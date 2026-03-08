@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from .models import Medicine
+from .models import Product
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
 
@@ -46,4 +47,27 @@ def home(request):
     return render(request, 'home.html')
 
 
+def tablet_page(request):
+    tablets = Product.objects.filter(category='Tablet')
+    return render(request, 'tablet.html', {'tablets': tablets})
 
+
+
+# def syrup_page(request):
+#     syrups = Product.objects.filter(category='Syrup')
+#     return render(request, 'syrup.html', {'products': syrups})
+
+
+# def injection_page(request):
+#     injections = Product.objects.filter(category='Injection')
+#     return render(request, 'injection.html', {'products': injections})
+
+
+# def firstaid_page(request):
+#     firstaid = Product.objects.filter(category='First Aid')
+#     return render(request, 'firstaid.html', {'products': firstaid})
+
+
+# def supplement_page(request):
+#     supplements = Product.objects.filter(category='Supplement')
+#     return render(request, 'supplement.html', {'products': supplements})

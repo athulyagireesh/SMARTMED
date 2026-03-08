@@ -1,10 +1,4 @@
-# from django.contrib import admin
-
-# Register your models here.
-
-
-from .models import Medicine
+from .models import Product 
 from django.contrib import admin
 
-admin.site.register(Medicine)
-# admin.site.register(Task)
+admin.site.register(Product)

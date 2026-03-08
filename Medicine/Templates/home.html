@@ -65,32 +65,40 @@
 
 
 <div class="second">
-<div class="section-title">Featured Products</div>
+<div class="section-title">FEATURED PRODUCTS</div>
 
 
 <div class="categories">
 
     <div class="cat">
                 <img src="{% static 'images/tablet.png' %}">
-        <div class="cat-name">Tablets</div>
+        <!-- <div class="cat-name">Tablet</div> -->
+        <div class="cat-name">
+        <a href="{% url 'tablet_page' %}"><h3>Tablets</h3></a>
+        </div>
     </div>
 
     <div class="cat">
                 <img src="{% static 'images/syrup.png' %}">
-        <div class="cat-name">Syrups</div>
+        <div class="cat-name">
+            <a href="{% url 'tablet_page' %}"><h3>syrups</h3></a>
+        </div>
     </div>
+
 
     <div class="cat">
                 <img src="{% static 'images/injection.png' %}">
         <div class="cat-name">Injections</div>
     </div>
 
+
     <div class="cat">
                 <img src="{% static 'images/firstaid.png' %}">
         <div class="cat-name">First Aid</div>
     </div>
 
-        <div class="cat">
+
+    <div class="cat">
                 <img src="{% static 'images/supp.png' %}">
         <div class="cat-name">Supplements</div>
     </div>
@@ -102,36 +110,34 @@
 <div class="products">
 
     <div class="card">
-        <img src="https://cdn-icons-png.flaticon.com/512/4320/4320365.png">
+        <img src="{% static 'images/paracetamol.png' %}">
         <div class="product-name">Paracetamol 500mg</div>
         <div class="price">₹25</div>
         <div class="cart-btn">Add to Cart</div>
     </div>
 
     <div class="card">
-        <img src="https://cdn-icons-png.flaticon.com/512/4320/4320373.png">
+       <img src="{% static 'images/vit c.webp' %}">
         <div class="product-name">Vitamin C 1000mg</div>
         <div class="price">₹150</div>
         <div class="cart-btn">Add to Cart</div>
     </div>
 
     <div class="card">
-        <img src="https://cdn-icons-png.flaticon.com/512/4320/4320341.png">
+        <img src="{% static 'images/cough.png' %}">
         <div class="product-name">Cough Syrup</div>
         <div class="price">₹80</div>
         <div class="cart-btn">Add to Cart</div>
     </div>
 
     <div class="card">
-        <img src="https://cdn-icons-png.flaticon.com/512/4320/4320363.png">
+        <img src="{% static 'images/insulin.webp' %}">
         <div class="product-name">Insulin Injection</div>
-        <div class="price">₹300</div>
+        <div class="price">₹900</div>
         <div class="cart-btn">Add to Cart</div>
     </div>
 
 </div>
-
-
 
 <div class="footer">
 
@@ -140,17 +146,16 @@
         <div>Contact Us</div>
         <div>Privacy Policy</div>
     </div>
-
 </div>
-
-
-
 </div>
 
 </div>
 
 </body>
 </html>
+
+
+
 
 
 

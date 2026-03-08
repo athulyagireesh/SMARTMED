@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/tablet.css' %}">
+
+</head>
+<body>
+    <div class="main">
+    <form action="" method="POST">
+        {% csrf_token %}
+  
+
+{% for product in tablets %}
+
+
+<div class="product">
+
+    <img src="{{ product.image.url }}" width="150">
+    <h3>{{ product.name }}</h3>
+    <p>Price: ₹{{ product.price }}</p>
+
+    <div class="actions">
+        <div class="cart">Add to Cart</div>
+        <div class="wishlist">♡</div>
+    </div>
+
+</div>
+
+{% endfor %}
+
+</div>
+</body>
+</html> 
+
+

@@ -67,7 +67,8 @@
 .second{
 font-family: Arial;
 background:#f5f7fb;
-/* background-color: black; */
+/* background-color:powderblue; */
+background-color: ;
 margin:0;
 }
 
@@ -84,13 +85,13 @@ background-image: url(../images/bg.png);
 
 
 .title{
-font-size:60px;
+font-size:75px;
 font-weight:bold;
 color:#1b4e8a;
 }
 
 .subtitle{
-font-size:42px;
+font-size:48px;
 font-weight: bold;
 margin-top:10px;
 color:#1b4e8a;
@@ -100,31 +101,23 @@ color:#1b4e8a;
 margin-top:30px;
 }
 
-/* 
-.btn{
-display:inline-block;
-padding:22px 40px;
-border-radius:6px;
-color:white;
-cursor:pointer;
-margin-right:60px;
-font-weight:bold;
-} */
+
 
 .two{
   display: flex;
-  gap: 35px;
+  gap: 38px;
 }
 
 
 .shop button{
-  /* display:inline-block; */
   background:#28a745;
   color: white;
   border: none;
   border-radius: 4px;
-  padding: 20px 18px;
-  padding-right: 15px;
+  font-size: 23px;
+  padding:20px 78px;
+  padding-right: 65px;
+  align-items: center;
 }
 
 
@@ -139,9 +132,10 @@ font-weight:bold;
   background:#007bff;
   color: white;
   border: none;
+  font-size: 23px;
   border-radius: 4px;
-  padding: 20px 18px;
-  padding-right: 15px;
+  padding: 20px 78px;
+  padding-right: 85px;
 }
 
 .upload button:hover{
@@ -151,9 +145,10 @@ font-weight:bold;
 
 .section-title{
 text-align:center;
-font-size:24px;
-font-weight:bold;
+font-size:25px;
+font-weight:700;
 margin-top:30px;
+color:#1b4e8a;
 }
 
 
@@ -166,15 +161,23 @@ margin:30px;
 
 .cat{
 background:white;
+/* background-color:beige; */
 width:120px;
 padding:15px;
 text-align:center;
-border-radius:10px;
-box-shadow:0 2px 8px rgba(0,0,0,0.1);
+border-radius:15px;
+box-shadow:0 15px 10px rgba(0,0,0,0.1);
 }
+
+.cat:hover{
+  color:coral;
+}
+
+
 
 .cat img{
 width:120px;
+height: 140px;
 }
 
 .cat-name{
@@ -196,12 +199,19 @@ background:white;
 width:200px;
 padding:20px;
 text-align:center;
-border-radius:10px;
-box-shadow:0 2px 8px rgba(0,0,0,0.1);
+border-radius:15px;
+box-shadow:0 15px 10px rgba(0,0,0,0.1);
 }
 
+
+.card:hover{
+  color:coral;
+}
+
+
 .card img{
-width:80px;
+width:180px;
+height: 200px;
 }
 
 .product-name{
@@ -216,6 +226,10 @@ font-size:18px;
 font-weight:bold;
 }
 
+.price:hover{
+  color:#1b4e8a;
+}
+
 .cart-btn{
 margin-top:10px;
 background:#28a745;
@@ -225,6 +239,9 @@ border-radius:6px;
 cursor:pointer;
 }
 
+.cart-btn:hover{
+  color:black;
+}
 
 
 .footer{
@@ -238,3 +255,21 @@ justify-content:center;
 gap:30px;
 color:white;
  }  
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+ 
