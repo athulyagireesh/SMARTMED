@@ -3,8 +3,8 @@
 <head>
 {% load static %}
 <meta charset="UTF-8">
-<title>injections</title>
-<link rel="stylesheet" href="{% static 'css/injection.css' %}">
+<title>firstaid</title>
+<link rel="stylesheet" href="{% static 'css/firstaid.css' %}">
 </head>
 
 <body>
@@ -13,7 +13,7 @@
       <form action="" method="POST">
         {% csrf_token %}
 
-{% for product in injections %}
+{% for product in firstaids %}
 
 <div class="product">
 

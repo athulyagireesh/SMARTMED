@@ -30,6 +30,9 @@ urlpatterns = [
     path('tablet/', views.tablet_page, name='tablet_page'),
     path('syrup/', views.syrup_page, name='syrup_page'),
     path('injection/', views.injection_page, name='injection_page'),
+    path('firstaid/', views.firstaid_page, name='firstaid_page'),
+    path('supplement/', views.supplement_page, name='supplement_page'),
+
 
   
 

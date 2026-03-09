@@ -63,11 +63,11 @@ def injection_page(request):
     return render(request, 'injection.html', {'injections': injections})
 
 
-# def firstaid_page(request):
-#     firstaid = Product.objects.filter(category='First Aid')
-#     return render(request, 'firstaid.html', {'products': firstaid})
+def firstaid_page(request):
+    firstaid = Product.objects.filter(category='First Aid')
+    return render(request, 'firstaid.html', {'firstaids': firstaid})
 
 
-# def supplement_page(request):
-#     supplements = Product.objects.filter(category='Supplement')
-#     return render(request, 'supplement.html', {'products': supplements})
+def supplement_page(request):
+    supplements = Product.objects.filter(category='Supplement')
+    return render(request, 'supplement.html', {'supplements': supplements})

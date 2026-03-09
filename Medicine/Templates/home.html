@@ -96,13 +96,17 @@
 
     <div class="cat">
                 <img src="{% static 'images/firstaid.png' %}">
-        <div class="cat-name">First Aid</div>
+        <div class="cat-name">
+            <a href="{% url 'firstaid_page' %}"><h3>Firstaid</h3></a>
+        </div>
     </div>
 
 
     <div class="cat">
                 <img src="{% static 'images/supp.png' %}">
-        <div class="cat-name">Supplements</div>
+        <div class="cat-name">
+           <a href="{% url 'supplement_page' %}"><h3>Supplement</h3></a>
+        </div>
     </div>
 
 </div>
