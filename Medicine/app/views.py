@@ -53,14 +53,14 @@ def tablet_page(request):
 
 
 
-# def syrup_page(request):
-#     syrups = Product.objects.filter(category='Syrup')
-#     return render(request, 'syrup.html', {'products': syrups})
+def syrup_page(request):
+    syrups = Product.objects.filter(category='Syrup')
+    return render(request, 'syrup.html', {'syrups': syrups})
 
 
-# def injection_page(request):
-#     injections = Product.objects.filter(category='Injection')
-#     return render(request, 'injection.html', {'products': injections})
+def injection_page(request):
+    injections = Product.objects.filter(category='Injection')
+    return render(request, 'injection.html', {'injections': injections})
 
 
 # def firstaid_page(request):

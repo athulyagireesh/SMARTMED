@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+<meta charset="UTF-8">
+<title>Syrups</title>
+<link rel="stylesheet" href="{% static 'css/injection.css' %}">
+</head>
+
+<body>
+
+<div class="main">
+      <form action="" method="POST">
+        {% csrf_token %}
+
+{% for product in injections %}
+
+<div class="product">
+
+<img src="{{ product.image.url }}" width="150">
+
+<h3>{{ product.name }}</h3>
+
+<p>Price: ₹{{ product.price }}</p>
+
+<div class="actions">
+<div class="cart">Add to Cart</div>
+<div class="wishlist">♡</div>
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</body>
+</html>

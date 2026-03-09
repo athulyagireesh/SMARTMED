@@ -28,6 +28,8 @@ urlpatterns = [
     path('home/', views.home,name='home'), 
     path('logout/', views.logout_view, name='logout'),
     path('tablet/', views.tablet_page, name='tablet_page'),
+    path('syrup/', views.syrup_page, name='syrup_page'),
+    path('injection/', views.injection_page, name='injection_page'),
 
   
 
