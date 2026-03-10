@@ -19,11 +19,12 @@
 <img src="{{ product.image.url }}" width="150">
 
 <h3>{{ product.name }}</h3>
+</a>
 
 <p>Price: ₹{{ product.price }}</p>
 
 <div class="actions">
-<div class="cart">Add to Cart</div>
+ <a href="{% url 'add_to_cart' product.id %}" class="cart">Add to Cart</a>
 <div class="wishlist">♡</div>
 </div>
 
