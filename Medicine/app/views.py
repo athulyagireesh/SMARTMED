@@ -71,3 +71,30 @@ def firstaid_page(request):
 def supplement_page(request):
     supplements = Product.objects.filter(category='Supplement')
     return render(request, 'supplement.html', {'supplements': supplements})
+
+
+def product_detail(request, id):
+    product = get_object_or_404(Product, id=id)
+    return render(request, 'product_detail.html', {'product': product})
+
+
+
+def add_to_cart(request, id):
+    product = Product.objects.get(id=id)
+
+    cart = request.session.get('cart', [])
+
+    cart.append(product.id)
+
+    request.session['cart'] = cart
+
+    return redirect('cart')
+
+
+
+def cart(request):
+    cart = request.session.get('cart', [])
+
+    products = Product.objects.filter(id__in=cart)
+
+    return render(request, 'cart.html', {'products': products})

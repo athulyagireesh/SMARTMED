@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+{% load static %}
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Your Cart</title>
+
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+
+</head>
+
+<body>
+
+<div class="main">
+
+<h1>Your Cart</h1>
+
+<form action="" method="POST">
+{% csrf_token %}
+
+{% for product in products %}
+
+<div class="product-container">
+
+<!-- PRODUCT IMAGE -->
+<div class="product-image">
+<img src="{{ product.image.url }}">
+</div>
+
+<!-- PRODUCT DETAILS -->
+<div class="product-details">
+
+<h2>{{ product.name }}</h2>
+
+<h3 class="price">₹{{ product.price }}</h3>
+
+<p class="desc">{{ product.description }}</p>
+
+<!-- QUANTITY -->
+<div class="quantity">
+<label>Quantity</label>
+<input type="number" value="1" min="1">
+</div>
+
+<!-- BUTTON AREA -->
+<div class="buttons">
+
+<button class="buy-btn">Buy Now</button>
+
+<!-- WISHLIST -->
+<label class="wishlist-box">
+<input type="checkbox">
+<span class="wishlist">♡</span>
+</label>
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</form>
+
+</div>
+
+</body>
+</html>
