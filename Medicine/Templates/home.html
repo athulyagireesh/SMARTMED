@@ -20,7 +20,7 @@
       <input type="text" placeholder="Search medicines ......" />
     </div>
 
-    <div class="right">
+    <!-- <div class="right">
         <img src="{% static 'images/crt.svg' %}" width="30px" height="30px">
 
         <img src="{% static 'images/wishlist.png' %}" width="30px" height="30px">
@@ -31,7 +31,31 @@
                 <button type="button">Logout</button>
             </a>
         </div>
+    </div> -->
+
+
+
+
+<div class="right">
+
+    <button class="icon-btn">
+        <img src="{% static 'images/crt.svg' %}" class="icon-img">
+    </button>
+
+    <button class="icon-btn">
+        <img src="{% static 'images/wishlist.png' %}" class="icon-img">
+    </button>
+
+    <div class="logout">
+        <a href="{% url 'logout' %}">
+            <button class="logout-btn" type="button">Logout</button>
+        </a>
     </div>
+
+</div>
+
+
+
 </div>
 
 

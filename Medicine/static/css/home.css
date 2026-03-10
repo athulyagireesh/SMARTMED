@@ -35,7 +35,9 @@
   border-radius: 10px;
 }
 
-.right {
+
+
+/* .right {
   display: flex;
   align-items: center;
   gap: 13px;
@@ -54,12 +56,61 @@
 
 .logout button:hover{
   background-color: darkorange;
+} */
+
+
+
+.right{
+    display:flex;
+    align-items:center;
+    padding-right: 23px;
+    gap:10px;
 }
 
- /* .menu {
-  font-size: 20px;
-  padding-right: 30px;
-} */
+/* icon buttons */
+.icon-btn{
+    border:none;
+    border-radius: 30px;
+    cursor:pointer;
+    padding:2px;
+    background-color:#28a745;
+    transition:transform 0.2s ease;
+}
+
+/* image inside button */
+.icon-img{
+    width:32px;
+    height:30px;
+}
+
+/* hover animation */
+.icon-btn:hover{
+    transform:scale(1.2);
+    background-color: red;
+}
+
+/* click animation */
+.icon-btn:active{
+    transform:scale(0.9);
+}
+
+/* logout button */
+.logout-btn{
+    height: 40px;
+    font-weight: 700;
+    padding:6px 25px;
+    border:none;
+    /* background:#007BFF; */
+    background-color: #1b4e8a;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.logout-btn:hover{
+    background:#0056b3;
+}
 
 
 
