@@ -9,8 +9,5 @@ class Product(models.Model):
     category = models.CharField(max_length=100)
     description = models.TextField()
 
-    # expiry_date = models.DateField()
-    # return_policy = models.CharField(max_length=200)
-
     def __str__(self):
         return self.name
