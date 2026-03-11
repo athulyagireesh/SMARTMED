@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
 {% load static %}
@@ -33,6 +33,52 @@
 
 {% endfor %}
 
+</div>
+
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+<meta charset="UTF-8">
+<title>Syrups</title>
+<link rel="stylesheet" href="{% static 'css/syrup.css' %}">
+</head>
+
+<body>
+
+<div class="main">
+<form action="" method="POST">
+{% csrf_token %}
+
+{% for product in syrups %}
+
+<div class="product">
+
+<img src="{{ product.image.url }}" width="150">
+
+<h3>{{ product.name }}</h3>
+
+<p>Price: ₹{{ product.price }}</p>
+
+<div class="actions">
+
+<a href="{% url 'add_to_cart' product.id %}" class="cart">Add to Cart</a>
+
+<label class="wishlist-box">
+<input type="checkbox">
+<span class="wishlist">♡</span>
+</label>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</form>
 </div>
 
 </body>

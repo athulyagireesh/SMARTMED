@@ -1,4 +1,4 @@
- body{
+ /* body{
     margin:0;
     padding:0;
     font-family: Arial, Helvetica, sans-serif;
@@ -10,7 +10,7 @@
     margin:auto;
 }
 
-/* FLEX CONTAINER */
+
 .main form{
     display:flex;
     flex-wrap:wrap;
@@ -19,7 +19,7 @@
     margin-top:40px;
 }
 
-/* PRODUCT CARD */
+
 .product{
     width:240px;
     background:white;
@@ -55,7 +55,7 @@
     font-weight:bold;
 }
 
-/* BUTTON AREA FLEX */
+
 .actions{
     display:flex;
     justify-content:space-between;
@@ -63,7 +63,7 @@
     margin-top:10px;
 }
 
-/* ADD TO CART */
+
 .cart{
     background:#1f6f63;
     color:white;
@@ -78,7 +78,7 @@
     background:#15574d;
 }
 
-/* WISHLIST */
+
 .wishlist{
     font-size:22px;
     cursor:pointer;
@@ -88,4 +88,123 @@
 
 .wishlist:hover{
     color:red;
+} */
+
+
+
+
+
+body{
+margin:0;
+padding:0;
+font-family: Arial, Helvetica, sans-serif;
+background: linear-gradient(135deg,#f6f9fc,#e9f3ff);
+}
+
+.main{
+width:90%;
+margin:auto;
+}
+
+.main form{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:25px;
+margin-top:40px;
+}
+
+.product{
+width:240px;
+background:white;
+border-radius:12px;
+padding:20px;
+text-align:center;
+box-shadow:0 6px 18px rgba(0,0,0,0.12);
+transition:0.3s;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+}
+
+.product:hover{
+transform:translateY(-8px);
+box-shadow:0 12px 25px rgba(0,0,0,0.18);
+}
+
+.product img{
+width:100%;
+height:160px;
+object-fit:contain;
+}
+
+.product h3{
+font-size:18px;
+color:#333;
+}
+
+.product p{
+font-size:20px;
+color:#0a7a55;
+font-weight:bold;
+}
+
+/* BUTTON AREA */
+
+.actions{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:10px;
+}
+
+/* ADD TO CART */
+
+.cart{
+background:#1f6f63;
+color:white;
+padding:8px 15px;
+border-radius:8px;
+cursor:pointer;
+font-size:14px;
+transition:0.3s;
+text-decoration:none;   /* removes underline */
+}
+
+.cart:hover{
+background:#15574d;
+}
+
+/* WISHLIST (same style as cart page) */
+
+.wishlist-box{
+cursor:pointer;
+}
+
+.wishlist-box input{
+display:none;
+}
+
+.wishlist{
+font-size:22px;
+width:35px;
+height:35px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+border:1px solid #ccc;
+color:#555;
+transition:0.3s;
+}
+
+.wishlist:hover{
+background:red;
+color:white;
+}
+
+.wishlist-box input:checked + .wishlist{
+background:red;
+color:white;
+border:none;
 }

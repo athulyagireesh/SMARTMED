@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
 {% load static %}
@@ -161,4 +161,175 @@
 </div>
 
 </body>
+</html> -->
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+<meta charset="UTF-8">
+<title>SmartMed</title>
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+
+<body>
+
+<div class="main">
+<form action="" method="POST">
+{% csrf_token %}
+
+<div class="first">
+
+<div class="logo">
+<img src="{% static 'images/logoo.png' %}" width="200">
+</div>
+
+<div class="search">
+<form method="GET" action="{% url 'home' %}">
+<input type="text" name="q" placeholder="Search medicines ......">
+</form>
+</div>
+
+<div class="right">
+
+<button class="icon-btn">
+<img src="{% static 'images/crt.svg' %}" class="icon-img">
+</button>
+
+<button class="icon-btn">
+<img src="{% static 'images/wishlist.png' %}" class="icon-img">
+</button>
+
+<div class="logout">
+<a href="{% url 'logout' %}">
+<button class="logout-btn" type="button">Logout</button>
+</a>
+</div>
+
+</div>
+
+</div>
+
+
+
+<div class="hero">
+
+<div class="hero-text">
+
+<div class="title">Order Medicines Online</div>
+<div class="subtitle">Fast, Safe & Reliable</div>
+
+<div class="hero-buttons">
+
+<a href="#all_products">
+<button class="shop-btn">Shop Now</button>
+</a>
+
+<a href="#">
+<button class="upload-btn">Upload Prescription</button>
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<div class="second">
+
+<div class="section-title">FEATURED PRODUCTS</div>
+
+<div class="categories">
+
+<div class="cat">
+<img src="{% static 'images/tablet.png' %}">
+<a href="{% url 'tablet_page' %}"><h3>Tablets</h3></a>
+</div>
+
+<div class="cat">
+<img src="{% static 'images/syrup.png' %}">
+<a href="{% url 'syrup_page' %}"><h3>Syrups</h3></a>
+</div>
+
+<div class="cat">
+<img src="{% static 'images/injection.png' %}">
+<a href="{% url 'injection_page' %}"><h3>Injections</h3></a>
+</div>
+
+<div class="cat">
+<img src="{% static 'images/firstaid.png' %}">
+<a href="{% url 'firstaid_page' %}"><h3>Firstaid</h3></a>
+</div>
+
+<div class="cat">
+<img src="{% static 'images/supp.png' %}">
+<a href="{% url 'supplement_page' %}"><h3>Supplement</h3></a>
+</div>
+
+</div>
+
+
+
+<div id="all_products" class="products">
+
+{% for product in products %}
+
+<div class="card">
+
+<a href="{% url 'product_detail' product.id %}">
+<img src="{{ product.image.url }}">
+</a>
+
+<div class="product-name">{{ product.name }}</div>
+
+<div class="price">₹{{ product.price }}</div>
+
+<div class="btn-area">
+
+<a href="{% url 'add_to_cart' product.id %}">
+<button class="cart-btn">Add to Cart</button>
+</a>
+
+<!-- Wishlist Checkbox (same style as cart page) -->
+
+<label class="wishlist-box">
+<input type="checkbox">
+<span class="wishlist">♡</span>
+</label>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+
+
+<div class="footer">
+
+<div class="footer-links">
+<div>About Us</div>
+<div>Contact Us</div>
+<div>Privacy Policy</div>
+</div>
+
+</div>
+
+</div>
+
+</form>
+</div>
+
+</body>
 </html>
+
+
+

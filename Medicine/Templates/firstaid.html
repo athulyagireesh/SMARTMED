@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
 {% load static %}
@@ -33,6 +33,55 @@
 
 {% endfor %}
 
+</div>
+
+</body>
+</html> -->
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+<meta charset="UTF-8">
+<title>firstaids</title>
+<link rel="stylesheet" href="{% static 'css/firstaid.css' %}">
+</head>
+
+<body>
+
+<div class="main">
+<form action="" method="POST">
+{% csrf_token %}
+
+{% for product in firstaids %}
+
+<div class="product">
+
+<img src="{{ product.image.url }}" width="150">
+
+<h3>{{ product.name }}</h3>
+
+<p>Price: ₹{{ product.price }}</p>
+
+<div class="actions">
+
+<a href="{% url 'add_to_cart' product.id %}" class="cart">Add to Cart</a>
+
+<!-- Wishlist checkbox (same as cart page) -->
+<label class="wishlist-box">
+<span class="wishlist">♡</span>
+</label>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</form>
 </div>
 
 </body>
