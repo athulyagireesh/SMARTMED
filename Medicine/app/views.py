@@ -42,9 +42,25 @@ def logout_view(request):
 
 
 
+# @login_required
+# def home(request):
+#     return render(request, 'home.html')
+
+
 @login_required
 def home(request):
-    return render(request, 'home.html')
+
+    query = request.GET.get('q')
+
+    if query:
+        products = Product.objects.filter(name__icontains=query)
+    else:
+        products = Product.objects.all()
+
+    return render(request, 'home.html', {'products': products})
+
+
+
 
 
 def tablet_page(request):

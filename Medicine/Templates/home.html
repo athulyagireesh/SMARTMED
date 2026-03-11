@@ -1,37 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <title>SmartMed</title>    
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% load static %}
+<meta charset="UTF-8">
+<title>SmartMed</title>
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
+
 <body>
 
 <div class="main">
-      <form action="" method="POST">
+    <form action="" method="POST">
         {% csrf_token %}
+
+
 <div class="first">
-    <div class="logo">
-               <img src="{% static 'images/logoo.png' %}" width="200px" height="150px">
-    </div>
 
-    <div class="search">
-      <input type="text" placeholder="Search medicines ......" />
-    </div>
+<div class="logo">
+<img src="{% static 'images/logoo.png' %}" width="200">
+</div>
 
-    <!-- <div class="right">
-        <img src="{% static 'images/crt.svg' %}" width="30px" height="30px">
+<div class="search">
+<form method="GET" action="{% url 'home' %}">
+<input type="text" name="q" placeholder="Search medicines ......">
+</form>
+</div>
 
-        <img src="{% static 'images/wishlist.png' %}" width="30px" height="30px">
-
-        
-        <div class="logout">
-            <a href="{% url 'logout' %}">
-                <button type="button">Logout</button>
-            </a>
-        </div>
-    </div> -->
 
 
 
@@ -54,138 +48,117 @@
 
 </div>
 
-
-
 </div>
 
 
-    <div class="hero">
 
-    <div class="hero-text">
-        <div class="title">Order Medicines Online</div>
-        <div class="subtitle">Fast, Safe & Reliable</div>
+<div class="hero">
 
-        <div class="hero-buttons">
-        
-            <div class="two">
-        <div class="shop">
-            <a href="{% url 'logout' %}">
-                <button type="button">Shop Now</button>
-            </a>
-        </div>
+<div class="hero-text">
 
-                
-        <div class="upload">
-            <a href="{% url 'logout' %}">
-                <button type="button">Upload Prescription</button>
-            </a>
-        </div>
-        </div>
-        </div>
-    </div>
+<div class="title">Order Medicines Online</div>
+<div class="subtitle">Fast, Safe & Reliable</div>
+
+<div class="hero-buttons">
+
+<a href="#all_products">
+<button class="shop-btn">Shop Now</button>
+</a>
+
+<a href="#">
+<button class="upload-btn">Upload Prescription</button>
+</a>
+
 </div>
 
+</div>
+
+</div>
 
 
 
 <div class="second">
-<div class="section-title">FEATURED PRODUCTS</div>
 
+<div class="section-title">FEATURED PRODUCTS</div>
 
 <div class="categories">
 
-    <div class="cat">
-                <img src="{% static 'images/tablet.png' %}">
-        <!-- <div class="cat-name">Tablet</div> -->
-        <div class="cat-name">
-        <a href="{% url 'tablet_page' %}"><h3>Tablets</h3></a>
-        </div>
-    </div>
+<div class="cat">
+<img src="{% static 'images/tablet.png' %}">
+<a href="{% url 'tablet_page' %}"><h3>Tablets</h3></a>
+</div>
 
-    <div class="cat">
-                <img src="{% static 'images/syrup.png' %}">
-        <div class="cat-name">
-        <a href="{% url 'syrup_page' %}"><h3>Syrups</h3></a>
-    </div>
-    </div>
+<div class="cat">
+<img src="{% static 'images/syrup.png' %}">
+<a href="{% url 'syrup_page' %}"><h3>Syrups</h3></a>
+</div>
 
+<div class="cat">
+<img src="{% static 'images/injection.png' %}">
+<a href="{% url 'injection_page' %}"><h3>Injections</h3></a>
+</div>
 
-    <div class="cat">
-                <img src="{% static 'images/injection.png' %}">
-        <div class="cat-name">
-            <a href="{% url 'injection_page' %}"><h3>Injections</h3></a>
-        </div>
-    </div>
+<div class="cat">
+<img src="{% static 'images/firstaid.png' %}">
+<a href="{% url 'firstaid_page' %}"><h3>Firstaid</h3></a>
+</div>
 
-
-    <div class="cat">
-                <img src="{% static 'images/firstaid.png' %}">
-        <div class="cat-name">
-            <a href="{% url 'firstaid_page' %}"><h3>Firstaid</h3></a>
-        </div>
-    </div>
-
-
-    <div class="cat">
-                <img src="{% static 'images/supp.png' %}">
-        <div class="cat-name">
-           <a href="{% url 'supplement_page' %}"><h3>Supplement</h3></a>
-        </div>
-    </div>
+<div class="cat">
+<img src="{% static 'images/supp.png' %}">
+<a href="{% url 'supplement_page' %}"><h3>Supplement</h3></a>
+</div>
 
 </div>
 
 
 
-<div class="products">
 
-    <div class="card">
-        <img src="{% static 'images/paracetamol.png' %}">
-        <div class="product-name">Paracetamol 500mg</div>
-        <div class="price">₹25</div>
-        <div class="cart-btn">Add to Cart</div>
-    </div>
+<div id="all_products" class="products">
 
-    <div class="card">
-       <img src="{% static 'images/vit c.webp' %}">
-        <div class="product-name">Vitamin C 1000mg</div>
-        <div class="price">₹150</div>
-        <div class="cart-btn">Add to Cart</div>
-    </div>
+{% for product in products %}
 
-    <div class="card">
-        <img src="{% static 'images/cough.png' %}">
-        <div class="product-name">Cough Syrup</div>
-        <div class="price">₹80</div>
-        <div class="cart-btn">Add to Cart</div>
-    </div>
+<div class="card">
 
-    <div class="card">
-        <img src="{% static 'images/insulin.webp' %}">
-        <div class="product-name">Insulin Injection</div>
-        <div class="price">₹900</div>
-        <div class="cart-btn">Add to Cart</div>
-    </div>
+<a href="{% url 'product_detail' product.id %}">
+<img src="{{ product.image.url }}">
+</a>
+
+<div class="product-name">{{ product.name }}</div>
+
+<div class="price">₹{{ product.price }}</div>
+
+<div class="btn-area">
+
+<a href="{% url 'add_to_cart' product.id %}">
+<button class="cart-btn">Add to Cart</button>
+</a>
+
+<button class="wish-btn">♡</button>
 
 </div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+
+
 
 <div class="footer">
 
-    <div class="footer-links">
-        <div>About Us</div>
-        <div>Contact Us</div>
-        <div>Privacy Policy</div>
-    </div>
+<div class="footer-links">
+<div>About Us</div>
+<div>Contact Us</div>
+<div>Privacy Policy</div>
 </div>
+
+</div>
+
 </div>
 
 </div>
 
 </body>
 </html>
-
-
-
-
-
-
