@@ -1,58 +1,19 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-{% load static %}
-<meta charset="UTF-8">
-<title>firstaids</title>
-<link rel="stylesheet" href="{% static 'css/firstaid.css' %}">
-</head>
-
-<body>
-
-<div class="main">
-      <form action="" method="POST">
-        {% csrf_token %}
-
-{% for product in firstaids %}
-
-<div class="product">
-
-<img src="{{ product.image.url }}" width="150">
-
-<h3>{{ product.name }}</h3>
-</a>
-
-<p>Price: ₹{{ product.price }}</p>
-
-<div class="actions">
- <a href="{% url 'add_to_cart' product.id %}" class="cart">Add to Cart</a>
-<div class="wishlist">♡</div>
-</div>
-
-</div>
-
-{% endfor %}
-
-</div>
-
-</body>
-</html> -->
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 {% load static %}
 <meta charset="UTF-8">
-<title>firstaids</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>First Aid</title>
+
 <link rel="stylesheet" href="{% static 'css/firstaid.css' %}">
+
 </head>
 
 <body>
 
 <div class="main">
+
 <form action="" method="POST">
 {% csrf_token %}
 
@@ -68,10 +29,12 @@
 
 <div class="actions">
 
-<a href="{% url 'add_to_cart' product.id %}" class="cart">Add to Cart</a>
+<a href="{% url 'add_to_cart' product.id %}" class="cart">
+Add to Cart
+</a>
 
-<!-- Wishlist checkbox (same as cart page) -->
 <label class="wishlist-box">
+<input type="checkbox">
 <span class="wishlist">♡</span>
 </label>
 
@@ -82,6 +45,7 @@
 {% endfor %}
 
 </form>
+
 </div>
 
 </body>

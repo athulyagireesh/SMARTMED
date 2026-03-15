@@ -1,50 +1,6 @@
 <!-- <!DOCTYPE html>
 <html lang="en">
 <head>
-     {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>tablets</title>
-    <link rel="stylesheet" href="{% static 'css/tablet.css' %}">
-
-</head>
-<body>
-    <div class="main">
-    <form action="" method="POST">
-        {% csrf_token %}
-  
-
-{% for product in tablets %}
-
-
-<div class="product">
-
-    <img src="{{ product.image.url }}" width="150">
-    <h3>{{ product.name }}</h3>
-    </a>
-
-    <p>Price: ₹{{ product.price }}</p>
-
-    <div class="actions">
-
-         <a href="{% url 'add_to_cart' product.id %}" class="cart">Add to Cart</a>
-         <div class="wishlist">♡</div>
-    </div>
-
-</div>
-
-{% endfor %}
-
-</div>
-</body>
-</html> 
-
- -->
-
-
- <!DOCTYPE html>
-<html lang="en">
-<head>
 {% load static %}
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -84,6 +40,85 @@
 {% endfor %}
 
 </form>
+</div>
+
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tablets</title>
+
+<link rel="stylesheet" href="{% static 'css/tablet.css' %}">
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+
+<div class="logo">
+<img src="{% static 'images/logoo.png' %}">
+</div>
+
+<div class="search">
+<form method="GET" action="{% url 'home' %}">
+<input type="text" name="q" placeholder="Search medicines...">
+<button type="submit">Search</button>
+</form>
+</div>
+
+<div class="home-btn">
+<a href="{% url 'home' %}">
+<button>Back to Home</button>
+</a>
+</div>
+
+</div>
+
+
+
+<div class="main">
+
+<form action="" method="POST">
+{% csrf_token %}
+
+{% for product in tablets %}
+
+<div class="product">
+
+<img src="{{ product.image.url }}">
+
+<h3>{{ product.name }}</h3>
+
+<p>Price: ₹{{ product.price }}</p>
+
+<div class="actions">
+
+<a href="{% url 'add_to_cart' product.id %}" class="cart">
+Add to Cart
+</a>
+
+<label class="wishlist-box">
+<input type="checkbox">
+<span class="wishlist">♡</span>
+</label>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</form>
+
 </div>
 
 </body>

@@ -53,16 +53,12 @@ color:#0a7a55;
 font-weight:bold;
 }
 
-
-
 .actions{
 display:flex;
 justify-content:space-between;
 align-items:center;
 margin-top:10px;
 }
-
-
 
 .cart{
 background:#1f6f63;
@@ -72,14 +68,12 @@ border-radius:8px;
 cursor:pointer;
 font-size:14px;
 transition:0.3s;
-text-decoration:none;  
+text-decoration:none;
 }
 
 .cart:hover{
 background:#15574d;
 }
-
-
 
 .wishlist-box{
 cursor:pointer;
