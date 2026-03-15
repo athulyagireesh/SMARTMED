@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from .models import Product
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 
 
@@ -114,3 +115,20 @@ def cart(request):
     products = Product.objects.filter(id__in=cart)
 
     return render(request, 'cart.html', {'products': products})
+
+
+@login_required
+def home(request):
+
+    query = request.GET.get('q')
+
+    if query:
+        products = Product.objects.filter(
+            Q(name__icontains=query) |
+            Q(description__icontains=query) |
+            Q(category__icontains=query)
+        )
+    else:
+        products = Product.objects.all()
+
+    return render(request, 'home.html', {'products': products})

@@ -1,99 +1,3 @@
- /* body{
-    margin:0;
-    padding:0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(135deg,#f6f9fc,#e9f3ff);
-}
-
-.main{
-    width:90%;
-    margin:auto;
-}
-
-
-.main form{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:25px;
-    margin-top:40px;
-}
-
-
-.product{
-    width:240px;
-    background:white;
-    border-radius:12px;
-    padding:20px;
-    text-align:center;
-    box-shadow:0 6px 18px rgba(0,0,0,0.12);
-    transition:0.3s;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-}
-
-.product:hover{
-    transform:translateY(-8px);
-    box-shadow:0 12px 25px rgba(0,0,0,0.18);
-}
-
-.product img{
-    width:100%;
-    height:160px;
-    object-fit:contain;
-}
-
-.product h3{
-    font-size:18px;
-    color:#333;
-}
-
-.product p{
-    font-size:20px;
-    color:#0a7a55;
-    font-weight:bold;
-}
-
-
-.actions{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-top:10px;
-}
-
-
-.cart{
-    background:#1f6f63;
-    color:white;
-    padding:8px 15px;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:14px;
-    transition:0.3s;
-}
-
-.cart:hover{
-    background:#15574d;
-}
-
-
-.wishlist{
-    font-size:22px;
-    cursor:pointer;
-    color:#888;
-    transition:0.3s;
-}
-
-.wishlist:hover{
-    color:red;
-} */
-
-
-
-
-
 body{
 margin:0;
 padding:0;
@@ -149,7 +53,7 @@ color:#0a7a55;
 font-weight:bold;
 }
 
-/* BUTTON AREA */
+
 
 .actions{
 display:flex;
@@ -158,7 +62,7 @@ align-items:center;
 margin-top:10px;
 }
 
-/* ADD TO CART */
+
 
 .cart{
 background:#1f6f63;
@@ -168,14 +72,14 @@ border-radius:8px;
 cursor:pointer;
 font-size:14px;
 transition:0.3s;
-text-decoration:none;   /* removes underline */
+text-decoration:none;  
 }
 
 .cart:hover{
 background:#15574d;
 }
 
-/* WISHLIST (same style as cart page) */
+
 
 .wishlist-box{
 cursor:pointer;
