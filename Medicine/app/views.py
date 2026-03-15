@@ -241,3 +241,19 @@ def tablet_page(request):
         'wishlist_products': wishlist_products,
         'wishlist_count': wishlist_count
     })
+
+
+
+@login_required
+def add_to_wishlist(request, id):
+
+    product = get_object_or_404(Product, id=id)
+
+    item = Wishlist.objects.filter(user=request.user, product=product)
+
+    if item.exists():
+        item.delete()
+    else:
+        Wishlist.objects.create(user=request.user, product=product)
+
+    return redirect(request.META.get('HTTP_REFERER'))
