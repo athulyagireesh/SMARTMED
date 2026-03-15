@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/wishlist.css' %}">
+</head>
+
+<body>
+
+<div class="navbar">
+
+<h2 class="wishlist-title">Wishlist</h2>
+
+<div class="search">
+<form method="GET">
+<input type="text" name="q" placeholder="Search medicines...">
+<button type="submit">Search</button>
+</form>
+</div>
+
+<div class="nav-right">
+
+<a href="{% url 'wishlist_page' %}" class="wishlist-icon">
+<img src="{% static 'images/wishlist.png' %}" width="28">
+<span class="wishlist-count">{{ items|length }}</span>
+</a>
+
+<a href="{% url 'home' %}">
+<button class="home-btn">Home</button>
+</a>
+
+</div>
+
+</div>
+
+
+
+<div class="main">
+
+{% for item in items %}
+
+<div class="product">
+
+<img src="{{ item.product.image.url }}">
+
+<h3>{{ item.product.name }}</h3>
+
+<p>₹{{ item.product.price }}</p>
+
+<div class="actions">
+
+<a href="{% url 'add_to_cart' item.product.id %}" class="cart">
+Add to Cart
+</a>
+
+<a href="{% url 'remove_wishlist' item.id %}">
+<button class="remove-btn">Remove</button>
+</a>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</body>
+</html>

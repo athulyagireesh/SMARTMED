@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from .models import Product
+from .models import Product 
+from .models import Wishlist
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+
 
 
 
@@ -131,4 +133,111 @@ def home(request):
         return render(request, 'search_results.html', {'products': products, 'query': query})
 
     products = Product.objects.all()
-    return render(request, 'home.html', {'products': products})
+    wishlist_count = Wishlist.objects.filter(user=request.user).count()
+
+    return render(request,'home.html',{'products':products,'wishlist_count':wishlist_count})
+
+
+
+# @login_required
+# def add_to_wishlist(request, id):
+#     product = Product.objects.get(id=id)
+
+#     item, created = Wishlist.objects.get_or_create(
+#         user=request.user,
+#         product=product
+#     )
+
+#     return redirect('home')
+
+@login_required
+def add_to_wishlist(request, id):
+
+    product = get_object_or_404(Product, id=id)
+
+    Wishlist.objects.get_or_create(
+        user=request.user,
+        product=product
+    )
+
+    return redirect(request.META.get('HTTP_REFERER'))
+
+
+# @login_required
+# def wishlist_page(request):
+
+#     items = Wishlist.objects.filter(user=request.user)
+
+#     return render(request,'wishlist.html',{'items':items})
+
+
+
+@login_required
+def wishlist_page(request):
+
+    query = request.GET.get('q')
+
+    items = Wishlist.objects.filter(user=request.user)
+
+    if query:
+        items = items.filter(product__name__icontains=query)
+
+    return render(request, 'wishlist.html', {'items': items})
+
+
+
+@login_required
+def remove_wishlist(request, id):
+
+    item = get_object_or_404(Wishlist, id=id, user=request.user)
+    item.delete()
+
+    return redirect('wishlist_page')
+
+
+# @login_required
+# def tablet_page(request):
+
+#     tablets = Product.objects.filter(category='Tablet')
+
+#     wishlist_count = Wishlist.objects.filter(user=request.user).count()
+
+#     return render(request, 'tablet.html', {
+#         'tablets': tablets,
+#         'wishlist_count': wishlist_count
+#     })
+
+
+@login_required
+def add_to_wishlist(request, id):
+
+    product = get_object_or_404(Product, id=id)
+
+    item = Wishlist.objects.filter(user=request.user, product=product)
+
+    if item.exists():
+        item.delete()   # remove if already in wishlist
+    else:
+        Wishlist.objects.create(user=request.user, product=product)
+
+    return redirect(request.META.get('HTTP_REFERER'))
+
+
+
+
+@login_required
+def tablet_page(request):
+
+    tablets = Product.objects.filter(category='Tablet')
+
+    wishlist_items = Wishlist.objects.filter(user=request.user)
+
+    wishlist_products = wishlist_items.values_list('product_id', flat=True)
+
+    wishlist_count = wishlist_items.count()
+
+    return render(request,'tablet.html',{
+        'tablets': tablets,
+        'wishlist_products': wishlist_products,
+        'wishlist_count': wishlist_count
+    })

@@ -36,6 +36,10 @@ urlpatterns = [
     path('product/<int:id>/', views.product_detail, name='product_detail'),
     path('add-to-cart/<int:id>/', views.add_to_cart, name='add_to_cart'),
     path('cart/', views.cart, name='cart'),
+    path('add-wishlist/<int:id>/', views.add_to_wishlist, name='add_wishlist'),
+    path('wishlist/', views.wishlist_page, name='wishlist_page'),
+    path('remove-wishlist/<int:id>/', views.remove_wishlist, name='remove_wishlist'),
+
 
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 

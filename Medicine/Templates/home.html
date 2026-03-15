@@ -33,9 +33,28 @@
 <img src="{% static 'images/crt.svg' %}" class="icon-img">
 </button>
 
+<!-- <button class="icon-btn">
+<img src="{% static 'images/wishlist.png' %}" class="icon-img">
+</button> -->
+
+<!-- <a href="{% url 'wishlist_page' %}">
 <button class="icon-btn">
 <img src="{% static 'images/wishlist.png' %}" class="icon-img">
 </button>
+</a> -->
+
+
+<a href="{% url 'wishlist_page' %}" class="wishlist-icon">
+
+<img src="{% static 'images/wishlist.png' %}" class="icon-img">
+
+<span class="wishlist-count">
+{{ wishlist_count }}
+</span>
+
+</a>
+
+
 
 <div class="logout">
 <a href="{% url 'logout' %}">
@@ -131,10 +150,13 @@
 
 
 
-<label class="wishlist-box">
+<!-- <label class="wishlist-box">
 <input type="checkbox">
 <span class="wishlist">♡</span>
-</label>
+</label> -->
+<a href="{% url 'add_wishlist' product.id %}">
+<span class="wishlist">♡</span>
+</a>
 
 </div>
 

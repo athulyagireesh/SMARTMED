@@ -1,0 +1,206 @@
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:linear-gradient(135deg,#f6f9fc,#e9f3ff);
+}
+
+
+
+
+
+.navbar{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:15px 40px;
+background:#2F80C7;
+box-shadow:0 3px 10px rgba(0,0,0,0.08);
+position:sticky;
+top:0;
+z-index:10;
+}
+
+
+
+
+
+.wishlist-title{
+color:#ff4b2b;
+font-size:26px;
+font-weight:bold;
+letter-spacing:1px;
+}
+
+
+
+
+
+.search form{
+display:flex;
+}
+
+.search input{
+width:300px;
+padding:10px;
+border:1px solid #ccc;
+border-radius:6px 0 0 6px;
+}
+
+.search button{
+padding:10px 15px;
+border:none;
+background:#1f6f63;
+color:white;
+border-radius:0 6px 6px 0;
+cursor:pointer;
+}
+
+
+
+
+
+.nav-right{
+display:flex;
+align-items:center;
+gap:20px;
+}
+
+
+
+
+.home-btn{
+background:#1f6f63;
+color:white;
+border:none;
+padding:8px 15px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.home-btn:hover{
+background:#15574d;
+}
+
+
+
+
+
+.wishlist-icon{
+position:relative;
+display:inline-block;
+cursor:pointer;
+}
+
+.wishlist-count{
+position:absolute;
+top:-6px;
+right:-8px;
+background:red;
+color:white;
+font-size:12px;
+padding:2px 6px;
+border-radius:50%;
+font-weight:bold;
+}
+
+
+
+
+.main{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:25px;
+margin-top:40px;
+padding:20px;
+}
+
+
+
+.product{
+width:240px;
+background:white;
+border-radius:12px;
+padding:20px;
+text-align:center;
+box-shadow:0 6px 18px rgba(0,0,0,0.12);
+transition:0.3s;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+}
+
+.product:hover{
+transform:translateY(-8px);
+box-shadow:0 12px 25px rgba(0,0,0,0.18);
+}
+
+
+
+
+
+.product img{
+width:100%;
+height:160px;
+object-fit:contain;
+}
+
+
+
+
+.product h3{
+font-size:18px;
+color:#333;
+}
+
+
+
+
+
+.product p{
+font-size:20px;
+color:#0a7a55;
+font-weight:bold;
+}
+
+
+
+
+.actions{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:15px;
+}
+
+
+
+.cart{
+background:#1f6f63;
+color:white;
+padding:8px 15px;
+border-radius:8px;
+cursor:pointer;
+font-size:14px;
+text-decoration:none;
+}
+
+.cart:hover{
+background:#15574d;
+}
+
+
+
+
+.remove-btn{
+background:red;
+color:white;
+border:none;
+padding:6px 12px;
+border-radius:6px;
+cursor:pointer;
+}
+
+.remove-btn:hover{
+background:darkred;
+}
