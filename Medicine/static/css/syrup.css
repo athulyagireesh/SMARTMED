@@ -1,8 +1,63 @@
 body{
 margin:0;
-padding:0;
-font-family: Arial, Helvetica, sans-serif;
-background: linear-gradient(135deg,#f6f9fc,#e9f3ff);
+font-family:Arial, Helvetica, sans-serif;
+background:linear-gradient(135deg,#f6f9fc,#e9f3ff);
+}
+
+.navbar{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:15px 40px;
+background:#2F80C7;
+box-shadow:0 3px 10px rgba(0,0,0,0.08);
+position:sticky;
+height: 7vh;
+top:0;
+z-index:10;
+}
+
+.search form{
+display:flex;
+}
+
+.search input{
+width:300px;
+padding:10px;
+border:1px solid #ccc;
+border-radius:6px 0 0 6px;
+}
+
+.search button{
+padding:10px 15px;
+border:none;
+background:#1f6f63;
+color:white;
+border-radius:0 6px 6px 0;
+cursor:pointer;
+}
+
+.nav-right{
+display:flex;
+align-items:center;
+gap:20px;
+}
+
+.icon-btn img{
+width:26px;
+}
+
+.home-btn{
+background:#1f6f63;
+color:white;
+border:none;
+padding:8px 15px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.home-btn:hover{
+background:#15574d;
 }
 
 .main{

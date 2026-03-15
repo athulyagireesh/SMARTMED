@@ -12,6 +12,44 @@
 
 <body>
 
+  <div class="navbar">
+
+<div class="logo">
+<img src="{% static 'images/logoo.png' %}" width="170">
+</div>
+
+
+<div class="search">
+
+<form method="GET" action="{% url 'home' %}">
+
+<input type="text" name="q" value="{{ query }}" placeholder="Search medicines...">
+
+<button type="submit">Search</button>
+
+</form>
+
+</div>
+
+
+<div class="nav-right">
+
+<!-- <a href="{% url 'cart' %}" class="icon-btn">
+<img src="{% static 'images/crt.svg' %}">
+</a>
+
+<a href="#" class="icon-btn">
+<img src="{% static 'images/wishlist.png' %}">
+</a> -->
+
+<a href="{% url 'home' %}">
+<button class="home-btn">Back to Home</button>
+</a>
+
+</div>
+
+</div>
+
 <div class="main">
 
 <form action="" method="POST">
