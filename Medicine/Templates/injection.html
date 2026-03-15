@@ -33,13 +33,11 @@
 
 <div class="nav-right">
 
-<!-- <a href="{% url 'cart' %}" class="icon-btn">
-<img src="{% static 'images/crt.svg' %}">
+<a href="{% url 'wishlist_page' %}" class="wishlist-icon">
+<img src="{% static 'images/wishlist.png' %}" width="28">
+<span class="wishlist-count">{{ wishlist_count }}</span>
 </a>
 
-<a href="#" class="icon-btn">
-<img src="{% static 'images/wishlist.png' %}">
-</a> -->
 
 <a href="{% url 'home' %}">
 <button class="home-btn">Back to Home</button>
@@ -70,11 +68,11 @@
 Add to Cart
 </a>
 
-<label class="wishlist-box">
-<input type="checkbox">
-<span class="wishlist">♡</span>
-</label>
-
+<a href="{% url 'add_wishlist' product.id %}" class="wishlist-btn">
+<span class="wishlist {% if product.id in wishlist_products %}active{% endif %}">
+♡
+</span>
+</a>
 </div>
 
 </div>

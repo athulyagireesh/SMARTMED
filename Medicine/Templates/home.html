@@ -29,19 +29,21 @@
 
 <div class="right">
 
-<button class="icon-btn">
-<img src="{% static 'images/crt.svg' %}" class="icon-img">
-</button>
-
 <!-- <button class="icon-btn">
-<img src="{% static 'images/wishlist.png' %}" class="icon-img">
+<img src="{% static 'images/crt.svg' %}" class="icon-img">
 </button> -->
 
-<!-- <a href="{% url 'wishlist_page' %}">
-<button class="icon-btn">
-<img src="{% static 'images/wishlist.png' %}" class="icon-img">
-</button>
-</a> -->
+<a href="{% url 'cart' %}" class="cart-icon">
+
+<img src="{% static 'images/crt.svg' %}" class="icon-img">
+
+<span class="cart-count">
+{{ cart_count }}
+</span>
+
+</a>
+
+
 
 
 <a href="{% url 'wishlist_page' %}" class="wishlist-icon">
@@ -148,9 +150,21 @@
 <button class="cart-btn">Add to Cart</button>
 </a>
 
+
+
+
 <a href="{% url 'add_wishlist' product.id %}">
-<span class="wishlist">♡</span>
+<!-- <span class="wishlist {% if product.id in wishlist_products %}active{% endif %}">
+♡
+</span> -->
+
+<span class="wishlist {% if product.id in wishlist_products %}active{% endif %}">
+♡
+</span>
 </a>
+
+
+
 
 </div>
 

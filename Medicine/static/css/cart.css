@@ -1,10 +1,51 @@
+
 body{
 margin:0;
-font-family:Arial, Helvetica, sans-serif;
+font-family:Arial;
 background:#f4f6f8;
 }
 
+/* NAVBAR */
 
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 40px;
+background:#2F80C7;
+color:white;
+}
+
+.search form{
+display:flex;
+}
+
+.search input{
+width:250px;
+padding:8px;
+border:none;
+border-radius:6px 0 0 6px;
+}
+
+.search button{
+padding:8px 15px;
+border:none;
+background:#1f6f63;
+color:white;
+border-radius:0 6px 6px 0;
+cursor:pointer;
+}
+
+.home-btn{
+background:#1f6f63;
+color:white;
+border:none;
+padding:8px 15px;
+border-radius:6px;
+cursor:pointer;
+}
+
+/* MAIN */
 
 .main{
 width:85%;
@@ -12,121 +53,112 @@ margin:auto;
 margin-top:40px;
 }
 
+/* PRODUCT CARD */
 
-
-.product-container{
+/* .product-container{
 display:flex;
-align-items:center;
 gap:60px;
 background:white;
 padding:30px;
 border-radius:10px;
 box-shadow:0 6px 20px rgba(0,0,0,0.15);
 margin-bottom:30px;
-}
+} */
 
 
 
-.product-image img{
-width:350px;
-object-fit:contain;
-}
-
-
-
-.product-details{
-max-width:450px;
-}
-
-.product-details h2{
-font-size:30px;
-margin-bottom:10px;
-}
-
-.price{
-color:green;
-margin-bottom:15px;
-}
-
-
-
-.desc{
-color:#555;
+.product-container{
+display:flex;
+align-items:center;
+gap:35px;
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 4px 12px rgba(0,0,0,0.12);
 margin-bottom:20px;
 }
 
 
 
+.product-image img{
+width:250px;
+}
+
+.price{
+color:green;
+}
+
+/* QUANTITY */
+
 .quantity{
-margin-bottom:25px;
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:20px;
+}
+
+.qty-btn{
+width:35px;
+height:35px;
+font-size:20px;
+border:none;
+background:#ddd;
+cursor:pointer;
 }
 
 .quantity input{
-width:70px;
-height:35px;
+width:50px;
 text-align:center;
-font-size:16px;
-margin-left:10px;
 }
 
+/* BUTTONS */
 
 .buttons{
 display:flex;
-align-items:center;
 gap:20px;
 }
 
-
-
 .buy-btn{
 background:#28a745;
+color:white;
 border:none;
 padding:10px 15px;
+border-radius:6px;
+}
+
+.remove-btn{
+background:red;
 color:white;
-font-size:18px;
+border:none;
+padding:10px 15px;
 border-radius:6px;
 cursor:pointer;
 }
 
-.buy-btn:hover{
-background:#1f8c39;
+/* BILL SUMMARY */
+
+.bill{
+background:white;
+padding:25px;
+border-radius:10px;
+width:300px;
+box-shadow:0 5px 15px rgba(0,0,0,0.15);
 }
 
-.wishlist-box{
+.order-btn{
+background:#007bff;
+color:white;
+border:none;
+padding:12px 20px;
+border-radius:6px;
+margin-top:10px;
 cursor:pointer;
 }
 
 
-
-.wishlist-box input{
-display:none;
-}
-
-
-
-.wishlist{
-font-size:26px;
-width:40px;
-height:40px;
-display:flex;
-align-items:center;
-justify-content:center;
-border-radius:50%;
-border:1px solid #ccc;
-color:#555;
-transition:0.3s;
-}
-
-
-
-.wishlist:hover{
-background:red;
-color:white;
-}
-
-
-
-.wishlist-box input:checked + .wishlist{
-background:red;
-color:white;
+.item-total{
+margin-top:10px;
+font-size:18px;
+font-weight:bold;
+color:#333;
 }

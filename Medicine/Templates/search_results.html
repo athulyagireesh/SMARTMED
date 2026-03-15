@@ -68,13 +68,16 @@
 Add to Cart
 </a>
 
-<!-- <label class="wishlist-box">
 
-<input type="checkbox">
 
-<span class="wishlist">♡</span>
+<a href="{% url 'add_wishlist' product.id %}" class="wishlist-btn">
+<span class="wishlist {% if product.id in wishlist_products %}active{% endif %}">
+♡
+</span>
+</a>
 
-</label> -->
+
+
 
 </div>
 

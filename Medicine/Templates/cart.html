@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Your Cart</title>
+<title>Cart</title>
 
 <link rel="stylesheet" href="{% static 'css/cart.css' %}">
 
@@ -15,47 +15,84 @@
 
 <body>
 
+<!-- NAVBAR -->
+
+<div class="navbar">
+
+<div class="nav-title">
+<h2>Cart</h2>
+</div>
+
+<div class="search">
+
+<!-- <form method="GET" action="{% url 'cart' %}">
+<input type="text" name="q" placeholder="Search medicines...">
+<button type="submit">Search</button> -->
+<form method="GET" action="{% url 'cart' %}">
+<input type="text" name="q" placeholder="Search medicines..." >
+<button type="submit">Search</button>
+</form>
+
+</div>
+
+<div class="nav-right">
+
+<a href="{% url 'home' %}">
+<button class="home-btn">Back to Home</button>
+</a>
+
+</div>
+
+</div>
+
+
+
 <div class="main">
 
-<h1>Your Cart</h1>
+<!-- <h1>Your Cart</h1> -->
 
-<form action="" method="POST">
-{% csrf_token %}
-
-{% for product in products %}
+{% for item in cart_items %}
 
 <div class="product-container">
 
-
 <div class="product-image">
-<img src="{{ product.image.url }}">
+<img src="{{ item.product.image.url }}">
 </div>
-
 
 <div class="product-details">
 
-<h2>{{ product.name }}</h2>
+<h2>{{ item.product.name }}</h2>
 
-<h3 class="price">₹{{ product.price }}</h3>
+<h3 class="price">₹{{ item.product.price }}</h3>
 
-<p class="desc">{{ product.description }}</p>
+<p class="desc">{{ item.product.description }}</p>
 
 
 <div class="quantity">
-<label>Quantity</label>
-<input type="number" value="1" min="1">
+
+<a href="{% url 'update_cart' item.product.id 'minus' %}">
+<button class="qty-btn">-</button>
+</a>
+
+<input type="text" value="{{ item.quantity }}" readonly>
+
+<a href="{% url 'update_cart' item.product.id 'plus' %}">
+<button class="qty-btn">+</button>
+</a>
+
 </div>
 
+
+<!-- <h3>Total : ₹{{ item.total_price }}</h3> -->
+<!-- <h3 class="item-total">Total : ₹{{ item.total_price }}</h3> -->
 
 <div class="buttons">
 
 <button class="buy-btn">Buy Now</button>
 
-
-<label class="wishlist-box">
-<input type="checkbox">
-<span class="wishlist">♡</span>
-</label>
+<a href="{% url 'remove_cart' item.product.id %}">
+<button class="remove-btn">Remove</button>
+</a>
 
 </div>
 
@@ -65,12 +102,25 @@
 
 {% endfor %}
 
-</form>
+
+
+<!-- BILL SUMMARY -->
+
+<div class="bill">
+
+<h2>Bill Summary</h2>
+
+<!-- <p>Subtotal : ₹{{ subtotal }}</p> -->
+
+<p>GST (18%) : ₹{{ gst }}</p>
+
+<h3>Total Amount : ₹{{ total }}</h3>
+
+<button class="order-btn">Place Order</button>
+
+</div>
 
 </div>
 
 </body>
-</html> 
-
-
-
+</html>
