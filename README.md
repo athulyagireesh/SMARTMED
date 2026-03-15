@@ -76,7 +76,7 @@ How to Run the Project
 
 Clone the repository
 
-git clone https://github.com/yourusername/smartmed.git
+git clone https://github.com/athulyagireesh/SMARTMED_ECOM_PROJECT.git
 
 Navigate to project folder
 
