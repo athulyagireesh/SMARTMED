@@ -128,7 +128,7 @@ def home(request):
             Q(description__icontains=query) |
             Q(category__icontains=query)
         )
-    else:
-        products = Product.objects.all()
+        return render(request, 'search_results.html', {'products': products, 'query': query})
 
+    products = Product.objects.all()
     return render(request, 'home.html', {'products': products})
