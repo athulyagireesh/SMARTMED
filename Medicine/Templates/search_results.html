@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
 {% load static %}
@@ -63,6 +63,297 @@ No medicines found for "{{ query }}"
 
 </div>
 </form>
+</div>
+
+</body>
+</html> -->
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+<meta charset="UTF-8">
+<title>Search Results</title>
+
+<link rel="stylesheet" href="{% static 'css/search_results.css' %}">
+
+</head>
+<body>
+
+<div class="main">
+
+<h2 class="title">Search Results for "{{ query }}"</h2>
+
+<form action="" method="POST">
+{% csrf_token %}
+
+{% for product in products %}
+
+<div class="product">
+
+<a href="{% url 'product_detail' product.id %}">
+<img src="{{ product.image.url }}" width="150">
+</a>
+
+<h3>{{ product.name }}</h3>
+
+<p>Price: ₹{{ product.price }}</p>
+
+<div class="actions">
+
+<a href="{% url 'add_to_cart' product.id %}" class="cart">Add to Cart</a>
+
+<label class="wishlist-box">
+
+<input type="checkbox">
+
+<span class="wishlist">♡</span>
+
+</label>
+
+</div>
+
+</div>
+
+{% empty %}
+
+<h3 class="no-result">No medicines found</h3>
+
+{% endfor %}
+
+</form>
+
+</div>
+
+</body>
+</html> -->
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+<meta charset="UTF-8">
+<title>Search Results</title>
+
+<link rel="stylesheet" href="{% static 'css/search_results.css' %}">
+
+</head>
+
+<body>
+
+<div class="main">
+
+
+
+<div class="first">
+
+<div class="logo">
+<img src="{% static 'images/logoo.png' %}" width="200">
+</div>
+
+<div class="search">
+<form method="GET" action="{% url 'home' %}">
+<input type="text" name="q" placeholder="Search medicines ......">
+<button type="submit">Search</button>
+</form>
+</div>
+
+<div class="right">
+
+<a href="{% url 'cart' %}">
+<button class="icon-btn">
+<img src="{% static 'images/crt.svg' %}" class="icon-img">
+</button>
+</a>
+
+<button class="icon-btn">
+<img src="{% static 'images/wishlist.png' %}" class="icon-img">
+</button>
+
+<div class="logout">
+<a href="{% url 'logout' %}">
+<button class="logout-btn" type="button">Logout</button>
+</a>
+</div>
+
+</div>
+
+</div>
+
+
+
+<div class="search-hero">
+
+<h1>Medicine Search</h1>
+
+<p>Showing medicines related to <span>"{{ query }}"</span></p>
+
+<a href="{% url 'home' %}">
+<button class="home-btn">Back to Home</button>
+</a>
+
+</div>
+
+
+<form action="" method="POST">
+{% csrf_token %}
+
+<div class="products">
+
+{% for product in products %}
+
+<div class="product">
+
+<a href="{% url 'product_detail' product.id %}">
+<img src="{{ product.image.url }}">
+</a>
+
+<h3>{{ product.name }}</h3>
+
+<p>₹{{ product.price }}</p>
+
+<div class="actions">
+
+<a href="{% url 'add_to_cart' product.id %}" class="cart">
+Add to Cart
+</a>
+
+<label class="wishlist-box">
+<input type="checkbox">
+<span class="wishlist">♡</span>
+</label>
+
+</div>
+
+</div>
+
+{% empty %}
+
+<div class="no-result">
+No medicines found for "<b>{{ query }}</b>"
+</div>
+
+{% endfor %}
+
+</div>
+
+</form>
+
+</div>
+
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+<meta charset="UTF-8">
+<title>Search Results</title>
+
+<link rel="stylesheet" href="{% static 'css/search_results.css' %}">
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<div class="navbar">
+
+<div class="logo">
+<img src="{% static 'images/logoo.png' %}" width="170">
+</div>
+
+
+<div class="search">
+
+<form method="GET" action="{% url 'home' %}">
+
+<input type="text" name="q" value="{{ query }}" placeholder="Search medicines...">
+
+<button type="submit">Search</button>
+
+</form>
+
+</div>
+
+
+<div class="nav-right">
+
+<!-- <a href="{% url 'cart' %}" class="icon-btn">
+<img src="{% static 'images/crt.svg' %}">
+</a>
+
+<a href="#" class="icon-btn">
+<img src="{% static 'images/wishlist.png' %}">
+</a> -->
+
+<a href="{% url 'home' %}">
+<button class="home-btn">Back to Home</button>
+</a>
+
+</div>
+
+</div>
+
+
+
+<!-- PRODUCTS -->
+
+<div class="main">
+
+<form method="POST">
+{% csrf_token %}
+
+<div class="products">
+
+{% for product in products %}
+
+<div class="product">
+
+<a href="{% url 'product_detail' product.id %}">
+<img src="{{ product.image.url }}">
+</a>
+
+<h3>{{ product.name }}</h3>
+
+<p>₹{{ product.price }}</p>
+
+<div class="actions">
+
+<a href="{% url 'add_to_cart' product.id %}" class="cart">
+Add to Cart
+</a>
+
+<label class="wishlist-box">
+
+<input type="checkbox">
+
+<span class="wishlist">♡</span>
+
+</label>
+
+</div>
+
+</div>
+
+{% empty %}
+
+<h3 class="no-result">No medicines found</h3>
+
+{% endfor %}
+
+</div>
+
+</form>
+
 </div>
 
 </body>
