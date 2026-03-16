@@ -52,6 +52,10 @@ urlpatterns = [
     path('product/<int:id>/', views.product_detail, name='product_detail'),
     path('add-to-cart/<int:id>/', views.add_to_cart, name='add_to_cart'),
     path('cart/', views.cart, name='cart'),
+
+
+    path('search/', views.search_results, name='search_results'),
+
     path('update-cart/<int:id>/<str:action>/',views.update_cart,name='update_cart'),
     path('remove-cart/<int:id>/',views.remove_cart,name='remove_cart'),
     path('add-wishlist/<int:id>/', views.add_to_wishlist, name='add_wishlist'),
@@ -59,5 +63,8 @@ urlpatterns = [
     path('remove-wishlist/<int:id>/', views.remove_wishlist, name='remove_wishlist'),
 
 
+    path('redirect-search/', views.redirect_search, name='redirect_search'),
+
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+
 

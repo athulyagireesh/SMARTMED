@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from .models import Product 
 from .models import Wishlist
+from django.urls import reverse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -175,16 +176,6 @@ def home(request):
 
 
 
-
-
-
-
-
-
-
-
-
-
 @login_required
 def add_to_wishlist(request, id):
     product = Product.objects.get(id=id)
@@ -252,7 +243,7 @@ def add_to_wishlist(request, id):
     item = Wishlist.objects.filter(user=request.user, product=product)
 
     if item.exists():
-        item.delete()   # remove if already in wishlist
+        item.delete()   
     else:
         Wishlist.objects.create(user=request.user, product=product)
 
@@ -277,6 +268,9 @@ def tablet_page(request):
         'wishlist_products': wishlist_products,
         'wishlist_count': wishlist_count
     })
+
+
+
 
 
 
@@ -382,19 +376,19 @@ def add_to_wishlist(request, id):
 
 
 
-@login_required
-def add_to_cart(request,id):
+# @login_required
+# def add_to_cart(request,id):
 
-    cart = request.session.get('cart',{})
+#     cart = request.session.get('cart',{})
 
-    if str(id) in cart:
-        cart[str(id)] += 1
-    else:
-        cart[str(id)] = 1
+#     if str(id) in cart:
+#         cart[str(id)] += 1
+#     else:
+#         cart[str(id)] = 1
 
-    request.session['cart'] = cart
+#     request.session['cart'] = cart
 
-    return redirect(request.META.get('HTTP_REFERER'))
+#     return redirect(request.META.get('HTTP_REFERER'))
 
 
 
@@ -402,7 +396,6 @@ def add_to_cart(request, id):
 
     cart = request.session.get('cart', {})
 
-    # convert to dictionary if not exists
     if not isinstance(cart, dict):
         cart = {}
 
@@ -413,7 +406,8 @@ def add_to_cart(request, id):
 
     request.session['cart'] = cart
 
-    return redirect('home')
+    # return redirect('home')
+    return redirect(request.META.get('HTTP_REFERER'))
 
 
 
@@ -492,7 +486,6 @@ def home(request):
     wishlist = Wishlist.objects.filter(user=request.user)
     wishlist_count = wishlist.count()
 
-    # CART SESSION
     cart = request.session.get('cart', {})
     cart_count = sum(cart.values())
 
@@ -539,15 +532,14 @@ def home(request):
     else:
         products = Product.objects.all()
 
-    # wishlist items
     wishlist_items = Wishlist.objects.filter(user=request.user)
 
-    # only product ids
+    
     wishlist_products = wishlist_items.values_list('product_id', flat=True)
 
     wishlist_count = wishlist_items.count()
 
-    # cart session
+
     cart = request.session.get('cart', {})
     cart_count = sum(cart.values())
 
@@ -597,7 +589,7 @@ def cart(request):
 
     products = Product.objects.filter(id__in=product_ids)
 
-    # SEARCH INSIDE CART PRODUCTS
+
     if query:
         products = products.filter(
             Q(name__icontains=query) |
@@ -675,4 +667,98 @@ def remove_cart(request,id):
     request.session['cart'] = cart
 
     return redirect('cart')
+
+
+
+
+
+
+
+@login_required
+def search_results(request):
+    query = request.GET.get('q', '')
+
+    products = Product.objects.filter(
+        Q(name__icontains=query) |
+        Q(description__icontains=query) |
+        Q(category__icontains=query)
+    )
+
+    wishlist_items = Wishlist.objects.filter(user=request.user)
+    wishlist_products = wishlist_items.values_list('product_id', flat=True)
+    wishlist_count = wishlist_items.count()
+
+
+    cart = request.session.get('cart', {})
+    cart_count = sum(cart.values())
+
+    return render(request, 'search_results.html', {
+        'products': products,
+        'query': query,
+        'wishlist_products': wishlist_products,
+        'wishlist_count': wishlist_count,
+        'cart_count': cart_count
+    })
+
+
+
+
+
+@login_required
+def home(request):
+    products = Product.objects.all()
+
+    wishlist_items = Wishlist.objects.filter(user=request.user)
+    wishlist_products = wishlist_items.values_list('product_id', flat=True)
+    wishlist_count = wishlist_items.count()
+
+    cart = request.session.get('cart', {})
+    if not isinstance(cart, dict):
+            cart = {}
+    cart_count = sum(cart.values())
+
+    return render(request, 'home.html', {
+        'products': products,
+        'wishlist_products': wishlist_products,
+        'wishlist_count': wishlist_count,
+        'cart_count': cart_count
+    })
+
+
+
+
+
+@login_required
+def add_to_wishlist(request, id):
+    product = get_object_or_404(Product, id=id)
+    item = Wishlist.objects.filter(user=request.user, product=product)
+    if item.exists():
+        item.delete()
+    else:
+        Wishlist.objects.create(user=request.user, product=product)
+    
+    # Stay on the same page
+    return redirect(request.META.get('HTTP_REFERER'))
+
+
+
+
+@login_required
+def redirect_search(request):
+    query = request.GET.get('q', '').strip()
+    category_map = {
+        'tablet': 'tablet_page',
+        'syrup': 'syrup_page',
+        'injection': 'injection_page',
+        'first aid': 'firstaid_page',
+        'supplement': 'supplement_page'
+    }
+
+    for cat_name, url_name in category_map.items():
+        if cat_name in query.lower():
+            return redirect(f"{reverse(url_name)}?q={query}")
+
+    return redirect(f"{reverse('search_results')}?q={query}")
+
+
 

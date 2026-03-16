@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartMed - {{ category }}</title>
+    <link rel="stylesheet" href="{% static 'css/category.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">
+            <img src="{% static 'images/logoo.png' %}" width="170">
+        </div>
+
+        <div class="search">
+            <!-- Search only within this category -->
+            <form method="GET" action="{% url 'category_page' category %}">
+                <input type="text" name="q" placeholder="Search {{ category }}..." value="{{ query|default:'' }}">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
+        <div class="nav-right">
+            <a href="{% url 'wishlist_page' %}" class="wishlist-icon">
+                <img src="{% static 'images/wishlist.png' %}" width="28">
+                <span class="wishlist-count">{{ wishlist_count }}</span>
+            </a>
+            <a href="{% url 'cart' %}" class="cart-icon">
+                <img src="{% static 'images/crt.svg' %}" width="28">
+                <span class="cart-count">{{ cart_count }}</span>
+            </a>
+            <a href="{% url 'home' %}">
+                <button class="home-btn">Home</button>
+            </a>
+            <a href="{% url 'logout' %}">
+                <button class="logout-btn">Logout</button>
+            </a>
+        </div>
+    </div>
+
+    <!-- Products Section -->
+    <h2 class="category-title">{{ category }}</h2>
+
+    <div class="products">
+        {% for product in products %}
+        <div class="product-card">
+            <a href="{% url 'product_detail' product.id %}">
+                <img src="{{ product.image.url }}">
+            </a>
+            <h3>{{ product.name }}</h3>
+            <p>₹{{ product.price }}</p>
+
+            <div class="product-actions">
+                <a href="{% url 'add_to_cart' product.id %}" class="cart-btn">Add to Cart</a>
+                <form method="POST" action="{% url 'add_wishlist' product.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="wishlist-btn">
+                        <span class="{% if product.id in wishlist_products %}active{% endif %}">♡</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% empty %}
+        <h3>No products found in this category.</h3>
+        {% endfor %}
+    </div>
+</body>
+</html>

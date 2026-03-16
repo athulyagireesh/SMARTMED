@@ -22,13 +22,14 @@
 
 <div class="search">
 
-<form method="GET" action="{% url 'home' %}">
 
-<input type="text" name="q" value="{{ query }}" placeholder="Search medicines...">
 
-<button type="submit">Search</button>
-
+<form method="GET" action="{% url 'search_results' %}">
+    <input type="text" name="q" placeholder="Search medicines...">
+    <button type="submit">Search</button>
 </form>
+
+
 
 </div>
 
