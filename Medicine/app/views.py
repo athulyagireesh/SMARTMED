@@ -676,4 +676,3 @@ def remove_cart(request,id):
 
     return redirect('cart')
 
-
