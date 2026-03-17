@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
 
@@ -15,7 +15,7 @@
 
 <body>
 
-<!-- NAVBAR -->
+
 <div class="navbar">
 
     <div class="nav-title">
@@ -38,12 +38,10 @@
 </div>
 
 
-<!-- MAIN -->
 <div class="main">
 
     <div class="cart-wrapper">
 
-        <!-- LEFT SIDE -->
         <div class="cart-left">
 
             {% for item in cart_items %}
@@ -93,7 +91,6 @@
         </div>
 
 
-        <!-- RIGHT SIDE -->
         <div class="cart-right">
 
             <div class="bill">
@@ -111,6 +108,145 @@
         </div>
 
     </div>
+
+</div>
+
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+{% load static %}
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cart</title>
+
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <h2>Cart</h2>
+
+    <div class="search">
+        <form method="GET" action="{% url 'cart' %}">
+            <input type="text" name="q" placeholder="Search medicines...">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <a href="{% url 'home' %}">
+        <button class="home-btn">Back to Home</button>
+    </a>
+</div>
+
+
+<div class="main">
+
+<div class="cart-layout">
+
+<!-- LEFT SIDE -->
+<div class="cart-items">
+
+{% if cart_items %}
+
+{% for item in cart_items %}
+
+<div class="product-card">
+
+    <img src="{{ item.product.image.url }}" class="product-img">
+
+    <div class="product-info">
+
+        <h3>{{ item.product.name }}</h3>
+
+        <p class="price">₹{{ item.product.price }}</p>
+
+        <!-- ✅ SUBTOTAL -->
+        <p class="subtotal">
+            Subtotal: ₹{{ item.total_price }}
+        </p>
+
+        <div class="quantity">
+
+            <a href="{% url 'update_cart' item.product.id 'minus' %}">
+                <button>-</button>
+            </a>
+
+            <input type="text" value="{{ item.quantity }}" readonly>
+
+            <a href="{% url 'update_cart' item.product.id 'plus' %}">
+                <button>+</button>
+            </a>
+
+        </div>
+
+        <div class="actions">
+
+            <button class="buy">Buy Now</button>
+
+            <a href="{% url 'remove_cart' item.product.id %}">
+                <button class="remove">Remove</button>
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endfor %}
+
+{% else %}
+
+<!-- ✅ EMPTY CART UI -->
+
+<div class="empty-cart">
+
+    <img src="{% static 'images/empty-cart.png' %}" alt="Empty Cart">
+
+    <h2>Your Cart is Empty 😔</h2>
+
+    <p>Looks like you haven’t added anything yet</p>
+
+    <a href="{% url 'home' %}">
+        <button class="shop-btn">Shop Now</button>
+    </a>
+
+</div>
+
+{% endif %}
+
+</div>
+
+
+<!-- RIGHT SIDE -->
+{% if cart_items %}
+
+<div class="summary">
+
+    <h2>Order Summary</h2>
+
+    <p>GST (18%) : ₹{{ gst }}</p>
+
+    <h3>Total Amount : ₹{{ total }}</h3>
+
+    <button class="order-btn">Place Order</button>
+
+</div>
+
+{% endif %}
+
+</div>
 
 </div>
 
