@@ -1,11 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 {% load static %}
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Wishlist</title>
+
 <link rel="stylesheet" href="{% static 'css/wishlist.css' %}">
+
 </head>
 
 <body>
+
+<!-- NAVBAR -->
 
 <div class="navbar">
 
@@ -21,7 +31,7 @@
 <div class="nav-right">
 
 <a href="{% url 'wishlist_page' %}" class="wishlist-icon">
-<img src="{% static 'images/wishlist.png' %}" width="28">
+<img src="{% static 'images/wishlist.png' %}">
 <span class="wishlist-count">{{ items|length }}</span>
 </a>
 
@@ -34,23 +44,32 @@
 </div>
 
 
+<!-- MAIN -->
 
 <div class="main">
 
+{% if items %}
+
+<div class="wishlist-container">
+
 {% for item in items %}
 
-<div class="product">
+<div class="wishlist-card">
 
-<img src="{{ item.product.image.url }}">
+<img src="{{ item.product.image.url }}" class="product-img">
+
+<div class="product-details">
 
 <h3>{{ item.product.name }}</h3>
 
-<p>₹{{ item.product.price }}</p>
+<p class="price">₹{{ item.product.price }}</p>
+
+<p class="desc">Best quality medicine for your needs</p>
 
 <div class="actions">
 
-<a href="{% url 'add_to_cart' item.product.id %}" class="cart">
-Add to Cart
+<a href="{% url 'add_to_cart' item.product.id %}" class="cart-btn">
+Move to Cart
 </a>
 
 <a href="{% url 'remove_wishlist' item.id %}">
@@ -61,7 +80,31 @@ Add to Cart
 
 </div>
 
+</div>
+
 {% endfor %}
+
+</div>
+
+{% else %}
+
+<!-- EMPTY WISHLIST -->
+
+<div class="empty-wishlist">
+
+<img src="{% static 'images/empty-wishlist.png' %}">
+
+<h2>Your Wishlist is Empty 💔</h2>
+
+<p>Add items you like to your wishlist</p>
+
+<a href="{% url 'home' %}">
+<button class="shop-btn">Shop Now</button>
+</a>
+
+</div>
+
+{% endif %}
 
 </div>
 
