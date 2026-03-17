@@ -16,109 +16,101 @@
 <body>
 
 <!-- NAVBAR -->
-
 <div class="navbar">
 
-<div class="nav-title">
-<h2>Cart</h2>
-</div>
+    <div class="nav-title">
+        <h2>Cart</h2>
+    </div>
 
-<div class="search">
+    <div class="search">
+        <form method="GET" action="{% url 'cart' %}">
+            <input type="text" name="q" placeholder="Search medicines...">
+            <button type="submit">Search</button>
+        </form>
+    </div>
 
-<!-- <form method="GET" action="{% url 'cart' %}">
-<input type="text" name="q" placeholder="Search medicines...">
-<button type="submit">Search</button> -->
-<form method="GET" action="{% url 'cart' %}">
-<input type="text" name="q" placeholder="Search medicines..." >
-<button type="submit">Search</button>
-</form>
-
-</div>
-
-<div class="nav-right">
-
-<a href="{% url 'home' %}">
-<button class="home-btn">Back to Home</button>
-</a>
-
-</div>
+    <div class="nav-right">
+        <a href="{% url 'home' %}">
+            <button class="home-btn">Back to Home</button>
+        </a>
+    </div>
 
 </div>
 
 
-
+<!-- MAIN -->
 <div class="main">
 
-<!-- <h1>Your Cart</h1> -->
+    <div class="cart-wrapper">
 
-{% for item in cart_items %}
+        <!-- LEFT SIDE -->
+        <div class="cart-left">
 
-<div class="product-container">
+            {% for item in cart_items %}
 
-<div class="product-image">
-<img src="{{ item.product.image.url }}">
-</div>
+            <div class="product-container">
 
-<div class="product-details">
+                <div class="product-image">
+                    <img src="{{ item.product.image.url }}">
+                </div>
 
-<h2>{{ item.product.name }}</h2>
+                <div class="product-details">
 
-<h3 class="price">₹{{ item.product.price }}</h3>
+                    <h3>{{ item.product.name }}</h3>
 
-<p class="desc">{{ item.product.description }}</p>
+                    <p class="price">₹{{ item.product.price }}</p>
 
+                    <div class="quantity">
 
-<div class="quantity">
+                        <a href="{% url 'update_cart' item.product.id 'minus' %}">
+                            <button class="qty-btn">-</button>
+                        </a>
 
-<a href="{% url 'update_cart' item.product.id 'minus' %}">
-<button class="qty-btn">-</button>
-</a>
+                        <input type="text" value="{{ item.quantity }}" readonly>
 
-<input type="text" value="{{ item.quantity }}" readonly>
+                        <a href="{% url 'update_cart' item.product.id 'plus' %}">
+                            <button class="qty-btn">+</button>
+                        </a>
 
-<a href="{% url 'update_cart' item.product.id 'plus' %}">
-<button class="qty-btn">+</button>
-</a>
+                    </div>
 
-</div>
+                    <div class="buttons">
 
+                        <button class="buy-btn">Buy Now</button>
 
-<!-- <h3>Total : ₹{{ item.total_price }}</h3> -->
-<!-- <h3 class="item-total">Total : ₹{{ item.total_price }}</h3> -->
+                        <a href="{% url 'remove_cart' item.product.id %}">
+                            <button class="remove-btn">Remove</button>
+                        </a>
 
-<div class="buttons">
+                    </div>
 
-<button class="buy-btn">Buy Now</button>
+                </div>
 
-<a href="{% url 'remove_cart' item.product.id %}">
-<button class="remove-btn">Remove</button>
-</a>
+            </div>
 
-</div>
+            {% endfor %}
 
-</div>
-
-</div>
-
-{% endfor %}
+        </div>
 
 
+        <!-- RIGHT SIDE -->
+        <div class="cart-right">
 
-<!-- BILL SUMMARY -->
+            <div class="bill">
 
-<div class="bill">
+                <h2>Order Summary</h2>
 
-<h2>Bill Summary</h2>
+                <p>GST (18%) : ₹{{ gst }}</p>
 
-<!-- <p>Subtotal : ₹{{ subtotal }}</p> -->
+                <h3>Total Amount : ₹{{ total }}</h3>
 
-<p>GST (18%) : ₹{{ gst }}</p>
+                <button class="order-btn">Place Order</button>
 
-<h3>Total Amount : ₹{{ total }}</h3>
+            </div>
 
-<button class="order-btn">Place Order</button>
+        </div>
 
-</div>
+    </div>
 
 </div>
 
