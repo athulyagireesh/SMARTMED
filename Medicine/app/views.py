@@ -762,3 +762,39 @@ def redirect_search(request):
 
 
 
+
+
+def checkout(request):
+
+    cart = request.session.get('cart', {})
+    cart_items = []
+    total = 0
+
+    for id, qty in cart.items():
+        product = Product.objects.get(id=id)
+
+        subtotal = product.price * qty
+        total += subtotal
+
+        cart_items.append({
+            'product': product,
+            'quantity': qty,
+            'subtotal': subtotal
+        })
+
+    gst = total * 0.18
+    grand_total = total + gst
+
+    # ✅ PLACE ORDER
+    if request.method == "POST":
+        request.session['cart'] = {}   # clear cart
+        return render(request, 'order_success.html', {
+            'total': grand_total
+        })
+
+    return render(request, 'checkout.html', {
+        'cart_items': cart_items,
+        'total': total,
+        'gst': gst,
+        'grand_total': grand_total
+    })

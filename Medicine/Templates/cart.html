@@ -122,7 +122,10 @@
 
     <h3>Total Amount : ₹{{ total }}</h3>
 
-    <button class="order-btn">Buy Now</button>
+    <!-- <button class="order-btn">Buy Now</button> -->
+<a href="{% url 'checkout' %}">
+    <button class="buy">Buy Now</button>
+</a>
 
 </div>
 

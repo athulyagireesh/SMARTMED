@@ -65,6 +65,9 @@ urlpatterns = [
 
     path('redirect-search/', views.redirect_search, name='redirect_search'),
 
+
+    path('checkout/', views.checkout, name='checkout'),
+
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 
 
