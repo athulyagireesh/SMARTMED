@@ -8,39 +8,68 @@
 
 <body>
 
+<!-- NAVBAR -->
 <div class="navbar">
-    <h2>Checkout</h2>
+
+    <div class="logo">
+        <img src="{% static 'images/logoo.png' %}" width="140">
+    </div>
+
+    <div class="search">
+        <form method="GET" action="{% url 'redirect_search' %}">
+            <input type="text" name="q" placeholder="Search medicines...">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <a href="{% url 'home' %}">
+        <button class="home-btn">Back to Home</button>
+    </a>
+
 </div>
 
+<h2 class="heading">Checkout Details</h2>
+
 <div class="main">
-
-<div class="layout">
-
-<!-- LEFT (ADDRESS + ITEMS) -->
-<div class="left">
-
-<h3>Delivery Address</h3>
 
 <form method="POST">
 {% csrf_token %}
 
+<div class="layout">
+
+<!-- LEFT SIDE -->
+<div class="left">
+
+<!-- ADDRESS -->
+<h3>Delivery Address</h3>
+
 <input type="text" placeholder="Full Name" required>
 <input type="text" placeholder="Phone Number" required>
-<textarea placeholder="Full Address" required></textarea>
+<textarea placeholder="Address" rows="3" required></textarea>
 
-<h3>Order Items</h3>
+<!-- ✅ PAYMENT JUST BELOW ADDRESS -->
+<h3>Payment Method</h3>
+
+<div class="payment">
+<label><input type="radio" name="payment" checked> Cash on Delivery</label>
+<label><input type="radio" name="payment"> UPI</label>
+<label><input type="radio" name="payment"> Card</label>
+</div>
+
+<!-- PRODUCTS GRID -->
+<h3>Your Items</h3>
+
+<div class="products-grid">
 
 {% for item in cart_items %}
 
-<div class="item">
+<div class="product-card">
 
-<img src="{{ item.product.image.url }}">
+    <img src="{{ item.product.image.url }}">
 
-<div>
-<p>{{ item.product.name }}</p>
-<p>Qty: {{ item.quantity }}</p>
-<p>₹{{ item.subtotal }}</p>
-</div>
+    <p class="name">{{ item.product.name }}</p>
+    <p>Qty: {{ item.quantity }}</p>
+    <p class="price">₹{{ item.subtotal }}</p>
 
 </div>
 
@@ -48,8 +77,9 @@
 
 </div>
 
+</div>
 
-<!-- RIGHT (SUMMARY) -->
+<!-- RIGHT SIDE -->
 <div class="right">
 
 <h3>Price Details</h3>
@@ -57,17 +87,17 @@
 <p>Total: ₹{{ total }}</p>
 <p>GST (18%): ₹{{ gst }}</p>
 
-<h2>Grand Total: ₹{{ grand_total }}</h2>
+<h2>₹{{ grand_total }}</h2>
 
 <button type="submit" class="order-btn">
 Place Order
 </button>
 
+</div>
+
+</div>
+
 </form>
-
-</div>
-
-</div>
 
 </div>
 
