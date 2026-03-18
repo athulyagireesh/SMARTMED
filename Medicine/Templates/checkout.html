@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 {% load static %}
-<title>Checkout</title>
+<meta charset="UTF-8">
+<title>Checkout - SmartMed</title>
 <link rel="stylesheet" href="{% static 'css/checkout.css' %}">
 </head>
 
@@ -12,7 +13,7 @@
 <div class="navbar">
 
     <div class="logo">
-        <img src="{% static 'images/logoo.png' %}" width="140">
+        <img src="{% static 'images/logoo.png' %}">
     </div>
 
     <div class="search">
@@ -22,76 +23,100 @@
         </form>
     </div>
 
-    <a href="{% url 'home' %}">
-        <button class="home-btn">Back to Home</button>
-    </a>
+    <div class="right">
+
+        <a href="{% url 'cart' %}" class="cart-icon">
+            <img src="{% static 'images/crt.svg' %}">
+            <span class="count">{{ cart_count }}</span>
+        </a>
+
+        <a href="{% url 'wishlist_page' %}" class="cart-icon">
+            <img src="{% static 'images/wishlist.png' %}">
+            <span class="count">{{ wishlist_count }}</span>
+        </a>
+
+    </div>
 
 </div>
 
-<h2 class="heading">Checkout Details</h2>
-
-<div class="main">
+<h2 class="title">Checkout</h2>
 
 <form method="POST">
 {% csrf_token %}
 
-<div class="layout">
+<div class="container">
 
 <!-- LEFT SIDE -->
 <div class="left">
 
-<!-- ADDRESS -->
 <h3>Delivery Address</h3>
 
 <input type="text" placeholder="Full Name" required>
 <input type="text" placeholder="Phone Number" required>
-<textarea placeholder="Address" rows="3" required></textarea>
+<textarea placeholder="Full Address" required></textarea>
 
-<!-- ✅ PAYMENT JUST BELOW ADDRESS -->
+
 <h3>Payment Method</h3>
 
-<div class="payment">
-<label><input type="radio" name="payment" checked> Cash on Delivery</label>
-<label><input type="radio" name="payment"> UPI</label>
-<label><input type="radio" name="payment"> Card</label>
+<div class="payment-box">
+
+<label class="pay-option active">
+<input type="radio" name="payment" checked>
+Cash on Delivery
+</label>
+
+<label class="pay-option">
+<input type="radio" name="payment">
+UPI
+<div class="pay-details">
+<input type="text" placeholder="Enter UPI ID">
+</div>
+</label>
+
+<label class="pay-option">
+<input type="radio" name="payment">
+Card Payment
+<div class="pay-details">
+<input type="text" placeholder="Card Number">
+<div class="row">
+<input type="text" placeholder="MM/YY">
+<input type="text" placeholder="CVV">
+</div>
+</div>
+</label>
+
 </div>
 
-<!-- PRODUCTS GRID -->
+
 <h3>Your Items</h3>
 
-<div class="products-grid">
+<div class="products">
 
 {% for item in cart_items %}
-
-<div class="product-card">
-
-    <img src="{{ item.product.image.url }}">
-
-    <p class="name">{{ item.product.name }}</p>
-    <p>Qty: {{ item.quantity }}</p>
-    <p class="price">₹{{ item.subtotal }}</p>
-
+<div class="card">
+<img src="{{ item.product.image.url }}">
+<p>{{ item.product.name }}</p>
+<p>Qty: {{ item.quantity }}</p>
+<p class="price">₹{{ item.subtotal }}</p>
 </div>
-
 {% endfor %}
 
 </div>
 
 </div>
 
+
 <!-- RIGHT SIDE -->
-<div class="right">
+<div class="right-box">
 
 <h3>Price Details</h3>
 
 <p>Total: ₹{{ total }}</p>
-<p>GST (18%): ₹{{ gst }}</p>
+<p>GST: ₹{{ gst }}</p>
 
 <h2>₹{{ grand_total }}</h2>
 
-<button type="submit" class="order-btn">
-Place Order
-</button>
+<button type="submit">Place Order</button>
 
 </div>
 
@@ -99,7 +124,50 @@ Place Order
 
 </form>
 
-</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+
+    <div class="footer-top">
+
+        <div class="footer-column">
+            <h4>ABOUT</h4>
+            <ul>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Careers</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h4>HELP</h4>
+            <ul>
+                <li><a href="#">Payments</a></li>
+                <li><a href="#">Shipping</a></li>
+                <li><a href="#">FAQ</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h4>POLICY</h4>
+            <ul>
+                <li><a href="#">Privacy</a></li>
+                <li><a href="#">Terms</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h4>SmartMed</h4>
+            <p>Kochi, Kerala</p>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <span>© 2026 SmartMed</span>
+    </div>
+
+</footer>
 
 </body>
 </html>
