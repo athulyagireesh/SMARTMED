@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from .models import Product 
 from .models import Wishlist
+from .models import Cart
 from django.urls import reverse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
@@ -99,29 +100,6 @@ def product_detail(request, id):
 
 
 
-def add_to_cart(request, id):
-    product = Product.objects.get(id=id)
-
-    cart = request.session.get('cart', [])
-
-    cart.append(product.id)
-
-    request.session['cart'] = cart
-
-    return redirect('cart')
-
-
-
-
-
-def cart(request):
-    cart = request.session.get('cart', [])
-
-    products = Product.objects.filter(id__in=cart)
-
-    return render(request, 'cart.html', {'products': products})
-
-
 @login_required
 def home(request):
 
@@ -187,6 +165,9 @@ def add_to_wishlist(request, id):
 
     return redirect('home')
 
+
+
+
 @login_required
 def add_to_wishlist(request, id):
 
@@ -198,6 +179,8 @@ def add_to_wishlist(request, id):
     )
 
     return redirect(request.META.get('HTTP_REFERER'))
+
+
 
 
 @login_required
@@ -376,37 +359,32 @@ def add_to_wishlist(request, id):
 
 
 
-# @login_required
-# def add_to_cart(request,id):
-
-#     cart = request.session.get('cart',{})
-
-#     if str(id) in cart:
-#         cart[str(id)] += 1
-#     else:
-#         cart[str(id)] = 1
-
-#     request.session['cart'] = cart
-
-#     return redirect(request.META.get('HTTP_REFERER'))
 
 
 
+
+
+
+
+
+
+
+from .models import Cart
+
+@login_required
 def add_to_cart(request, id):
 
-    cart = request.session.get('cart', {})
+    product = get_object_or_404(Product, id=id)
 
-    if not isinstance(cart, dict):
-        cart = {}
+    item, created = Cart.objects.get_or_create(
+        user=request.user,
+        product=product
+    )
 
-    if str(id) in cart:
-        cart[str(id)] += 1
-    else:
-        cart[str(id)] = 1
+    if not created:
+        item.quantity += 1
+        item.save()
 
-    request.session['cart'] = cart
-
-    # return redirect('home')
     return redirect(request.META.get('HTTP_REFERER'))
 
 
@@ -417,40 +395,32 @@ def add_to_cart(request, id):
 @login_required
 def cart(request):
 
-    cart = request.session.get('cart',{})
-
-    product_ids = cart.keys()
-
-    products = Product.objects.filter(id__in=product_ids)
+    items = Cart.objects.filter(user=request.user)
 
     cart_items = []
-    subtotal = 0
+    total = 0
 
-    for product in products:
-
-        quantity = cart[str(product.id)]
-        total_price = product.price * quantity
-
-        subtotal += total_price
+    for item in items:
+        subtotal = item.product.price * item.quantity
+        total += subtotal
 
         cart_items.append({
-            'product':product,
-            'quantity':quantity,
-            'total_price':total_price
+            'product': item.product,
+            'quantity': item.quantity,
+            'total_price': subtotal
         })
 
-    gst = subtotal * 0.18
-    total = subtotal + gst
+    gst = total * 0.18
+    final_total = total + gst
 
-    cart_count = sum(cart.values())
-
-    return render(request,'cart.html',{
-        'cart_items':cart_items,
-        'subtotal':subtotal,
-        'gst':gst,
-        'total':total,
-        'cart_count':cart_count
+    return render(request, 'cart.html', {
+        'cart_items': cart_items,
+        'total': total,
+        'gst': gst,
+        'final_total': final_total
     })
+
+
 
 
 
@@ -479,78 +449,6 @@ def home(request):
 
 
 
-def home(request):
-
-    products = Product.objects.all()
-
-    wishlist = Wishlist.objects.filter(user=request.user)
-    wishlist_count = wishlist.count()
-
-    cart = request.session.get('cart', {})
-    cart_count = sum(cart.values())
-
-    return render(request,'home.html',{
-        'products':products,
-        'wishlist_count':wishlist_count,
-        'cart_count':cart_count
-    })
-
-
-def home(request):
-
-    query = request.GET.get('q')
-
-    if query:
-        products = Product.objects.filter(name__icontains=query)
-    else:
-        products = Product.objects.all()
-
-    wishlist = Wishlist.objects.filter(user=request.user)
-    wishlist_count = wishlist.count()
-
-    cart = request.session.get('cart', {})
-    cart_count = sum(cart.values())
-
-    return render(request,'home.html',{
-        'products':products,
-        'wishlist_count':wishlist_count,
-        'cart_count':cart_count
-    })
-
-
-
-
-
-
-@login_required
-def home(request):
-
-    query = request.GET.get('q')
-
-    if query:
-        products = Product.objects.filter(name__icontains=query)
-    else:
-        products = Product.objects.all()
-
-    wishlist_items = Wishlist.objects.filter(user=request.user)
-
-    
-    wishlist_products = wishlist_items.values_list('product_id', flat=True)
-
-    wishlist_count = wishlist_items.count()
-
-
-    cart = request.session.get('cart', {})
-    cart_count = sum(cart.values())
-
-    return render(request,'home.html',{
-        'products':products,
-        'wishlist_products':wishlist_products,
-        'wishlist_count':wishlist_count,
-        'cart_count':cart_count
-    })
-
-
 
 
 
@@ -575,100 +473,36 @@ def add_to_wishlist(request, id):
 
 
 
-@login_required
-def cart(request):
-
-    query = request.GET.get('q')
-
-    cart = request.session.get('cart', {})
-
-    if not isinstance(cart, dict):
-        cart = {}
-
-    product_ids = cart.keys()
-
-    products = Product.objects.filter(id__in=product_ids)
-
-
-    if query:
-        products = products.filter(
-            Q(name__icontains=query) |
-            Q(description__icontains=query) |
-            Q(category__icontains=query)
-        )
-
-    cart_items = []
-    total = 0
-
-    for product in products:
-
-        quantity = cart.get(str(product.id), 1)
-
-        subtotal = product.price * quantity
-
-        total += subtotal
-
-        cart_items.append({
-            'product': product,
-            'quantity': quantity,
-            'subtotal': subtotal
-        })
-
-    gst = total * 0.05
-    final_total = total + gst
-
-    context = {
-        'cart_items': cart_items,
-        'total': total,
-        'gst': gst,
-        'final_total': final_total,
-        'query': query
-    }
-
-    return render(request, 'cart.html', context)
-
-
-
-
-
 
 
 @login_required
-def update_cart(request,id,action):
+def update_cart(request, id, action):
 
-    cart = request.session.get('cart',{})
+    item = get_object_or_404(Cart, user=request.user, product_id=id)
 
-    if str(id) in cart:
+    if action == "plus":
+        item.quantity += 1
 
-        if action == "plus":
-            cart[str(id)] += 1
+    elif action == "minus":
+        item.quantity -= 1
+        if item.quantity <= 0:
+            item.delete()
+            return redirect('cart')
 
-        elif action == "minus":
-            cart[str(id)] -= 1
-
-            if cart[str(id)] <= 0:
-                del cart[str(id)]
-
-    request.session['cart'] = cart
-
+    item.save()
     return redirect('cart')
 
 
 
 
+
 @login_required
-def remove_cart(request,id):
+def remove_cart(request, id):
 
-    cart = request.session.get('cart',{})
-
-    if str(id) in cart:
-        del cart[str(id)]
-
-    request.session['cart'] = cart
+    item = get_object_or_404(Cart, user=request.user, product_id=id)
+    item.delete()
 
     return redirect('cart')
-
-
 
 
 
@@ -688,9 +522,9 @@ def search_results(request):
     wishlist_products = wishlist_items.values_list('product_id', flat=True)
     wishlist_count = wishlist_items.count()
 
-
-    cart = request.session.get('cart', {})
-    cart_count = sum(cart.values())
+    # ✅ FIXED: use database cart
+    cart_items = Cart.objects.filter(user=request.user)
+    cart_count = sum(item.quantity for item in cart_items)
 
     return render(request, 'search_results.html', {
         'products': products,
@@ -704,6 +538,10 @@ def search_results(request):
 
 
 
+
+
+
+
 @login_required
 def home(request):
     products = Product.objects.all()
@@ -712,10 +550,13 @@ def home(request):
     wishlist_products = wishlist_items.values_list('product_id', flat=True)
     wishlist_count = wishlist_items.count()
 
-    cart = request.session.get('cart', {})
-    if not isinstance(cart, dict):
-            cart = {}
-    cart_count = sum(cart.values())
+    # cart = request.session.get('cart', {})
+    # if not isinstance(cart, dict):
+    #         cart = {}
+    # cart_count = sum(cart.values())
+
+
+    cart_count = Cart.objects.filter(user=request.user).count()
 
     return render(request, 'home.html', {
         'products': products,
@@ -764,30 +605,30 @@ def redirect_search(request):
 
 
 
+
+@login_required
 def checkout(request):
 
-    cart = request.session.get('cart', {})
-    cart_items = []
+    items = Cart.objects.filter(user=request.user)
+
     total = 0
+    cart_items = []
 
-    for id, qty in cart.items():
-        product = Product.objects.get(id=id)
-
-        subtotal = product.price * qty
+    for item in items:
+        subtotal = item.product.price * item.quantity
         total += subtotal
 
         cart_items.append({
-            'product': product,
-            'quantity': qty,
+            'product': item.product,
+            'quantity': item.quantity,
             'subtotal': subtotal
         })
 
     gst = total * 0.18
     grand_total = total + gst
 
-    # ✅ PLACE ORDER
     if request.method == "POST":
-        request.session['cart'] = {}   # clear cart
+        items.delete()   # clear DB cart
         return render(request, 'order_success.html', {
             'total': grand_total
         })

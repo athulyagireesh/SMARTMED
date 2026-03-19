@@ -6,39 +6,21 @@
 <title>SmartMed</title>
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
-
 <body>
 
 <div class="main">
-
-
 <div class="first">
-
 <div class="logo">
 <img src="{% static 'images/logoo.png' %}" width="200">
 </div>
-
-
 <div class="search">
-
-
-
-
-
-
-
-
 <form method="GET" action="{% url 'redirect_search' %}">
     <input type="text" name="q" placeholder="Search medicines...">
     <button type="submit">Search</button>
 </form>
-
-
-
 </div>
 
 <div class="right">
-
 
 <a href="{% url 'cart' %}" class="cart-icon">
 
@@ -179,24 +161,9 @@
 
 </div>
 
-
-
-<!-- <div class="footer">
-
-<div class="footer-links">
-<div>About Us</div>
-<div>Contact Us</div>
-<div>Privacy Policy</div>
 </div>
 
-</div> -->
-
-</div>
-
-
-<!-- Footer Start -->
 <footer class="footer">
-    <!-- Top Section with Columns -->
     <div class="footer-top">
 
         <div class="footer-column">
@@ -276,14 +243,8 @@
         </div>
     </div>
 </footer>
-<!-- Footer End -->
-
-
 
 </div>
-
-
-
 
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
@@ -297,23 +258,5 @@ s0.parentNode.insertBefore(s1,s0);
 })();
 </script> 
 
-
-
-
-
-
-
-
-
-
-
-
-
 </body>
 </html>
-
-
-
-
-
-
