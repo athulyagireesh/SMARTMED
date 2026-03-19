@@ -10,20 +10,14 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
 
-
-
 def register_view(request):
     if request.method == "POST":
         name = request.POST['name']
         password = request.POST['password']
         confirm_password = request.POST['confirm_password']
         User.objects.create_user(username=name, password=password)
-
         return redirect('login')
-
     return render(request, 'register.html')
-
-
 
 
 
@@ -357,18 +351,6 @@ def add_to_wishlist(request, id):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 from .models import Cart
 
 @login_required
@@ -472,9 +454,6 @@ def add_to_wishlist(request, id):
 
 
 
-
-
-
 @login_required
 def update_cart(request, id, action):
 
@@ -521,8 +500,6 @@ def search_results(request):
     wishlist_items = Wishlist.objects.filter(user=request.user)
     wishlist_products = wishlist_items.values_list('product_id', flat=True)
     wishlist_count = wishlist_items.count()
-
-    # ✅ FIXED: use database cart
     cart_items = Cart.objects.filter(user=request.user)
     cart_count = sum(item.quantity for item in cart_items)
 
@@ -540,8 +517,6 @@ def search_results(request):
 
 
 
-
-
 @login_required
 def home(request):
     products = Product.objects.all()
@@ -549,12 +524,6 @@ def home(request):
     wishlist_items = Wishlist.objects.filter(user=request.user)
     wishlist_products = wishlist_items.values_list('product_id', flat=True)
     wishlist_count = wishlist_items.count()
-
-    # cart = request.session.get('cart', {})
-    # if not isinstance(cart, dict):
-    #         cart = {}
-    # cart_count = sum(cart.values())
-
 
     cart_count = Cart.objects.filter(user=request.user).count()
 
@@ -578,7 +547,6 @@ def add_to_wishlist(request, id):
     else:
         Wishlist.objects.create(user=request.user, product=product)
     
-    # Stay on the same page
     return redirect(request.META.get('HTTP_REFERER'))
 
 
@@ -628,7 +596,7 @@ def checkout(request):
     grand_total = total + gst
 
     if request.method == "POST":
-        items.delete()   # clear DB cart
+        items.delete()  
         return render(request, 'order_success.html', {
             'total': grand_total
         })
@@ -639,3 +607,6 @@ def checkout(request):
         'gst': gst,
         'grand_total': grand_total
     })
+
+
+
