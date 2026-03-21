@@ -229,24 +229,46 @@ def add_to_wishlist(request, id):
 
 
 
+# @login_required
+# def tablet_page(request):
+
+#     tablets = Product.objects.filter(category='Tablet')
+
+#     wishlist_items = Wishlist.objects.filter(user=request.user)
+
+#     wishlist_products = wishlist_items.values_list('product_id', flat=True)
+
+#     wishlist_count = wishlist_items.count()
+
+#     return render(request,'tablet.html',{
+#         'tablets': tablets,
+#         'wishlist_products': wishlist_products,
+#         'wishlist_count': wishlist_count
+#     })
+
+
+
+
+
 @login_required
 def tablet_page(request):
 
     tablets = Product.objects.filter(category='Tablet')
 
     wishlist_items = Wishlist.objects.filter(user=request.user)
-
     wishlist_products = wishlist_items.values_list('product_id', flat=True)
-
     wishlist_count = wishlist_items.count()
 
-    return render(request,'tablet.html',{
+    # ✅ FIX: CART COUNT
+    cart_items = Cart.objects.filter(user=request.user)
+    cart_count = sum(item.quantity for item in cart_items)
+
+    return render(request, 'tablet.html', {
         'tablets': tablets,
         'wishlist_products': wishlist_products,
-        'wishlist_count': wishlist_count
+        'wishlist_count': wishlist_count,
+        'cart_count': cart_count   # ✅ IMPORTANT
     })
-
-
 
 
 

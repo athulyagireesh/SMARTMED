@@ -1,4 +1,4 @@
-body{
+/* body{
 margin:0;
 font-family:Arial, Helvetica, sans-serif;
 background:linear-gradient(135deg,#f6f9fc,#e9f3ff);
@@ -239,10 +239,506 @@ color:white;
 background:red;
 color:white;
 border:none;
+} */ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* *{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+body{
+background:#f5f7fb;
+}
+
+
+.navbar{
+width:100%;
+height:80px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 40px;
+background:#2F80C7;
+position:fixed;
+top:0;
+z-index:1000;
+}
+
+
+.logo img{
+height:60px;
+}
+
+
+.search{
+flex:1;
+display:flex;
+justify-content:center;
+}
+
+.search form{
+display:flex;
+width:100%;
+max-width:500px;
+}
+
+.search input{
+flex:1;
+padding:10px;
+border:none;
+border-radius:6px 0 0 6px;
+outline:none;
+}
+
+
+
+
+.search button{
+padding:10px 15px;
+border:none;
+background:#1f6f63;
+color:white;
+border-radius:0 6px 6px 0;
+cursor:pointer;
+}
+
+
+.nav-right{
+display:flex;
+align-items:center;
+gap:20px;
+}
+
+
+.icon-box{
+position:relative;
+width:45px;
+height:45px;
+background:#1f6f63;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+text-decoration:none;
+transition:0.3s;
+}
+
+.icon-box:hover{
+background:#15574d;
+transform:scale(1.1);
+}
+
+.icon-box img{
+width:22px;
+height:22px;
+}
+
+
+.badge{
+position:absolute;
+top:-5px;
+right:-5px;
+background:red;
+color:white;
+font-size:12px;
+min-width:18px;
+height:18px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+font-weight:bold;
+}
+
+
+.home-btn{
+height:40px;
+padding:0 15px;
+background:#1b4e8a;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+.home-btn:hover{
+background:#0056b3;
+}
+
+
+.main{
+margin-top:110px;
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:25px;
+padding:20px;
+}
+
+
+.product{
+width:220px;
+background:white;
+padding:15px;
+border-radius:12px;
+text-align:center;
+box-shadow:0 6px 18px rgba(0,0,0,0.12);
+transition:0.3s;
+}
+
+.product:hover{
+transform:translateY(-8px);
+}
+
+.product img{
+width:100%;
+height:150px;
+object-fit:contain;
+}
+
+.product h3{
+font-size:16px;
+margin:10px 0;
+}
+
+.product p{
+color:#0a7a55;
+font-size:18px;
+font-weight:bold;
+}
+
+
+.actions{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:12px;
+}
+
+
+.cart-btn{
+background:#1f6f63;
+color:white;
+padding:8px 12px;
+border-radius:6px;
+text-decoration:none;
+font-size:14px;
+}
+
+
+.wish-circle{
+width:38px;
+height:38px;
+border-radius:50%;
+border:1px solid #ccc;
+background:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:18px;
+cursor:pointer;
+transition:0.3s;
+}
+
+
+.wish-circle:hover{
+background:#ff4d4d;
+color:white;
+border:none;
+}
+
+
+.wish-circle.active{
+background:#ff4d4d;
+color:white;
+border:none;
 } */
 
 
 
+
+
+
+
+
+
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+body{
+background:#f5f7fb;
+}
+
+/* ================= NAVBAR ================= */
+.navbar{
+width:100%;
+height:85px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+background:#2F80C7;
+position:fixed;
+top:0;
+left:0;
+padding:0 25px;   /* ✅ FIX: no left empty space */
+z-index:1000;
+}
+
+/* LOGO */
+.logo img{
+height:65px;
+width:auto;
+}
+
+/* SEARCH CENTER */
+.search{
+flex:1;
+display:flex;
+justify-content:center;
+}
+
+.search form{
+display:flex;
+width:100%;
+max-width:500px;
+}
+
+.search input{
+flex:1;
+padding:10px 15px;
+border:none;
+outline:none;
+border-radius:6px 0 0 6px;
+background:#f2f2f2;
+}
+
+.search button{
+background:#1f6f63;
+color:white;
+border:none;
+padding:10px 20px;
+border-radius:0 6px 6px 0;
+cursor:pointer;
+}
+
+/* RIGHT SIDE */
+/* .nav-right{
+display:flex;
+align-items:center;
+gap:15px;
+} */
+
+
+
+.nav-right{
+display:flex;
+align-items:center;
+gap:12px;          /* reduce spacing */
+}
+
+
+
+/* ICON BOX (CART & WISHLIST) */
+.icon-box{
+position:relative;
+width:45px;
+height:45px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#1f6f63;
+border-radius:50%;
+cursor:pointer;
+transition:0.3s;
+text-decoration:none;
+}
+
+.icon-box img{
+width:22px;
+height:22px;
+}
+
+.icon-box:hover{
+background:#15574d;
+transform:scale(1.1);
+}
+
+/* BADGE (COUNT FIXED) */
+.badge{
+position:absolute;
+top:-6px;
+right:-6px;
+background:red;
+color:white;   
+font-size:12px;
+min-width:18px;
+height:18px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+font-weight:bold;
+z-index:10;   /* ✅ IMPORTANT */
+}
+
+/* HOME BUTTON */
+/* .home-btn{
+height:40px;
+padding:0 40px;
+border:none;
+background:#1b4e8a;
+color:white;
+border-radius:6px;
+cursor:pointer;
+font-weight:600;
+} */
+
+
+
+.home-btn{
+height:40px;
+padding:0 14px;    /* slightly smaller */
+margin-left:5px;   /* move slightly left */
+border:none;
+background:#1b4e8a;
+color:white;
+border-radius:6px;
+cursor:pointer;
+font-weight:600;
+}
+
+
+.home-btn{
+margin-left:-5px;   /* pull left */
+}
+
+
+.home-btn:hover{
+background:#0056b3;
+}
+
+/* ================= MAIN ================= */
+.main{
+margin-top:110px;
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:25px;
+padding:20px;
+}
+
+/* PRODUCT CARD */
+.product{
+width:230px;
+background:white;
+padding:15px;
+border-radius:12px;
+text-align:center;
+box-shadow:0 6px 18px rgba(0,0,0,0.12);
+transition:0.3s;
+}
+
+.product:hover{
+transform:translateY(-8px);
+}
+
+/* IMAGE */
+.product img{
+width:100%;
+height:150px;
+object-fit:contain;
+}
+
+/* NAME */
+.product h3{
+font-size:16px;
+margin:10px 0;
+}
+
+/* PRICE */
+.product p{
+color:#0a7a55;
+font-size:18px;
+font-weight:bold;
+}
+
+/* ACTIONS */
+.actions{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:12px;
+}
+
+/* CART BUTTON */
+.cart-btn{
+background:#1f6f63;
+color:white;
+padding:8px 12px;
+border-radius:6px;
+text-decoration:none;
+font-size:14px;
+}
+
+.cart-btn:hover{
+background:#15574d;
+}
+
+/* ================= WISHLIST CIRCLE ================= */
+.wish-circle{
+width:42px;
+height:42px;
+border-radius:50%;
+border:1px solid #ccc;
+background:white;
+cursor:pointer;
+font-size:20px;
+display:flex;
+align-items:center;
+justify-content:center;
+transition:0.3s;
+}
+
+/* HOVER */
+.wish-circle:hover{
+background:red;
+color:white;
+border:none;
+}
+
+/* ACTIVE */
+.wish-circle.active{
+background:red;
+color:white;
+border:none;
+}
 
 
 
