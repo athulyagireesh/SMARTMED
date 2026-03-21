@@ -259,7 +259,6 @@ def tablet_page(request):
     wishlist_products = wishlist_items.values_list('product_id', flat=True)
     wishlist_count = wishlist_items.count()
 
-    # ✅ FIX: CART COUNT
     cart_items = Cart.objects.filter(user=request.user)
     cart_count = sum(item.quantity for item in cart_items)
 
@@ -284,10 +283,14 @@ def syrup_page(request):
 
     wishlist_count = wishlist_items.count()
 
+    cart_items = Cart.objects.filter(user=request.user)
+    cart_count = sum(item.quantity for item in cart_items)
+
     return render(request,'syrup.html',{
         'syrups':syrups,
         'wishlist_products':wishlist_products,
-        'wishlist_count':wishlist_count
+        'wishlist_count':wishlist_count,
+        'cart_count': cart_count
     })
 
 
@@ -304,10 +307,14 @@ def injection_page(request):
 
     wishlist_count = wishlist_items.count()
 
+    cart_items = Cart.objects.filter(user=request.user)
+    cart_count = sum(item.quantity for item in cart_items)
+
     return render(request,'injection.html',{
         'injections':injections,
         'wishlist_products':wishlist_products,
-        'wishlist_count':wishlist_count
+        'wishlist_count':wishlist_count,
+        'cart_count': cart_count
     })
 
 
@@ -324,10 +331,14 @@ def firstaid_page(request):
 
     wishlist_count = wishlist_items.count()
 
+    cart_items = Cart.objects.filter(user=request.user)
+    cart_count = sum(item.quantity for item in cart_items)
+
     return render(request,'firstaid.html',{
         'firstaids':firstaids,
         'wishlist_products':wishlist_products,
-        'wishlist_count':wishlist_count
+        'wishlist_count':wishlist_count,
+        'cart_count': cart_count
     })
 
 
@@ -345,10 +356,14 @@ def supplement_page(request):
 
     wishlist_count = wishlist_items.count()
 
+    cart_items = Cart.objects.filter(user=request.user)
+    cart_count = sum(item.quantity for item in cart_items)
+
     return render(request,'supplement.html',{
         'supplements':supplements,
         'wishlist_products':wishlist_products,
-        'wishlist_count':wishlist_count
+        'wishlist_count':wishlist_count,
+        'cart_count': cart_count
     })
 
 
