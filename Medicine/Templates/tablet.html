@@ -26,32 +26,30 @@
 
 <div class="nav-right">
 
-<!-- CART -->
 <a href="{% url 'cart' %}" class="icon-box">
     <img src="{% static 'images/crt.svg' %}">
     <span class="badge">{{ cart_count }}</span>
 </a>
 
-<!-- WISHLIST -->
 <a href="{% url 'wishlist_page' %}" class="icon-box">
     <img src="{% static 'images/wishlist.png' %}">
     <span class="badge">{{ wishlist_count }}</span>
 </a>
 
-<!-- HOME -->
 <a href="{% url 'home' %}">
     <button class="home-btn">Home</button>
 </a>
 
 </div>
-
 </div>
+
+<!-- PAGE WRAPPER -->
+<div class="page-container">
 
 <!-- PRODUCTS -->
 <div class="main">
 
 {% for product in tablets %}
-
 <div class="product">
 
 <img src="{{ product.image.url }}">
@@ -66,21 +64,68 @@
 Add to Cart
 </a>
 
-<!-- ✅ NEW WISHLIST STYLE -->
 <form action="{% url 'add_wishlist' product.id %}" method="POST">
 {% csrf_token %}
 <button class="wish-circle {% if product.id in wishlist_products %}active{% endif %}">
-    ♡
+♡
 </button>
 </form>
 
 </div>
 
 </div>
-
 {% endfor %}
 
 </div>
+
+<!-- FOOTER -->
+<footer class="footer">
+
+<div class="footer-top">
+
+<div class="footer-column">
+<h4>ABOUT</h4>
+<ul>
+<li><a href="#">Contact Us</a></li>
+<li><a href="#">About Us</a></li>
+<li><a href="#">Careers</a></li>
+<li><a href="#">Press</a></li>
+</ul>
+</div>
+
+<div class="footer-column">
+<h4>HELP</h4>
+<ul>
+<li><a href="#">Payments</a></li>
+<li><a href="#">Shipping</a></li>
+<li><a href="#">Returns</a></li>
+<li><a href="#">FAQ</a></li>
+</ul>
+</div>
+
+<div class="footer-column">
+<h4>CONTACT</h4>
+<p>
+SmartMed Online Pvt Ltd<br>
+Kochi, Kerala, India
+</p>
+
+<div class="social-icons">
+<a href="#"><img src="{% static 'images/face.png' %}"></a>
+<a href="#"><img src="{% static 'images/twit.png' %}"></a>
+<a href="#"><img src="{% static 'images/ins.png' %}"></a>
+</div>
+</div>
+
+</div>
+
+<div class="footer-bottom">
+<span>© 2026 SmartMed</span>
+</div>
+
+</footer>
+
+</div> <!-- END page-container -->
 
 </body>
 </html>

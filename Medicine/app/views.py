@@ -4,9 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q, Sum
 from django.urls import reverse
-
 from .models import Product, Wishlist, Cart
-
 
 
 def register_view(request):
@@ -97,6 +95,7 @@ def syrup_page(request):
         'wishlist_count': wishlist_count,
         'cart_count': cart_count
     })
+
 
 
 @login_required
