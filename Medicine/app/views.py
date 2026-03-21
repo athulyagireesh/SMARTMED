@@ -7,6 +7,7 @@ from django.urls import reverse
 from .models import Product, Wishlist, Cart
 
 
+
 def register_view(request):
     if request.method == "POST":
         name = request.POST['name']
@@ -95,7 +96,6 @@ def syrup_page(request):
         'wishlist_count': wishlist_count,
         'cart_count': cart_count
     })
-
 
 
 @login_required
@@ -343,3 +343,7 @@ def checkout(request):
         'gst': gst,
         'grand_total': grand_total
     })
+
+
+
+

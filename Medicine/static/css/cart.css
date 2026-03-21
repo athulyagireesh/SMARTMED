@@ -11,7 +11,8 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 padding:15px 40px;
-background:#2874f0;
+/* background:#2874f0; */
+background:#2F80C7;
 color:white;
 }
 

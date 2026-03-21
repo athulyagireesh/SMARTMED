@@ -72,9 +72,17 @@
 <button class="shop-btn">Show All</button>
 </a>
 
-<a href="#">
+<!-- <a href="#">
 <button class="upload-btn">Upload Prescription</button>
-</a>
+</a> -->
+
+
+<form action="{% url 'upload_prescription' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="prescription" required>
+    <button type="submit" class="upload-btn">Upload Prescription</button>
+</form>
+
 
 </div>
 
