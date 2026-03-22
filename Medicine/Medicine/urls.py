@@ -65,6 +65,7 @@ urlpatterns = [
 
     path('redirect-search/', views.redirect_search, name='redirect_search'),
 
+    path('upload-prescription/', views.upload_prescription, name='upload_prescription'),
 
     path('checkout/', views.checkout, name='checkout'),
 

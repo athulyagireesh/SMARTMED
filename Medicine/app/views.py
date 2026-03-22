@@ -58,6 +58,20 @@ def home(request):
 
 
 
+
+@login_required
+def upload_prescription(request):
+    if request.method == "POST":
+        prescription = request.FILES.get('prescription')
+
+        if prescription:
+            print(prescription.name)   # temporary test
+            return redirect('home')
+
+    return redirect('home')
+
+
+
 @login_required
 def tablet_page(request):
     tablets = Product.objects.filter(category='Tablet')
@@ -343,7 +357,4 @@ def checkout(request):
         'gst': gst,
         'grand_total': grand_total
     })
-
-
-
 
