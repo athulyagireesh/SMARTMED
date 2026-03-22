@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+      {% load static %}
+      <meta charset="UTF-8">
+    <title>Prescription Result</title>
+    <link rel="stylesheet" href="{% static 'css/prescription.css' %}">
+</head>
+<body>
+
+<h1 class="title">Matched Medicines</h1>
+
+<div class="products">
+
+{% for product in products %}
+    <div class="card">
+        <img src="{{ product.image.url }}">
+        <h3>{{ product.name }}</h3>
+        <p>₹{{ product.price }}</p>
+    </div>
+{% empty %}
+    <p class="no-result">No matching medicines found</p>
+{% endfor %}
+
+</div>
+
+<div class="text-box">
+    <h3>Extracted Text</h3>
+    <pre>{{ text }}</pre>
+</div>
+
+</body>
+</html>

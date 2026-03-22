@@ -5,7 +5,12 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q, Sum
 from django.urls import reverse
 from .models import Product, Wishlist, Cart
+from .models import Product, Prescription
+import pytesseract
+from PIL import Image
 
+# pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract-ocr-w64-setup-5.5.0.20241111.exe"
+pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 
 def register_view(request):
@@ -357,4 +362,40 @@ def checkout(request):
         'gst': gst,
         'grand_total': grand_total
     })
+
+
+
+
+
+@login_required
+def upload_prescription(request):
+    if request.method == "POST":
+        image = request.FILES.get('prescription')
+
+        if image:
+            prescription = Prescription.objects.create(
+                user=request.user,
+                image=image
+            )
+
+            img = Image.open(prescription.image.path)
+            text = pytesseract.image_to_string(img)
+
+            # 🔥 Match medicines
+            words = text.lower().split()
+
+            matched_products = Product.objects.none()
+
+            for word in words:
+                matched_products |= Product.objects.filter(name__icontains=word)
+
+            return render(request, 'prescription_result.html', {
+                'products': matched_products.distinct(),
+                'text': text
+            })
+
+    return redirect('home')
+
+
+
 
