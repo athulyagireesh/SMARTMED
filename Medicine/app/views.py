@@ -7,9 +7,10 @@ from django.urls import reverse
 from .models import Product, Wishlist, Cart
 from .models import Product, Prescription
 import pytesseract
+import re
+import cv2
 from PIL import Image
 
-# pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract-ocr-w64-setup-5.5.0.20241111.exe"
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 
@@ -63,17 +64,6 @@ def home(request):
 
 
 
-
-@login_required
-def upload_prescription(request):
-    if request.method == "POST":
-        prescription = request.FILES.get('prescription')
-
-        if prescription:
-            print(prescription.name)   # temporary test
-            return redirect('home')
-
-    return redirect('home')
 
 
 
@@ -366,36 +356,75 @@ def checkout(request):
 
 
 
-
 @login_required
 def upload_prescription(request):
+
     if request.method == "POST":
         image = request.FILES.get('prescription')
 
         if image:
+            # ✅ Save image
             prescription = Prescription.objects.create(
                 user=request.user,
                 image=image
             )
 
-            img = Image.open(prescription.image.path)
-            text = pytesseract.image_to_string(img)
+            # 🔥 IMAGE PREPROCESSING (IMPORTANT)
+            img = cv2.imread(prescription.image.path)
 
-            # 🔥 Match medicines
-            words = text.lower().split()
+            gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
+            # Improve clarity
+            gray = cv2.GaussianBlur(gray, (5, 5), 0)
+            _, thresh = cv2.threshold(gray, 150, 255, cv2.THRESH_BINARY)
+
+            processed_path = prescription.image.path.replace('.jpg', '_processed.jpg')
+            cv2.imwrite(processed_path, thresh)
+
+            # 🔥 OCR
+            text = pytesseract.image_to_string(processed_path)
+
+            print("OCR TEXT:", text)
+
+            # 🔥 CLEAN TEXT
+            text = text.lower()
+            text = re.sub(r'[^a-zA-Z\s]', '', text)
+
+            words = text.split()
+
+            # 🔥 IGNORE WORDS
+            ignore_words = [
+                'tab','tablet','mg','ml','take','after','before',
+                'morning','night','daily','once','twice','days',
+                'q','rx','age','name','sex','date'
+            ]
+
+            filtered_words = [
+                word for word in words
+                if word not in ignore_words and len(word) > 4
+            ]
+
+            print("Filtered Words:", filtered_words)
+
+            # 🔥 MATCH PRODUCTS
             matched_products = Product.objects.none()
 
-            for word in words:
-                matched_products |= Product.objects.filter(name__icontains=word)
+            for word in filtered_words:
+                results = Product.objects.filter(name__icontains=word)
+                if results.exists():
+                    matched_products |= results
+
+            # 🔥 EXTRA ACCURACY (full name match)
+            for product in Product.objects.all():
+                if product.name.lower() in text:
+                    matched_products |= Product.objects.filter(id=product.id)
+
+            matched_products = matched_products.distinct()
 
             return render(request, 'prescription_result.html', {
-                'products': matched_products.distinct(),
-                'text': text
+                'products': matched_products,
+                'text': text,
+                'manual_input': ""
             })
 
     return redirect('home')
-
-
-
-

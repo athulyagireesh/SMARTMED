@@ -76,16 +76,6 @@
 <button class="upload-btn">Upload Prescription</button>
 </a> -->
 
-<form action="{% url 'upload_prescription' %}" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-
-    <input type="file" name="prescription" required class="file-input">
-
-    <!-- <button type="submit" class="upload-btn">
-        Upload Prescription
-    </button> -->
-
-</form>
 
 
 <form action="{% url 'upload_prescription' %}" method="POST" enctype="multipart/form-data">
