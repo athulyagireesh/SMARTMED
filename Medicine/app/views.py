@@ -320,6 +320,16 @@ def redirect_search(request):
 
 
 
+
+
+
+
+
+
+
+
+
+
 @login_required
 def checkout(request):
     items = Cart.objects.filter(user=request.user)
@@ -340,8 +350,15 @@ def checkout(request):
     gst = total * 0.18
     grand_total = total + gst
 
+    # ✅ FIX: Navbar counts (VERY IMPORTANT)
+    cart_count = Cart.objects.filter(user=request.user).aggregate(
+        total=Sum('quantity')
+    )['total'] or 0
+
+    wishlist_count = Wishlist.objects.filter(user=request.user).count()
+
     if request.method == "POST":
-        items.delete()
+        items.delete()  # clear cart after order
         return render(request, 'order_success.html', {
             'total': grand_total
         })
@@ -350,8 +367,54 @@ def checkout(request):
         'cart_items': cart_items,
         'total': total,
         'gst': gst,
-        'grand_total': grand_total
+        'grand_total': grand_total,
+        'cart_count': cart_count,
+        'wishlist_count': wishlist_count
     })
+
+
+
+
+
+
+
+
+
+
+
+
+# @login_required
+# def checkout(request):
+#     items = Cart.objects.filter(user=request.user)
+
+#     total = 0
+#     cart_items = []
+
+#     for item in items:
+#         subtotal = item.product.price * item.quantity
+#         total += subtotal
+
+#         cart_items.append({
+#             'product': item.product,
+#             'quantity': item.quantity,
+#             'subtotal': subtotal
+#         })
+
+#     gst = total * 0.18
+#     grand_total = total + gst
+
+#     if request.method == "POST":
+#         items.delete()
+#         return render(request, 'order_success.html', {
+#             'total': grand_total
+#         })
+
+#     return render(request, 'checkout.html', {
+#         'cart_items': cart_items,
+#         'total': total,
+#         'gst': gst,
+#         'grand_total': grand_total
+#     })
 
 
 
