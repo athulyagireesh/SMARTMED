@@ -24,16 +24,13 @@
 
 <a href="{% url 'cart' %}" class="cart-icon">
 
-<img src="{% static 'images/crt.svg' %}" class="icon-img">
+<!-- <img src="{% static 'images/crt.svg' %}" class="icon-img">
 
 <span class="cart-count">
 {{ cart_count }}
-</span>
+</span> -->
 
 </a>
-
-
-
 
 <a href="{% url 'wishlist_page' %}" class="wishlist-icon">
 
@@ -45,8 +42,6 @@
 
 </a>
 
-
-
 <div class="logout">
 <a href="{% url 'logout' %}">
 <button class="logout-btn" type="button">Logout</button>
@@ -56,8 +51,6 @@
 </div>
 
 </div>
-
-
 
 <div class="hero">
 
@@ -72,11 +65,6 @@
 <button class="shop-btn">Show All</button>
 </a>
 
-<!-- <a href="#">
-<button class="upload-btn">Upload Prescription</button>
-</a> -->
-
-
 
 <form action="{% url 'upload_prescription' %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
@@ -90,8 +78,6 @@
 </div>
 
 </div>
-
-
 
 <div class="second">
 
@@ -127,7 +113,6 @@
 </div>
 
 
-
 <div id="all_products" class="products">
 
 {% for product in products %}
@@ -149,8 +134,6 @@
 </a>
 
 
-
-
 <a href="{% url 'add_wishlist' product.id %}">
 
 
@@ -158,10 +141,6 @@
 ♡
 </span>
 </a>
-
-
-
-
 </div>
 
 </div>
@@ -235,11 +214,9 @@
                 <a href="#"><img src="{% static 'images/ins.png' %}" alt="Instagram"></a>
             </div>
         </div>
-
     </div>
 
   
-
     <div class="footer-bottom">
         <div class="footer-left">
             <span>&copy; 2026 SmartMed.com</span>
