@@ -191,8 +191,10 @@ def add_to_cart(request, id):
     return redirect(request.META.get('HTTP_REFERER'))
 
 
+
 @login_required
 def cart(request):
+
     items = Cart.objects.filter(user=request.user)
 
     cart_items = []
@@ -208,15 +210,22 @@ def cart(request):
             'total_price': subtotal
         })
 
-    gst = total * 0.18
-    final_total = total + gst
+    gst = round(total * 0.18, 2)
+
+    # ✅ CORRECT CART COUNT (DATABASE)
+    cart_count = items.aggregate(total=Sum('quantity'))['total'] or 0
+
+    # ✅ CORRECT WISHLIST COUNT
+    wishlist_count = Wishlist.objects.filter(user=request.user).count()
 
     return render(request, 'cart.html', {
         'cart_items': cart_items,
         'total': total,
         'gst': gst,
-        'final_total': final_total
+        'cart_count': cart_count,
+        'wishlist_count': wishlist_count,
     })
+
 
 
 @login_required
@@ -257,10 +266,29 @@ def add_to_wishlist(request, id):
     return redirect(request.META.get('HTTP_REFERER'))
 
 
+# @login_required
+# def wishlist_page(request):
+#     items = Wishlist.objects.filter(user=request.user)
+#     return render(request, 'wishlist.html', {'items': items})
+
+
 @login_required
 def wishlist_page(request):
+
     items = Wishlist.objects.filter(user=request.user)
-    return render(request, 'wishlist.html', {'items': items})
+
+    # ✅ FIXED COUNTS (SAME AS CART & CHECKOUT)
+    cart_count = Cart.objects.filter(user=request.user).aggregate(
+        total=Sum('quantity')
+    )['total'] or 0
+
+    wishlist_count = items.count()
+
+    return render(request, 'wishlist.html', {
+        'items': items,
+        'cart_count': cart_count,
+        'wishlist_count': wishlist_count
+    })
 
 
 @login_required
@@ -322,55 +350,70 @@ def redirect_search(request):
 
 
 
-
-
-
-
-
-
-
-
 @login_required
-def checkout(request):
-    items = Cart.objects.filter(user=request.user)
+def my_orders(request):
 
-    total = 0
-    cart_items = []
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')
 
-    for item in items:
-        subtotal = item.product.price * item.quantity
-        total += subtotal
-
-        cart_items.append({
-            'product': item.product,
-            'quantity': item.quantity,
-            'subtotal': subtotal
-        })
-
-    gst = total * 0.18
-    grand_total = total + gst
-
-    # ✅ FIX: Navbar counts (VERY IMPORTANT)
     cart_count = Cart.objects.filter(user=request.user).aggregate(
         total=Sum('quantity')
     )['total'] or 0
 
     wishlist_count = Wishlist.objects.filter(user=request.user).count()
 
-    if request.method == "POST":
-        items.delete()  # clear cart after order
-        return render(request, 'order_success.html', {
-            'total': grand_total
-        })
-
-    return render(request, 'checkout.html', {
-        'cart_items': cart_items,
-        'total': total,
-        'gst': gst,
-        'grand_total': grand_total,
+    return render(request, 'my_orders.html', {
+        'orders': orders,
         'cart_count': cart_count,
         'wishlist_count': wishlist_count
     })
+
+
+
+
+
+
+
+# @login_required
+# def checkout(request):
+#     items = Cart.objects.filter(user=request.user)
+
+#     total = 0
+#     cart_items = []
+
+#     for item in items:
+#         subtotal = item.product.price * item.quantity
+#         total += subtotal
+
+#         cart_items.append({
+#             'product': item.product,
+#             'quantity': item.quantity,
+#             'subtotal': subtotal
+#         })
+
+#     gst = total * 0.18
+#     grand_total = total + gst
+
+   
+#     cart_count = Cart.objects.filter(user=request.user).aggregate(
+#         total=Sum('quantity')
+#     )['total'] or 0
+
+#     wishlist_count = Wishlist.objects.filter(user=request.user).count()
+
+#     if request.method == "POST":
+#         items.delete()  
+#         return render(request, 'order_success.html', {
+#             'total': grand_total
+#         })
+
+#     return render(request, 'checkout.html', {
+#         'cart_items': cart_items,
+#         'total': total,
+#         'gst': gst,
+#         'grand_total': grand_total,
+#         'cart_count': cart_count,
+#         'wishlist_count': wishlist_count
+#     })
 
 
 

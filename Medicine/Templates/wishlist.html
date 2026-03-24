@@ -1,38 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-
 {% load static %}
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Wishlist</title>
+<title>Wishlist - SmartMed</title>
 
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
 <link rel="stylesheet" href="{% static 'css/wishlist.css' %}">
 
 </head>
 
 <body>
 
-<!-- NAVBAR -->
+<!-- ✅ SAME NAVBAR -->
+<div class="first">
 
-<div class="navbar">
-
-<h2 class="wishlist-title">Wishlist</h2>
+<div class="logo">
+<img src="{% static 'images/logoo.png' %}">
+</div>
 
 <div class="search">
-<form method="GET">
+<form method="GET" action="{% url 'redirect_search' %}">
 <input type="text" name="q" placeholder="Search medicines...">
 <button type="submit">Search</button>
 </form>
 </div>
 
-<div class="nav-right">
+<div class="right">
+
+<a href="{% url 'cart' %}" class="cart-icon">
+<img src="{% static 'images/crt.svg' %}" class="icon-img">
+<span class="cart-count">{{ cart_count }}</span>
+</a>
 
 <a href="{% url 'wishlist_page' %}" class="wishlist-icon">
-<img src="{% static 'images/wishlist.png' %}">
-<span class="wishlist-count">{{ items|length }}</span>
+<img src="{% static 'images/wishlist.png' %}" class="icon-img">
+<span class="wishlist-count">{{ wishlist_count }}</span>
 </a>
 
 <a href="{% url 'home' %}">
@@ -40,40 +46,63 @@
 </a>
 
 </div>
-
 </div>
 
 
-
+<!-- ✅ MAIN -->
 <div class="main">
+
+<div class="checkout-wrapper">
+
+<div class="name">Wishlist</div>
+
+<div class="container">
+
+<!-- LEFT -->
+<div class="left">
 
 {% if items %}
 
-<div class="wishlist-container">
-
 {% for item in items %}
 
-<div class="wishlist-card">
+<div class="box product-box">
 
-<img src="{{ item.product.image.url }}" class="product-img">
+<div class="product-row">
 
-<div class="product-details">
+<img src="{{ item.product.image.url }}">
 
-<h3>{{ item.product.name }}</h3>
+<div class="details">
 
-<p class="price">₹{{ item.product.price }}</p>
+<p class="pname">{{ item.product.name }}</p>
+<p>Price: ₹{{ item.product.price }}</p>
+<p class="saved">Saved for later</p>
 
-<p class="desc">Best quality medicine for your needs</p>
+<!-- <div class="actions">
 
-<div class="actions">
-
-<a href="{% url 'add_to_cart' item.product.id %}" class="cart-btn">
-Move to Cart
+<a href="{% url 'add_to_cart' item.product.id %}">
+<button class="move-btn">Move to Cart</button>
 </a>
 
 <a href="{% url 'remove_wishlist' item.id %}">
-<button class="remove-btn">Remove</button>
+<button class="remove">Remove</button>
 </a>
+
+</div> -->
+
+
+
+
+<div class="actions">
+
+<a href="{% url 'add_to_cart' item.product.id %}" class="move-btn">
+    Move to Cart
+</a>
+
+<a href="{% url 'remove_wishlist' item.id %}" class="remove-btn">
+    Remove
+</a>
+
+</div>
 
 </div>
 
@@ -83,22 +112,36 @@ Move to Cart
 
 {% endfor %}
 
-</div>
-
 {% else %}
 
-<!-- EMPTY WISHLIST -->
-
-<div class="empty-wishlist">
-
+<div class="empty-cart">
 <img src="{% static 'images/empty-wishlist.png' %}">
-
 <h2>Your Wishlist is Empty 💔</h2>
-
-<p>Add items you like to your wishlist</p>
-
 <a href="{% url 'home' %}">
 <button class="shop-btn">Shop Now</button>
+</a>
+</div>
+
+{% endif %}
+
+</div>
+
+
+<!-- RIGHT SIDE (LIKE CART SUMMARY) -->
+{% if items %}
+
+<div class="right-box">
+
+<h3>Wishlist Summary</h3>
+
+<div class="price-box">
+<p>Total Items <span>{{ wishlist_count }}</span></p>
+<hr>
+<h2>{{ wishlist_count }} Items</h2>
+</div>
+
+<a href="{% url 'cart' %}">
+<button class="order-btn">Go to Cart</button>
 </a>
 
 </div>
@@ -106,6 +149,91 @@ Move to Cart
 {% endif %}
 
 </div>
+
+</div>
+
+</div>
+
+
+<!-- ✅ SAME FULL FOOTER -->
+<footer class="footer">
+    <div class="footer-top">
+
+        <div class="footer-column">
+            <h4>ABOUT</h4>
+            <ul>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">SmartMed Stories</a></li>
+                <li><a href="#">Press</a></li>
+                <li><a href="#">Corporate Information</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h4>GROUP COMPANIES</h4>
+            <ul>
+                <li><a href="#">MediTrack</a></li>
+                <li><a href="#">HealthTrip</a></li>
+                <li><a href="#">PharmaShop</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h4>HELP</h4>
+            <ul>
+                <li><a href="#">Payments</a></li>
+                <li><a href="#">Shipping</a></li>
+                <li><a href="#">Cancellation & Returns</a></li>
+                <li><a href="#">FAQ</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h4>CONSUMER POLICY</h4>
+            <ul>
+                <li><a href="#">Cancellation & Returns</a></li>
+                <li><a href="#">Terms Of Use</a></li>
+                <li><a href="#">Security</a></li>
+                <li><a href="#">Privacy</a></li>
+                <li><a href="#">Sitemap</a></li>
+                <li><a href="#">Grievance Redressal</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h4>Mail Us:</h4>
+            <p>SmartMed Online Pvt Ltd,<br>
+            Building HealthTech, Kochi, Kerala, India</p>
+
+            <h4>Registered Office:</h4>
+            <p>SmartMed Online Pvt Ltd,<br>
+            CIN: U12345SMARTMED<br>
+            Telephone: 0484-1234567</p>
+
+            <div class="social-icons">
+                <img src="{% static 'images/face.png' %}">
+                <img src="{% static 'images/twit.png' %}">
+                <img src="{% static 'images/youtube.jpg' %}">
+                <img src="{% static 'images/ins.png' %}">
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <div class="footer-left">
+            <span>&copy; 2026 SmartMed.com</span>
+        </div>
+        <div class="footer-right">
+            <img src="{% static 'images/visaa.jpg' %}">
+            <img src="{% static 'images/masterr.jpg' %}">
+            <img src="{% static 'images/rupay.png' %}">
+            <img src="{% static 'images/cod.avif' %}">
+        </div>
+    </div>
+</footer>
 
 </body>
 </html>

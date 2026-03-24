@@ -70,4 +70,6 @@ urlpatterns = [
     path('checkout/', views.checkout, name='checkout'),
 
 
+    path('my-orders/', views.my_orders, name='my_orders'),
+    
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

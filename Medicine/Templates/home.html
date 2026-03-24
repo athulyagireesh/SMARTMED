@@ -20,7 +20,7 @@
 </form>
 </div>
 
-<div class="right">
+<!-- <div class="right">
 
 <a href="{% url 'cart' %}" class="cart-icon">
 
@@ -48,7 +48,50 @@
 </a>
 </div>
 
+</div> -->
+
+
+
+
+
+
+
+
+
+
+
+<div class="right">
+
+<a href="{% url 'cart' %}" class="cart-icon round-btn">
+<img src="{% static 'images/crt.svg' %}" class="icon-img">
+<span class="cart-count">{{ cart_count }}</span>
+</a>
+
+<a href="{% url 'wishlist_page' %}" class="wishlist-icon round-btn">
+<img src="{% static 'images/wishlist.png' %}" class="icon-img">
+<span class="wishlist-count">{{ wishlist_count }}</span>
+</a>
+
+<!-- ✅ NEW BUTTON -->
+<a href="{% url 'my_orders' %}">
+<button class="orders-btn">My Orders</button>
+</a>
+
+<div class="logout">
+<a href="{% url 'logout' %}">
+<button class="logout-btn" type="button">Logout</button>
+</a>
 </div>
+
+</div>
+
+
+
+
+
+
+
+
 
 </div>
 

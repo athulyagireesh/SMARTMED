@@ -67,6 +67,47 @@ border-radius:0 6px 6px 0;
 background:#15574d;
 }
 
+/* ROUND GREEN BUTTON FOR ICONS */
+.round-btn{
+background:#28a745;
+border-radius:50%;
+width:45px;
+height:45px;
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+transition:0.3s;
+}
+
+.round-btn:hover{
+background:#1e7e34;
+transform:scale(1.1);
+}
+
+/* FIX ICON SIZE INSIDE ROUND */
+.round-btn .icon-img{
+width:22px;
+height:22px;
+}
+
+/* MY ORDERS BUTTON */
+.orders-btn{
+height:40px;
+padding:6px 20px;
+border:none;
+background:#ff9800;
+color:white;
+border-radius:5px;
+cursor:pointer;
+font-weight:600;
+transition:0.3s;
+}
+
+.orders-btn:hover{
+background:#e68900;
+}
+
 
 .right{
 display:flex;
