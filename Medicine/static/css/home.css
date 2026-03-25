@@ -67,8 +67,44 @@ border-radius:0 6px 6px 0;
 background:#15574d;
 }
 
-/* ROUND GREEN BUTTON FOR ICONS */
+
+
 .round-btn{
+background:#28a745;
+border-radius:50%;
+width:42px;
+height:42px;
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+transition:0.3s;
+flex-shrink:0;
+}
+
+.round-btn:hover{
+background:#1e7e34;
+transform:scale(1.1);
+}
+
+.round-btn{
+width:50px;
+height:50px;
+}
+
+/* .icon-img{
+width:26px;
+height:26px;
+} */
+
+.round-btn .icon-img{
+width:30px;
+height:30px;
+object-fit:contain;
+}
+
+/* ROUND GREEN BUTTON FOR ICONS */
+/* .round-btn{
 background:#28a745;
 border-radius:50%;
 width:45px;
@@ -85,14 +121,14 @@ background:#1e7e34;
 transform:scale(1.1);
 }
 
-/* FIX ICON SIZE INSIDE ROUND */
+
 .round-btn .icon-img{
 width:22px;
 height:22px;
-}
+} */
 
 /* MY ORDERS BUTTON */
-.orders-btn{
+/* .orders-btn{
 height:40px;
 padding:6px 20px;
 border:none;
@@ -106,14 +142,50 @@ transition:0.3s;
 
 .orders-btn:hover{
 background:#e68900;
+} */
+.orders-btn{
+height:50px;
 }
 
 
-.right{
+.logout-btn{
+height:50px;
+}
+
+
+.orders-btn{
+height:42px;
+padding:6px 18px;
+border:none;
+background:linear-gradient(135deg, #ff6a00, #ffb347);
+color:white;
+border-radius:8px;
+cursor:pointer;
+font-weight:600;
+transition:0.3s;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.orders-btn:hover{
+background:linear-gradient(135deg, #e65c00, #ffa500);
+transform:translateY(-2px);
+}
+
+
+/* .right{
 display:flex;
 align-items:center;
 padding-right:23px;
 gap:10px;
+} */
+
+.right{
+display:flex;
+align-items:center;
+gap:15px;
+padding-right:25px;
 }
 
 
@@ -122,7 +194,7 @@ position:relative;
 display:inline-block;
 }
 
-.cart-count{
+/* .cart-count{
 position:absolute;
 top:-5px;
 right:-5px;
@@ -132,8 +204,21 @@ font-size:12px;
 padding:2px 6px;
 border-radius:50%;
 font-weight:bold;
-}
+} */
 
+
+.cart-count,
+.wishlist-count{
+position:absolute;
+top:-6px;
+right:-6px;
+background:red;
+color:white;
+font-size:11px;
+padding:2px 5px;
+border-radius:50%;
+font-weight:bold;
+}
 
 .wishlist-icon{
 position:relative;
@@ -152,7 +237,7 @@ color:red;
 }
 
 
-.wishlist-count{
+/* .wishlist-count{
 position:absolute;
 top:-5px;
 right:-5px;
@@ -162,7 +247,14 @@ font-size:12px;
 padding:2px 6px;
 border-radius:50%;
 font-weight:bold;
+} */
+
+.right a{
+text-decoration:none;
+display:flex;
+align-items:center;
 }
+
 
 
 .wishlist.active{

@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q, Sum
 from django.urls import reverse
+from .models import Order, OrderItem
 from .models import Product, Wishlist, Cart
 from .models import Product, Prescription
 import pytesseract
@@ -418,6 +419,71 @@ def my_orders(request):
 
 
 
+
+
+
+
+
+@login_required
+def checkout(request):
+
+    items = Cart.objects.filter(user=request.user)
+
+    total = 0
+    cart_items = []
+
+    for item in items:
+        subtotal = item.product.price * item.quantity
+        total += subtotal
+
+        cart_items.append({
+            'product': item.product,
+            'quantity': item.quantity,
+            'subtotal': subtotal
+        })
+
+    gst = round(total * 0.18, 2)
+    grand_total = total + gst
+
+    # ✅ NAVBAR COUNTS (IMPORTANT)
+    cart_count = items.aggregate(total=Sum('quantity'))['total'] or 0
+    wishlist_count = Wishlist.objects.filter(user=request.user).count()
+
+    # ✅ PLACE ORDER
+    if request.method == "POST":
+
+        if items.exists():   # prevent empty order
+
+            # 🔥 CREATE ORDER
+            order = Order.objects.create(
+                user=request.user,
+                total_amount=grand_total
+            )
+
+            # 🔥 SAVE ORDER ITEMS
+            for item in items:
+                OrderItem.objects.create(
+                    order=order,
+                    product=item.product,
+                    quantity=item.quantity,
+                    price=item.product.price
+                )
+
+            # 🔥 CLEAR CART
+            items.delete()
+
+            return render(request, 'order_success.html', {
+                'total': grand_total
+            })
+
+    return render(request, 'checkout.html', {
+        'cart_items': cart_items,
+        'total': total,
+        'gst': gst,
+        'grand_total': grand_total,
+        'cart_count': cart_count,
+        'wishlist_count': wishlist_count
+    })
 
 
 

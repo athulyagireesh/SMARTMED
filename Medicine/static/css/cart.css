@@ -19,6 +19,276 @@ padding:20px;
 
 
 
+/* RESET */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+/* BODY */
+body{
+background:#f1f3f6;
+}
+
+/* MAIN FIX FOR NAVBAR */
+.main{
+margin-top:100px;
+padding:20px;
+}
+
+/* HOME BUTTON */
+.home-btn{
+background:#1b4e8a;
+color:white;
+border:none;
+padding:8px 18px;
+border-radius:6px;
+cursor:pointer;
+}
+
+.home-btn:hover{
+background:#0d3b66;
+}
+
+/* WRAPPER */
+.checkout-wrapper{
+max-width:1200px;
+margin:auto;
+}
+
+/* TITLE */
+.name{
+font-size:28px;
+font-weight:bold;
+margin-bottom:20px;
+color:#1b4e8a;
+}
+
+/* LAYOUT */
+.container{
+display:flex;
+gap:20px;
+align-items:flex-start;
+}
+
+/* LEFT SIDE */
+.left{
+flex:2;
+}
+
+/* BOX */
+.box{
+background:white;
+padding:15px;
+border-radius:10px;
+margin-bottom:15px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* PRODUCT ROW */
+.product-row{
+display:flex;
+gap:15px;
+align-items:center;
+}
+
+/* IMAGE */
+.product-row img{
+width:100px;
+height:100px;
+object-fit:contain;
+}
+
+/* DETAILS */
+.details{
+flex:1;
+}
+
+.pname{
+font-weight:bold;
+font-size:16px;
+margin-bottom:5px;
+}
+
+/* PRICE TEXT */
+.details p{
+margin:3px 0;
+font-size:14px;
+}
+
+/* QUANTITY */
+.quantity{
+display:flex;
+gap:10px;
+margin-top:10px;
+align-items:center;
+}
+
+.quantity button{
+width:30px;
+height:30px;
+border:none;
+background:#e0e0e0;
+cursor:pointer;
+border-radius:4px;
+font-weight:bold;
+}
+
+.quantity input{
+width:40px;
+text-align:center;
+border:none;
+background:#f5f5f5;
+padding:5px;
+}
+
+/* REMOVE BUTTON */
+.remove{
+background:#d32f2f;
+color:white;
+border:none;
+padding:6px 12px;
+margin-top:10px;
+border-radius:5px;
+cursor:pointer;
+}
+
+/* RIGHT SIDE */
+.right-box{
+flex:1;
+background:white;
+padding:20px;
+border-radius:10px;
+height:fit-content;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+position:sticky;
+top:120px;
+}
+
+/* PRICE BOX */
+.price-box{
+margin-top:10px;
+}
+
+.price-box p{
+display:flex;
+justify-content:space-between;
+margin:8px 0;
+font-size:15px;
+}
+
+.price-box h2{
+margin-top:10px;
+color:#1b4e8a;
+}
+
+/* BUTTON */
+.order-btn{
+width:100%;
+background:#fb641b;
+color:white;
+border:none;
+padding:12px;
+margin-top:20px;
+cursor:pointer;
+border-radius:6px;
+font-size:16px;
+}
+
+.order-btn:hover{
+background:#e85a10;
+}
+
+/* EMPTY CART */
+.empty-cart{
+text-align:center;
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+.empty-cart img{
+width:200px;
+margin-bottom:20px;
+}
+
+.shop-btn{
+background:#2874f0;
+color:white;
+border:none;
+padding:10px 20px;
+border-radius:6px;
+cursor:pointer;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+
+.container{
+flex-direction:column;
+}
+
+.right-box{
+position:static;
+width:100%;
+}
+
+.product-row{
+flex-direction:column;
+text-align:center;
+}
+
+}
+
+/* ================================= */
+/* ✅ ADDED: CART & WISHLIST FIX ONLY */
+/* ================================= */
+
+.cart-icon,
+.wishlist-icon{
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+width:48px;
+height:48px;
+background:#28a745;
+border-radius:50%;
+transition:0.3s;
+}
+
+/* HOVER EFFECT */
+.cart-icon:hover,
+.wishlist-icon:hover{
+background:#1e7e34;
+transform:scale(1.1);
+}
+
+/* ICON SIZE */
+.cart-icon .icon-img,
+.wishlist-icon .icon-img{
+width:24px;
+height:24px;
+object-fit:contain;
+}
+
+/* BADGE POSITION */
+.cart-count,
+.wishlist-count{
+position:absolute;
+top:-6px;
+right:-6px;
+background:red;
+color:white;
+font-size:11px;
+padding:2px 6px;
+border-radius:50%;
+font-weight:bold;
+}
+
 
 /* HOME BUTTON */
 .home-btn{
