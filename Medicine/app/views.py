@@ -5,7 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q, Sum
 from django.urls import reverse
 from django.core.mail import send_mail
-from .models import Order, OrderItem
+from .models import Order, OrderItem 
+from django.contrib import messages
 from .models import Product, Wishlist, Cart
 from .models import Product, Prescription
 import pytesseract
@@ -352,16 +353,36 @@ def redirect_search(request):
 
 
 
+# @login_required
+# def my_orders(request):
+
+#     orders = Order.objects.filter(user=request.user).order_by('-created_at')
+
+#     cart_count = Cart.objects.filter(user=request.user).aggregate(
+#         total=Sum('quantity')
+#     )['total'] or 0
+
+#     wishlist_count = Wishlist.objects.filter(user=request.user).count()
+
+#     return render(request, 'my_orders.html', {
+#         'orders': orders,
+#         'cart_count': cart_count,
+#         'wishlist_count': wishlist_count
+#     })
+
+
+
 @login_required
 def my_orders(request):
 
     orders = Order.objects.filter(user=request.user).order_by('-created_at')
 
-    cart_count = Cart.objects.filter(user=request.user).aggregate(
-        total=Sum('quantity')
-    )['total'] or 0
+    # ✅ navbar count fix
+    cart_items = Cart.objects.filter(user=request.user)
+    wishlist_items = Wishlist.objects.filter(user=request.user)
 
-    wishlist_count = Wishlist.objects.filter(user=request.user).count()
+    cart_count = sum(item.quantity for item in cart_items)
+    wishlist_count = wishlist_items.count()
 
     return render(request, 'my_orders.html', {
         'orders': orders,
@@ -671,10 +692,18 @@ def upload_prescription(request):
 
 
 
+
+
+
 @login_required
 def checkout(request):
 
     cart_items = Cart.objects.filter(user=request.user)
+    wishlist_items = Wishlist.objects.filter(user=request.user)
+
+    # ✅ COUNT FIX
+    cart_count = sum(item.quantity for item in cart_items)
+    wishlist_count = wishlist_items.count()
 
     total = 0
     for item in cart_items:
@@ -688,7 +717,6 @@ def checkout(request):
         address = request.POST.get('address')
         payment = request.POST.get('payment')
 
-        # ✅ CREATE ORDER
         order = Order.objects.create(
             user=request.user,
             name=name,
@@ -699,7 +727,6 @@ def checkout(request):
             total_amount=total
         )
 
-        # ✅ SAVE ORDER ITEMS
         for item in cart_items:
             OrderItem.objects.create(
                 order=order,
@@ -708,23 +735,15 @@ def checkout(request):
                 price=item.product.price
             )
 
-        # ✅ CLEAR CART
         cart_items.delete()
-
-        # ✅ SEND EMAIL
-        send_mail(
-            'SmartMed Order Confirmation',
-            f'Hello {name}, your order #{order.id} is placed successfully!',
-            'your_email@gmail.com',
-            [email],
-            fail_silently=True,
-        )
 
         return redirect('order_success')
 
     return render(request, 'checkout.html', {
         'cart_items': cart_items,
-        'total': total
+        'total': total,
+        'cart_count': cart_count,          # ✅ FIX
+        'wishlist_count': wishlist_count   # ✅ FIX
     })
 
 
@@ -733,7 +752,28 @@ def order_success(request):
     return render(request, 'order_success.html')
 
 
+# @login_required
+# def my_orders(request):
+#     orders = Order.objects.filter(user=request.user).order_by('-created_at')
+#     return render(request, 'my_orders.html', {'orders': orders})
+
+
+
 @login_required
-def my_orders(request):
-    orders = Order.objects.filter(user=request.user).order_by('-created_at')
-    return render(request, 'my_orders.html', {'orders': orders})
+def cancel_order(request, order_id):
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+
+    if order.status == "Pending":
+        order.status = "Cancelled"
+        order.save()
+
+    return redirect('my_orders')
+
+
+@login_required
+def remove_order(request, order_id):
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    if order.status == "Cancelled":
+        order.delete()
+        messages.success(request, "Order removed successfully.")
+    return redirect('my_orders')

@@ -70,5 +70,7 @@ urlpatterns = [
     path('checkout/', views.checkout, name='checkout'),
     path('success/', views.order_success, name='order_success'),
     path('my-orders/', views.my_orders, name='my_orders'),
+    path('cancel-order/<int:order_id>/', views.cancel_order, name='cancel_order'),
+    path('remove-order/<int:order_id>/', views.remove_order, name='remove_order'),
     
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

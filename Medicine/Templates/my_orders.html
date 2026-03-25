@@ -1,29 +1,99 @@
 <!DOCTYPE html>
 <html>
 <head>
-{% load static %}
+    {% load static %}
+<meta charset="UTF-8">
+<title>My Orders</title>
+
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
-<link rel="stylesheet" href="{% static 'css/orders.css' %}">
+<link rel="stylesheet" href="{% static 'css/myorders.css' %}">
 </head>
 
 <body>
 
-<!-- SAME NAVBAR -->
+<div class="main">
 
-<div class="orders-container">
+<!-- ✅ SAME NAVBAR -->
+<div class="first">
 
-<a href="{% url 'my_orders' %}">
-    <button class="home-btn">My Orders</button>
+<div class="logo">
+<img src="{% static 'images/logoo.png' %}">
+</div>
+
+<div class="search">
+<form method="GET" action="{% url 'redirect_search' %}">
+<input type="text" name="q" placeholder="Search medicines...">
+<button type="submit">Search</button>
+</form>
+</div>
+
+<div class="right">
+
+<a href="{% url 'cart' %}" class="cart-icon">
+<img src="{% static 'images/crt.svg' %}" class="icon-img">
+<span class="cart-count">{{ cart_count }}</span>
 </a>
 
-<h2>My Orders</h2>
+<a href="{% url 'wishlist_page' %}" class="wishlist-icon">
+<img src="{% static 'images/wishlist.png' %}" class="icon-img">
+<span class="wishlist-count">{{ wishlist_count }}</span>
+</a>
+
+<a href="{% url 'home' %}">
+<button class="home-btn">Home</button>
+</a>
+
+</div>
+</div>
+
+<!-- PAGE -->
+<div class="orders-wrapper">
+
+<h2 class="title">My Orders</h2>
 
 {% for order in orders %}
 <div class="order-card">
-    <p><strong>Order ID:</strong> {{ order.id }}</p>
-    <p><strong>Total:</strong> ₹{{ order.total_amount }}</p>
-    <p><strong>Payment:</strong> {{ order.payment_method }}</p>
-    <p><strong>Status:</strong> {{ order.status }}</p>
+
+<div class="order-top">
+<span>Order ID: #{{ order.id }}</span>
+<span class="status {{ order.status|lower }}">{{ order.status }}</span>
+</div>
+
+<div class="order-items">
+
+{% for item in order.orderitem_set.all %}
+<div class="item">
+
+<img src="{{ item.product.image.url }}">
+
+<div class="details">
+<h4>{{ item.product.name }}</h4>
+<p>₹{{ item.price }} x {{ item.quantity }}</p>
+</div>
+
+</div>
+{% endfor %}
+
+</div>
+
+<div class="order-bottom">
+
+<p><strong>Payment:</strong> {{ order.payment_method }}</p>
+<p><strong>Total:</strong> ₹{{ order.total_amount }}</p>
+
+{% if order.status == "Pending" %}
+<a href="{% url 'cancel_order' order.id %}">
+<button class="cancel-btn">Cancel Order</button>
+</a>
+
+{% elif order.status == "Cancelled" %}
+        <a href="{% url 'remove_order' order.id %}">
+            <button class="cancel-btn">Remove</button>
+        </a>
+{% endif %}
+
+</div>
+
 </div>
 {% empty %}
 <p>No orders found</p>
@@ -31,7 +101,75 @@
 
 </div>
 
-<!-- SAME FOOTER -->
+<!-- ✅ SAME FOOTER -->
+<footer class="footer">
+    <div class="footer-top">
 
+        <div class="footer-column">
+            <h4>ABOUT</h4>
+            <ul>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">SmartMed Stories</a></li>
+                <li><a href="#">Press</a></li>
+                <li><a href="#">Corporate Information</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h4>GROUP COMPANIES</h4>
+            <ul>
+                <li><a href="#">MediTrack</a></li>
+                <li><a href="#">HealthTrip</a></li>
+                <li><a href="#">PharmaShop</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h4>HELP</h4>
+            <ul>
+                <li><a href="#">Payments</a></li>
+                <li><a href="#">Shipping</a></li>
+                <li><a href="#">Cancellation & Returns</a></li>
+                <li><a href="#">FAQ</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h4>CONSUMER POLICY</h4>
+            <ul>
+                <li><a href="#">Cancellation & Returns</a></li>
+                <li><a href="#">Terms Of Use</a></li>
+                <li><a href="#">Security</a></li>
+                <li><a href="#">Privacy</a></li>
+                <li><a href="#">Sitemap</a></li>
+                <li><a href="#">Grievance Redressal</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h4>Mail Us:</h4>
+            <p>SmartMed Online Pvt Ltd,<br>
+            Building HealthTech, Kochi, Kerala, India</p>
+        </div>
+
+    </div>
+
+   <div class="footer-bottom">
+        <div class="footer-left">
+            <span>&copy; 2026 SmartMed.com</span>
+        </div>
+        <div class="footer-right">
+            <img src="{% static 'images/visaa.jpg' %}" alt="Visa"             width="30px"  height="30px" >
+            <img src="{% static 'images/masterr.jpg' %}" alt="Mastercard"     width="30px"  height="30px">
+            <img src="{% static 'images/rupay.png' %}" alt="RuPay"            width="30px"  height="30px">
+            <img src="{% static 'images/cod.avif' %}" alt="Cash on Delivery"  width="30px"  height="30px">
+        </div>
+    </div>
+    
+</footer>
+
+</div>
 </body>
 </html>
