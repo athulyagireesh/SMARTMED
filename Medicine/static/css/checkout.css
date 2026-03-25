@@ -138,6 +138,8 @@ margin-bottom:10px;
 color:#1b4e8a;
 }
 
+
+
 .box input,
 .box textarea{
 width:100%;
@@ -165,7 +167,7 @@ background:#218838;
 
 
 
-.payment-grid{
+/* .payment-grid{
 display:flex;
 flex-direction:column;
 gap:15px;
@@ -203,20 +205,71 @@ margin:0;
 padding:10px;
 border:1px solid #ccc;
 border-radius:5px;
-}
+} */
 
-.row{
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* PAYMENT SECTION CONTAINER (SMALL BOX) */
+.payment-methods{
+width:350px;              /* small square look */
+margin-top:10px;
 display:flex;
-gap:10px;
+flex-direction:column;
+gap:12px;
 }
 
+/* EACH CARD */
+.payment-card{
+display:flex;
+align-items:center;       /* PERFECT ALIGNMENT */
+gap:10px;
+padding:12px 15px;
+border:1px solid #ddd;
+border-radius:8px;
+background:#fff;
+cursor:pointer;
+transition:0.3s;
+}
 
+/* HOVER EFFECT */
+.payment-card:hover{
+border-color:#28a745;
+box-shadow:0 3px 8px rgba(0,0,0,0.1);
+}
 
+/* RADIO BUTTON */
+.payment-card input[type="radio"]{
+margin:0;
+transform:scale(1.2);     /* slightly bigger */
+accent-color:#28a745;
+cursor:pointer;
+}
 
+/* TEXT CONTENT */
+.pay-content{
+display:flex;
+align-items:center;
+}
 
-
-
-
+/* TEXT STYLE */
+.pay-content h4{
+margin:0;
+font-size:15px;
+font-weight:500;
+}
 
 
 
