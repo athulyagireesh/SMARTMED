@@ -751,6 +751,21 @@ def checkout(request):
 def order_success(request):
     return render(request, 'order_success.html')
 
+def order_success(request):
+    # Get cart count
+    cart = request.session.get('cart', {})
+    cart_count = sum(item['quantity'] for item in cart.values()) if cart else 0
+
+    # Get wishlist count
+    if request.user.is_authenticated:
+        wishlist_count = Wishlist.objects.filter(user=request.user).count()
+    else:
+        wishlist_count = 0
+
+    return render(request, 'order_success.html', {
+        'cart_count': cart_count,
+        'wishlist_count': wishlist_count,
+    })
 
 # @login_required
 # def my_orders(request):
