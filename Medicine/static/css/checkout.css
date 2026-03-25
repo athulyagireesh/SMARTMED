@@ -70,8 +70,8 @@ transform:scale(1.1);
 }
 
 .icon-img{
-width:22px;
-height:22px;
+width:28px;    
+height:28px;
 }
 
 
@@ -116,7 +116,9 @@ display:flex;
 gap:20px;
 }
 
-
+.che{
+    color: #0d3b66;
+}
 
 .left{
 flex:2;
@@ -207,6 +209,21 @@ border-radius:5px;
 display:flex;
 gap:10px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
