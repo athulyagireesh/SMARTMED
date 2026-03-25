@@ -1,0 +1,24 @@
+.success-box{
+margin-top:150px;
+text-align:center;
+background:white;
+padding:40px;
+width:400px;
+margin:auto;
+border-radius:10px;
+box-shadow:0 5px 10px rgba(0,0,0,0.1);
+}
+
+.success-box h1{
+color:#28a745;
+}
+
+.success-box button{
+margin-top:20px;
+padding:10px 20px;
+background:#2F80C7;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}

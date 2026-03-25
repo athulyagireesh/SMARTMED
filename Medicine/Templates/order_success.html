@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    {% load static %}
-<title>Success</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/success.css' %}">
 </head>
 
-<body style="text-align:center; margin-top:100px; font-family:Arial;">
+<body>
 
-<h1>🎉 Order Placed Successfully!</h1>
+<!-- COPY SAME NAVBAR HERE -->
 
-<p>Total Paid: ₹{{ total }}</p>
+<div class="success-box">
+    <h1>✅ Order Placed Successfully</h1>
+    <p>Your order has been placed.</p>
 
-<a href="{% url 'home' %}">
-<button style="padding:10px 20px;">Continue Shopping</button>
-</a>
+    <a href="{% url 'home' %}">
+        <button>Continue Shopping</button>
+    </a>
+</div>
 
-{% endfor %}
+<!-- COPY SAME FOOTER HERE -->
+
 </body>
 </html>

@@ -40,13 +40,37 @@ class Prescription(models.Model):
         return f"Prescription - {self.user.username} - {self.id}"
     
 
+# class Order(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     total_amount = models.FloatField()
+#     created_at = models.DateTimeField(auto_now_add=True)
+
+#     def __str__(self):
+#         return f"Order {self.id} - {self.user.username}"
+
+
+
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=15)
+    address = models.TextField()
+
+    payment_method = models.CharField(max_length=20)
+
     total_amount = models.FloatField()
+
+    status = models.CharField(max_length=20, default="Pending")  # future tracking
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Order {self.id} - {self.user.username}"
+    
+
+    
     
 
 class OrderItem(models.Model):

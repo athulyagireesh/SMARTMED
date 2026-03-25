@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q, Sum
 from django.urls import reverse
+from django.core.mail import send_mail
 from .models import Order, OrderItem
 from .models import Product, Wishlist, Cart
 from .models import Product, Prescription
@@ -424,66 +425,132 @@ def my_orders(request):
 
 
 
-@login_required
-def checkout(request):
+# @login_required
+# def checkout(request):
 
-    items = Cart.objects.filter(user=request.user)
+#     items = Cart.objects.filter(user=request.user)
 
-    total = 0
-    cart_items = []
+#     total = 0
+#     cart_items = []
 
-    for item in items:
-        subtotal = item.product.price * item.quantity
-        total += subtotal
+#     for item in items:
+#         subtotal = item.product.price * item.quantity
+#         total += subtotal
 
-        cart_items.append({
-            'product': item.product,
-            'quantity': item.quantity,
-            'subtotal': subtotal
-        })
+#         cart_items.append({
+#             'product': item.product,
+#             'quantity': item.quantity,
+#             'subtotal': subtotal
+#         })
 
-    gst = round(total * 0.18, 2)
-    grand_total = total + gst
+#     gst = round(total * 0.18, 2)
+#     grand_total = total + gst
 
-    # ✅ NAVBAR COUNTS (IMPORTANT)
-    cart_count = items.aggregate(total=Sum('quantity'))['total'] or 0
-    wishlist_count = Wishlist.objects.filter(user=request.user).count()
+   
+#     cart_count = items.aggregate(total=Sum('quantity'))['total'] or 0
+#     wishlist_count = Wishlist.objects.filter(user=request.user).count()
 
-    # ✅ PLACE ORDER
-    if request.method == "POST":
+#     if request.method == "POST":
 
-        if items.exists():   # prevent empty order
+#         if items.exists():   
 
-            # 🔥 CREATE ORDER
-            order = Order.objects.create(
-                user=request.user,
-                total_amount=grand_total
-            )
+#             order = Order.objects.create(
+#                 user=request.user,
+#                 total_amount=grand_total
+#             )
 
-            # 🔥 SAVE ORDER ITEMS
-            for item in items:
-                OrderItem.objects.create(
-                    order=order,
-                    product=item.product,
-                    quantity=item.quantity,
-                    price=item.product.price
-                )
+#             for item in items:
+#                 OrderItem.objects.create(
+#                     order=order,
+#                     product=item.product,
+#                     quantity=item.quantity,
+#                     price=item.product.price
+#                 )
 
-            # 🔥 CLEAR CART
-            items.delete()
+      
+#             items.delete()
 
-            return render(request, 'order_success.html', {
-                'total': grand_total
-            })
+#             return render(request, 'order_success.html', {
+#                 'total': grand_total
+#             })
 
-    return render(request, 'checkout.html', {
-        'cart_items': cart_items,
-        'total': total,
-        'gst': gst,
-        'grand_total': grand_total,
-        'cart_count': cart_count,
-        'wishlist_count': wishlist_count
-    })
+#     return render(request, 'checkout.html', {
+#         'cart_items': cart_items,
+#         'total': total,
+#         'gst': gst,
+#         'grand_total': grand_total,
+#         'cart_count': cart_count,
+#         'wishlist_count': wishlist_count
+#     })
+
+
+
+
+
+
+
+
+
+
+
+
+
+# @login_required
+# def checkout(request):
+
+#     cart_items = Cart.objects.filter(user=request.user)
+
+#     total = 0
+
+#     for item in cart_items:
+#         total += item.product.price * item.quantity
+
+#     if request.method == "POST":
+
+#         name = request.POST.get('name')
+#         email = request.POST.get('email')
+#         phone = request.POST.get('phone')
+#         address = request.POST.get('address')
+#         payment = request.POST.get('payment')
+
+    
+#         order = Order.objects.create(
+#             user=request.user,
+#             name=name,
+#             email=email,
+#             phone=phone,
+#             address=address,
+#             payment_method=payment,
+#             total_amount=total
+#         )
+
+#         for item in cart_items:
+#             OrderItem.objects.create(
+#                 order=order,
+#                 product=item.product,
+#                 quantity=item.quantity,
+#                 price=item.product.price
+#             )
+
+    
+#         cart_items.delete()
+
+        
+#         send_mail(
+#             'Order Placed Successfully',
+#             f'Hi {name}, your order #{order.id} is confirmed!',
+#             'your_email@gmail.com',
+#             [email],
+#             fail_silently=True,
+#         )
+
+#         return redirect('order_success')
+
+#     return render(request, 'checkout.html', {
+#         'cart_items': cart_items,
+#         'total': total
+#     })
+
 
 
 
@@ -600,3 +667,73 @@ def upload_prescription(request):
             })
 
     return redirect('home')
+
+
+
+
+@login_required
+def checkout(request):
+
+    cart_items = Cart.objects.filter(user=request.user)
+
+    total = 0
+    for item in cart_items:
+        total += item.product.price * item.quantity
+
+    if request.method == "POST":
+
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        address = request.POST.get('address')
+        payment = request.POST.get('payment')
+
+        # ✅ CREATE ORDER
+        order = Order.objects.create(
+            user=request.user,
+            name=name,
+            email=email,
+            phone=phone,
+            address=address,
+            payment_method=payment,
+            total_amount=total
+        )
+
+        # ✅ SAVE ORDER ITEMS
+        for item in cart_items:
+            OrderItem.objects.create(
+                order=order,
+                product=item.product,
+                quantity=item.quantity,
+                price=item.product.price
+            )
+
+        # ✅ CLEAR CART
+        cart_items.delete()
+
+        # ✅ SEND EMAIL
+        send_mail(
+            'SmartMed Order Confirmation',
+            f'Hello {name}, your order #{order.id} is placed successfully!',
+            'your_email@gmail.com',
+            [email],
+            fail_silently=True,
+        )
+
+        return redirect('order_success')
+
+    return render(request, 'checkout.html', {
+        'cart_items': cart_items,
+        'total': total
+    })
+
+
+@login_required
+def order_success(request):
+    return render(request, 'order_success.html')
+
+
+@login_required
+def my_orders(request):
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')
+    return render(request, 'my_orders.html', {'orders': orders})

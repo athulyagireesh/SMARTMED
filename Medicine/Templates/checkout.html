@@ -62,9 +62,13 @@
     </div>
 <h3 class="section-title">Delivery Address</h3>
 
-<input type="text" placeholder="Full Name" required>
-<input type="text" placeholder="Mobile Number" required>
-<textarea placeholder="Full Address" required></textarea>
+<input type="text" name="name" placeholder="Full Name" required>
+
+<input type="email" name="email" placeholder="Email Address" required>
+
+<input type="tel" name="phone" placeholder="Mobile Number" required>
+
+<textarea name="address" placeholder="Full Address" required></textarea>
 
 <button type="button" class="save-btn">Save Address</button>
 </div>
@@ -96,6 +100,96 @@
 
 
 </div>
+</label>
+
+</div>
+</div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+<h3 class="section-title payment-title">Payment Method</h3>
+
+<div class="payment-methods">
+
+<label class="payment-row">
+    <div class="pay-left">
+        <img src="{% static 'images/card.png' %}" class="pay-icon">
+        <span>Card</span>
+    </div>
+    <!-- <input type="radio" name="payment" checked> -->
+    <input type="radio" name="payment" value="card">
+</label>
+
+<label class="payment-row">
+    <div class="pay-left">
+        <img src="{% static 'images/upi.jpg' %}" class="pay-icon">
+        <span>UPI Payment</span>
+    </div>
+    <!-- <input type="radio" name="payment"> -->
+     <input type="radio" name="payment" value="upi">
+</label>
+
+<label class="payment-row">
+    <div class="pay-left">
+        <img src="{% static 'images/cashod.png' %}" class="pay-icon">
+        <span>Cash on Delivery</span>
+    </div>
+    <!-- <input type="radio" name="payment"> -->
+     <input type="radio" name="payment" value="cod" checked>
+</label>
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- <div class="box">
+<h3 class="section-title">Payment Method</h3>
+
+<div class="payment-methods">
+
+<label class="payment-row">
+    <input type="radio" name="payment" checked>
+
+    <div class="pay-left">
+        <img src="{% static 'images/card.png' %}" class="pay-icon">
+        <span>Card</span>
+    </div>
+
+</label>
+
+
+<label class="payment-row">
+    <input type="radio" name="payment">
+
+    <div class="pay-left">
+        <img src="{% static 'images/upi.jpg' %}" class="pay-icon">
+        <span>UPI Payment</span>
+    </div>
+</label>
+
+
+<label class="payment-row">
+    <input type="radio" name="payment">
+
+    <div class="pay-left">
+        <img src="{% static 'images/cashod.png' %}" class="pay-icon">
+        <span>Cash on Delivery</span>
+    </div>
 </label>
 
 </div>

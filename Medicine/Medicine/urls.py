@@ -68,8 +68,7 @@ urlpatterns = [
     path('upload-prescription/', views.upload_prescription, name='upload_prescription'),
 
     path('checkout/', views.checkout, name='checkout'),
-
-
+    path('success/', views.order_success, name='order_success'),
     path('my-orders/', views.my_orders, name='my_orders'),
     
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
