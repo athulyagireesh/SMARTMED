@@ -1,0 +1,119 @@
+/* BODY */
+body{
+    margin:0;
+    font-family:Arial;
+    background:#f4f6f9;
+}
+
+/* NAVBAR */
+.navbar{
+    background:#2F80C7;
+    color:white;
+    padding:15px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.home-btn{
+    background:#28a745;
+    color:white;
+    padding:8px 18px;
+    border:none;
+    border-radius:5px;
+    text-decoration:none;
+}
+
+/* MAIN */
+.container{
+    display:flex;
+    gap:20px;
+    padding:30px;
+}
+
+/* LEFT BOX */
+.left-box{
+    flex:1;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    text-align:center;
+    box-shadow:0 5px 10px rgba(0,0,0,0.1);
+}
+
+.prescription-img{
+    width:100%;
+    max-height:400px;
+    object-fit:contain;
+    margin-top:10px;
+}
+
+/* RIGHT BOX */
+.right-box{
+    flex:2;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 5px 10px rgba(0,0,0,0.1);
+}
+
+/* GRID */
+.medicine-grid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+/* CARD */
+.card{
+    width:200px;
+    background:#fff;
+    padding:15px;
+    border-radius:10px;
+    text-align:center;
+    box-shadow:0 5px 10px rgba(0,0,0,0.1);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+/* IMAGE */
+.med-img{
+    width:120px;
+    height:120px;
+    object-fit:contain;
+}
+
+/* PRICE */
+.price{
+    color:#28a745;
+    font-weight:bold;
+}
+
+/* BUTTON */
+.cart-btn{
+    margin-top:10px;
+    background:#fb641b;
+    color:white;
+    border:none;
+    padding:8px 15px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.cart-btn:hover{
+    background:#e55300;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+    .container{
+        flex-direction:column;
+    }
+
+    .card{
+        width:100%;
+    }
+}

@@ -1,31 +1,68 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-      {% load static %}
-      <meta charset="UTF-8">
-    <title>Prescription Result</title>
-    <link rel="stylesheet" href="{% static 'css/prescription.css' %}">
+<meta charset="UTF-8">
+<title>Matched Medicines</title>
+
+<link rel="stylesheet" href="{% static 'css/prescription.css' %}">
 </head>
+
 <body>
 
-<h1 class="title">Matched Medicines</h1>
-
-<div class="products">
-{% for product in products %}
-    <div class="card">
-        <img src="{{ product.image.url }}">
-        <h3>{{ product.name }}</h3>
-        <p>₹{{ product.price }}</p>
-    </div>
-{% empty %}
-    <p class="no-result">No matching medicines found</p>
-{% endfor %}
+<!-- NAVBAR -->
+<div class="navbar">
+    <h2 class="logo">SmartMed</h2>
+    <a href="{% url 'home' %}" class="home-btn">Home</a>
 </div>
 
-<hr>
+<!-- MAIN -->
+<div class="main-container">
 
-<h3>Extracted Text (You can verify)</h3>
-<pre>{{ text }}</pre>
+    <!-- LEFT PANEL -->
+    <div class="prescription-box">
+        <h3>Uploaded Prescription</h3>
+
+        {% if prescription %}
+            <img src="{{ prescription.image.url }}" class="prescription-img">
+        {% endif %}
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="medicine-box">
+        <h3>Matched Medicines</h3>
+
+        {% if products %}
+        <div class="medicine-grid">
+
+            {% for product in products %}
+            <div class="medicine-card">
+
+                <div class="img-box">
+                    <img src="{{ product.image.url }}">
+                </div>
+
+                <div class="info">
+                    <h4>{{ product.name }}</h4>
+                    <p class="price">₹{{ product.price }}</p>
+                </div>
+
+                <a href="{% url 'add_to_cart' product.id %}">
+                    <button class="cart-btn">Add to Cart</button>
+                </a>
+
+            </div>
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+            <p class="no-data">No medicines found from prescription</p>
+        {% endif %}
+
+    </div>
+
+</div>
 
 </body>
 </html>

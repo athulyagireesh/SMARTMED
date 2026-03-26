@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+<meta charset="UTF-8">
+<title>Matched Medicines</title>
+<link rel="stylesheet" href="{% static 'css/matched.css' %}">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <h2>SmartMed</h2>
+    <a href="{% url 'home' %}" class="home-btn">Home</a>
+</div>
+
+<!-- MAIN CONTAINER -->
+<div class="container">
+
+    <!-- LEFT: PRESCRIPTION -->
+    <div class="left-box">
+        <h3>Your Prescription</h3>
+
+        {% if prescription %}
+        <img src="{{ prescription.url }}" class="prescription-img">
+        {% else %}
+        <p>No Prescription Uploaded</p>
+        {% endif %}
+    </div>
+
+    <!-- RIGHT: MATCHED MEDICINES -->
+    <div class="right-box">
+        <h3>Matched Medicines</h3>
+
+        {% if medicines %}
+        <div class="medicine-grid">
+
+            {% for med in medicines %}
+            <div class="card">
+
+                <img src="{{ med.image.url }}" class="med-img">
+
+                <h4>{{ med.name }}</h4>
+
+                <p class="price">₹{{ med.price }}</p>
+
+                <a href="{% url 'add_to_cart' med.id %}">
+                    <button class="cart-btn">Add to Cart</button>
+                </a>
+
+            </div>
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+        <p>No medicines found</p>
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

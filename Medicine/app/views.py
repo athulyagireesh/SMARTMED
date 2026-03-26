@@ -12,7 +12,12 @@ from .models import Product, Prescription
 import pytesseract
 import re
 import cv2
+import razorpay
+from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 from PIL import Image
+
 
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
@@ -269,10 +274,6 @@ def add_to_wishlist(request, id):
     return redirect(request.META.get('HTTP_REFERER'))
 
 
-# @login_required
-# def wishlist_page(request):
-#     items = Wishlist.objects.filter(user=request.user)
-#     return render(request, 'wishlist.html', {'items': items})
 
 
 @login_required
@@ -353,23 +354,6 @@ def redirect_search(request):
 
 
 
-# @login_required
-# def my_orders(request):
-
-#     orders = Order.objects.filter(user=request.user).order_by('-created_at')
-
-#     cart_count = Cart.objects.filter(user=request.user).aggregate(
-#         total=Sum('quantity')
-#     )['total'] or 0
-
-#     wishlist_count = Wishlist.objects.filter(user=request.user).count()
-
-#     return render(request, 'my_orders.html', {
-#         'orders': orders,
-#         'cart_count': cart_count,
-#         'wishlist_count': wishlist_count
-#     })
-
 
 
 @login_required
@@ -393,304 +377,147 @@ def my_orders(request):
 
 
 
-
-
-
 # @login_required
-# def checkout(request):
-#     items = Cart.objects.filter(user=request.user)
-
-#     total = 0
-#     cart_items = []
-
-#     for item in items:
-#         subtotal = item.product.price * item.quantity
-#         total += subtotal
-
-#         cart_items.append({
-#             'product': item.product,
-#             'quantity': item.quantity,
-#             'subtotal': subtotal
-#         })
-
-#     gst = total * 0.18
-#     grand_total = total + gst
-
-   
-#     cart_count = Cart.objects.filter(user=request.user).aggregate(
-#         total=Sum('quantity')
-#     )['total'] or 0
-
-#     wishlist_count = Wishlist.objects.filter(user=request.user).count()
+# def upload_prescription(request):
 
 #     if request.method == "POST":
-#         items.delete()  
-#         return render(request, 'order_success.html', {
-#             'total': grand_total
-#         })
+#         image = request.FILES.get('prescription')
 
-#     return render(request, 'checkout.html', {
-#         'cart_items': cart_items,
-#         'total': total,
-#         'gst': gst,
-#         'grand_total': grand_total,
-#         'cart_count': cart_count,
-#         'wishlist_count': wishlist_count
-#     })
-
-
-
-
-
-
-
-
-
-# @login_required
-# def checkout(request):
-
-#     items = Cart.objects.filter(user=request.user)
-
-#     total = 0
-#     cart_items = []
-
-#     for item in items:
-#         subtotal = item.product.price * item.quantity
-#         total += subtotal
-
-#         cart_items.append({
-#             'product': item.product,
-#             'quantity': item.quantity,
-#             'subtotal': subtotal
-#         })
-
-#     gst = round(total * 0.18, 2)
-#     grand_total = total + gst
-
-   
-#     cart_count = items.aggregate(total=Sum('quantity'))['total'] or 0
-#     wishlist_count = Wishlist.objects.filter(user=request.user).count()
-
-#     if request.method == "POST":
-
-#         if items.exists():   
-
-#             order = Order.objects.create(
+#         if image:
+            
+#             prescription = Prescription.objects.create(
 #                 user=request.user,
-#                 total_amount=grand_total
+#                 image=image
 #             )
 
-#             for item in items:
-#                 OrderItem.objects.create(
-#                     order=order,
-#                     product=item.product,
-#                     quantity=item.quantity,
-#                     price=item.product.price
-#                 )
+            
+#             img = cv2.imread(prescription.image.path)
 
-      
-#             items.delete()
+#             gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-#             return render(request, 'order_success.html', {
-#                 'total': grand_total
-#             })
+          
+#             gray = cv2.GaussianBlur(gray, (5, 5), 0)
+#             _, thresh = cv2.threshold(gray, 150, 255, cv2.THRESH_BINARY)
 
-#     return render(request, 'checkout.html', {
-#         'cart_items': cart_items,
-#         'total': total,
-#         'gst': gst,
-#         'grand_total': grand_total,
-#         'cart_count': cart_count,
-#         'wishlist_count': wishlist_count
-#     })
+#             processed_path = prescription.image.path.replace('.jpg', '_processed.jpg')
+#             cv2.imwrite(processed_path, thresh)
 
+           
+#             text = pytesseract.image_to_string(processed_path)
 
-
-
-
-
-
-
-
-
-
-
-
-# @login_required
-# def checkout(request):
-
-#     cart_items = Cart.objects.filter(user=request.user)
-
-#     total = 0
-
-#     for item in cart_items:
-#         total += item.product.price * item.quantity
-
-#     if request.method == "POST":
-
-#         name = request.POST.get('name')
-#         email = request.POST.get('email')
-#         phone = request.POST.get('phone')
-#         address = request.POST.get('address')
-#         payment = request.POST.get('payment')
-
-    
-#         order = Order.objects.create(
-#             user=request.user,
-#             name=name,
-#             email=email,
-#             phone=phone,
-#             address=address,
-#             payment_method=payment,
-#             total_amount=total
-#         )
-
-#         for item in cart_items:
-#             OrderItem.objects.create(
-#                 order=order,
-#                 product=item.product,
-#                 quantity=item.quantity,
-#                 price=item.product.price
-#             )
-
-    
-#         cart_items.delete()
+#             print("OCR TEXT:", text)
 
         
-#         send_mail(
-#             'Order Placed Successfully',
-#             f'Hi {name}, your order #{order.id} is confirmed!',
-#             'your_email@gmail.com',
-#             [email],
-#             fail_silently=True,
-#         )
+#             text = text.lower()
+#             text = re.sub(r'[^a-zA-Z\s]', '', text)
 
-#         return redirect('order_success')
+#             words = text.split()
 
-#     return render(request, 'checkout.html', {
-#         'cart_items': cart_items,
-#         'total': total
-#     })
+           
+#             ignore_words = [
+#                 'tab','tablet','mg','ml','take','after','before',
+#                 'morning','night','daily','once','twice','days',
+#                 'q','rx','age','name','sex','date'
+#             ]
 
+#             filtered_words = [
+#                 word for word in words
+#                 if word not in ignore_words and len(word) > 4
+#             ]
 
+#             print("Filtered Words:", filtered_words)
 
+          
+#             matched_products = Product.objects.none()
 
+#             for word in filtered_words:
+#                 results = Product.objects.filter(name__icontains=word)
+#                 if results.exists():
+#                     matched_products |= results
 
+#             for product in Product.objects.all():
+#                 if product.name.lower() in text:
+#                     matched_products |= Product.objects.filter(id=product.id)
 
+#             matched_products = matched_products.distinct()
 
+#             return render(request, 'prescription_result.html', {
+#                 'products': matched_products,
+#                 'text': text,
+#                 'manual_input': ""
+#             })
 
-
-# @login_required
-# def checkout(request):
-#     items = Cart.objects.filter(user=request.user)
-
-#     total = 0
-#     cart_items = []
-
-#     for item in items:
-#         subtotal = item.product.price * item.quantity
-#         total += subtotal
-
-#         cart_items.append({
-#             'product': item.product,
-#             'quantity': item.quantity,
-#             'subtotal': subtotal
-#         })
-
-#     gst = total * 0.18
-#     grand_total = total + gst
-
-#     if request.method == "POST":
-#         items.delete()
-#         return render(request, 'order_success.html', {
-#             'total': grand_total
-#         })
-
-#     return render(request, 'checkout.html', {
-#         'cart_items': cart_items,
-#         'total': total,
-#         'gst': gst,
-#         'grand_total': grand_total
-#     })
-
+#     return redirect('home')
 
 
 
 @login_required
 def upload_prescription(request):
-
     if request.method == "POST":
         image = request.FILES.get('prescription')
 
         if image:
-            # ✅ Save image
             prescription = Prescription.objects.create(
                 user=request.user,
                 image=image
             )
 
-            # 🔥 IMAGE PREPROCESSING (IMPORTANT)
-            img = cv2.imread(prescription.image.path)
+            import cv2, pytesseract, re
 
-            gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            try:
+                img = cv2.imread(prescription.image.path)
 
-            # Improve clarity
-            gray = cv2.GaussianBlur(gray, (5, 5), 0)
-            _, thresh = cv2.threshold(gray, 150, 255, cv2.THRESH_BINARY)
+                if img is None:
+                    text = ""
+                else:
+                    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+                    gray = cv2.GaussianBlur(gray, (5, 5), 0)
 
-            processed_path = prescription.image.path.replace('.jpg', '_processed.jpg')
-            cv2.imwrite(processed_path, thresh)
+                    thresh = cv2.adaptiveThreshold(
+                        gray, 255,
+                        cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+                        cv2.THRESH_BINARY,
+                        11, 2
+                    )
 
-            # 🔥 OCR
-            text = pytesseract.image_to_string(processed_path)
+                    processed_path = prescription.image.path.replace('.', '_processed.')
+                    cv2.imwrite(processed_path, thresh)
 
-            print("OCR TEXT:", text)
+                    text = pytesseract.image_to_string(processed_path)
 
-            # 🔥 CLEAN TEXT
+            except:
+                text = ""
+
+            # ✅ CLEAN TEXT
             text = text.lower()
-            text = re.sub(r'[^a-zA-Z\s]', '', text)
+            text = re.sub(r'[^a-z\s]', ' ', text)
 
             words = text.split()
 
-            # 🔥 IGNORE WORDS
             ignore_words = [
                 'tab','tablet','mg','ml','take','after','before',
                 'morning','night','daily','once','twice','days',
-                'q','rx','age','name','sex','date'
+                'rx','age','name','date','doctor'
             ]
 
             filtered_words = [
-                word for word in words
-                if word not in ignore_words and len(word) > 4
+                w for w in words if w not in ignore_words and len(w) > 3
             ]
 
-            print("Filtered Words:", filtered_words)
-
-            # 🔥 MATCH PRODUCTS
-            matched_products = Product.objects.none()
-
-            for word in filtered_words:
-                results = Product.objects.filter(name__icontains=word)
-                if results.exists():
-                    matched_products |= results
-
-            # 🔥 EXTRA ACCURACY (full name match)
-            for product in Product.objects.all():
-                if product.name.lower() in text:
-                    matched_products |= Product.objects.filter(id=product.id)
-
-            matched_products = matched_products.distinct()
+            # ✅ MATCH ONLY CURRENT SEARCH
+            if filtered_words:
+                query = r'(' + '|'.join(filtered_words) + ')'
+                matched_products = Product.objects.filter(name__iregex=query)
+            else:
+                matched_products = Product.objects.none()
 
             return render(request, 'prescription_result.html', {
                 'products': matched_products,
-                'text': text,
-                'manual_input': ""
+                'prescription': prescription,
+                'text': text
             })
 
     return redirect('home')
-
-
-
 
 
 
@@ -701,13 +528,26 @@ def checkout(request):
     cart_items = Cart.objects.filter(user=request.user)
     wishlist_items = Wishlist.objects.filter(user=request.user)
 
-    # ✅ COUNT FIX
     cart_count = sum(item.quantity for item in cart_items)
     wishlist_count = wishlist_items.count()
 
-    total = 0
-    for item in cart_items:
-        total += item.product.price * item.quantity
+    total = sum(item.product.price * item.quantity for item in cart_items)
+    gst = round(total * 0.18, 2)
+    grand_total = total + gst
+
+    # ✅ RAZORPAY ORDER (ONLY FOR UPI)
+    client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+
+    try:
+        razorpay_order = client.order.create({
+            "amount": int(grand_total * 100),  # paise
+            "currency": "INR",
+            "payment_capture": "1"
+        })
+        razorpay_order_id = razorpay_order['id']
+    except Exception as e:
+        print("Razorpay Error:", e)
+        razorpay_order_id = None
 
     if request.method == "POST":
 
@@ -717,6 +557,7 @@ def checkout(request):
         address = request.POST.get('address')
         payment = request.POST.get('payment')
 
+        # ✅ CREATE ORDER
         order = Order.objects.create(
             user=request.user,
             name=name,
@@ -724,9 +565,10 @@ def checkout(request):
             phone=phone,
             address=address,
             payment_method=payment,
-            total_amount=total
+            total_amount=grand_total
         )
 
+        # ✅ SAVE ITEMS
         for item in cart_items:
             OrderItem.objects.create(
                 order=order,
@@ -735,37 +577,61 @@ def checkout(request):
                 price=item.product.price
             )
 
+        # ✅ CLEAR CART
         cart_items.delete()
+
+        # ✅ SEND EMAIL (WORKS FOR BOTH COD & UPI)
+        send_mail(
+            'Order Placed Successfully',
+            f'Hi {name}, your order #{order.id} is confirmed!',
+            settings.EMAIL_HOST_USER,
+            [email],
+            fail_silently=True,
+        )
 
         return redirect('order_success')
 
     return render(request, 'checkout.html', {
         'cart_items': cart_items,
         'total': total,
-        'cart_count': cart_count,          # ✅ FIX
-        'wishlist_count': wishlist_count   # ✅ FIX
+        'gst': gst,
+        'grand_total': grand_total,
+        'cart_count': cart_count,
+        'wishlist_count': wishlist_count,
+        'razorpay_order_id': razorpay_order_id,
+        'razorpay_merchant_key': settings.RAZORPAY_KEY_ID
     })
+
+
+
+
+
+
+
+
 
 
 @login_required
 def order_success(request):
     return render(request, 'order_success.html')
+    
 
+
+
+
+
+
+@login_required
 def order_success(request):
-    # Get cart count
-    cart = request.session.get('cart', {})
-    cart_count = sum(item['quantity'] for item in cart.values()) if cart else 0
 
-    # Get wishlist count
-    if request.user.is_authenticated:
-        wishlist_count = Wishlist.objects.filter(user=request.user).count()
-    else:
-        wishlist_count = 0
+    cart_count = 0
+    wishlist_count = Wishlist.objects.filter(user=request.user).count()
 
     return render(request, 'order_success.html', {
         'cart_count': cart_count,
         'wishlist_count': wishlist_count,
     })
+
 
 # @login_required
 # def my_orders(request):
@@ -792,3 +658,9 @@ def remove_order(request, order_id):
         order.delete()
         messages.success(request, "Order removed successfully.")
     return redirect('my_orders')
+
+
+
+
+
+

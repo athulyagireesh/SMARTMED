@@ -8,14 +8,13 @@
     <link rel="stylesheet" href="{% static 'css/category.css' %}">
 </head>
 <body>
-    <!-- Navbar -->
     <div class="navbar">
         <div class="logo">
             <img src="{% static 'images/logoo.png' %}" width="170">
         </div>
 
         <div class="search">
-            <!-- Search only within this category -->
+
             <form method="GET" action="{% url 'category_page' category %}">
                 <input type="text" name="q" placeholder="Search {{ category }}..." value="{{ query|default:'' }}">
                 <button type="submit">Search</button>
@@ -40,7 +39,6 @@
         </div>
     </div>
 
-    <!-- Products Section -->
     <h2 class="category-title">{{ category }}</h2>
 
     <div class="products">
