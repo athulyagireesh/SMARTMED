@@ -15,7 +15,6 @@
 
 <body>
 
-<!-- ✅ SAME NAVBAR -->
 <div class="first">
 
 <div class="logo">
@@ -49,7 +48,6 @@
 </div>
 
 
-<!-- ✅ MAIN -->
 <div class="main">
 
 <div class="checkout-wrapper">
@@ -58,7 +56,6 @@
 
 <div class="container">
 
-<!-- LEFT -->
 <div class="left">
 
 {% if items %}
@@ -76,19 +73,6 @@
 <p class="pname">{{ item.product.name }}</p>
 <p>Price: ₹{{ item.product.price }}</p>
 <p class="saved">Saved for later</p>
-
-<!-- <div class="actions">
-
-<a href="{% url 'add_to_cart' item.product.id %}">
-<button class="move-btn">Move to Cart</button>
-</a>
-
-<a href="{% url 'remove_wishlist' item.id %}">
-<button class="remove">Remove</button>
-</a>
-
-</div> -->
-
 
 
 
@@ -127,7 +111,6 @@
 </div>
 
 
-<!-- RIGHT SIDE (LIKE CART SUMMARY) -->
 {% if items %}
 
 <div class="right-box">
@@ -155,7 +138,6 @@
 </div>
 
 
-<!-- ✅ SAME FULL FOOTER -->
 <footer class="footer">
     <div class="footer-top">
 

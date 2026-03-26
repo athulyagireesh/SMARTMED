@@ -48,7 +48,6 @@
 
 <div class="checkout-wrapper">
 
-<!-- <form method="POST"> -->
     <form method="POST" id="checkout-form">
 {% csrf_token %}
 
@@ -121,7 +120,7 @@
 </div>
 
 <button type="submit" class="order-btn">Place Order</button>
-<!-- <button type="button" id="rzp-button" class="order-btn">Pay Online</button> -->
+
 
 </div>
 
@@ -205,12 +204,12 @@ document.getElementById("checkout-form").addEventListener("submit", function(e){
 
     var payment = document.querySelector('input[name="payment"]:checked').value;
 
-    // ✅ COD → Direct Submit
+ 
     if(payment === "cod"){
         return true;
     }
 
-    // ✅ UPI → Razorpay
+
     e.preventDefault();
 
     var options = {
@@ -222,7 +221,7 @@ document.getElementById("checkout-form").addEventListener("submit", function(e){
         "order_id": "{{ razorpay_order_id }}",
 
         "handler": function (response){
-            // ✅ AFTER SUCCESS → submit form → Django saves order → redirect success page
+    
             document.getElementById("checkout-form").submit();
         },
 
@@ -249,224 +248,3 @@ document.getElementById("checkout-form").addEventListener("submit", function(e){
 
 
 
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout - SmartMed</title>
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">
-    <link rel="stylesheet" href="{% static 'css/checkout.css' %}">
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-</head>
-<body>
-
-<div class="main">
-
-    <div class="first">
-        <div class="logo">
-            <img src="{% static 'images/logoo.png' %}">
-        </div>
-
-        <div class="search">
-            <form method="GET" action="{% url 'redirect_search' %}">
-                <input type="text" name="q" placeholder="Search medicines...">
-                <button type="submit">Search</button>
-            </form>
-        </div>
-
-        <div class="right">
-            <a href="{% url 'cart' %}" class="cart-icon">
-                <img src="{% static 'images/crt.svg' %}" class="icon-img">
-                <span class="cart-count">{{ cart_count }}</span>
-            </a>
-
-            <a href="{% url 'wishlist_page' %}" class="wishlist-icon">
-                <img src="{% static 'images/wishlist.png' %}" class="icon-img">
-                <span class="wishlist-count">{{ wishlist_count }}</span>
-            </a>
-
-            <a href="{% url 'home' %}">
-                <button class="home-btn">Home</button>
-            </a>
-        </div>
-    </div>
-
-   
-    <div class="checkout-wrapper">
-        <form method="POST" id="checkout-form">
-            {% csrf_token %}
-            <div class="container">
-
-               
-                <div class="left">
-
-                    <div class="box">
-                        <div class="che">
-                            <h2>Checkout Details</h2>
-                        </div>
-
-                        <h3 class="section-title">Delivery Address</h3>
-                        <input type="text" name="name" placeholder="Full Name" required>
-                        <input type="email" name="email" placeholder="Email Address" required>
-                        <input type="tel" name="phone" placeholder="Mobile Number" required>
-                        <textarea name="address" placeholder="Full Address" required></textarea>
-                        <button type="button" class="save-btn">Save Address</button>
-                    </div>
-
-                    <h3 class="section-title payment-title">Payment Method</h3>
-                    <div class="payment-methods">
-                        <label class="payment-row">
-                            <div class="pay-left">
-                                <img src="{% static 'images/card.png' %}" class="pay-icon">
-                                <span>Card</span>
-                            </div>
-                            <input type="radio" name="payment" value="card">
-                        </label>
-
-                        <label class="payment-row">
-                            <div class="pay-left">
-                                <img src="{% static 'images/upi.jpg' %}" class="pay-icon">
-                                <span>UPI Payment</span>
-                            </div>
-                            <input type="radio" name="payment" value="upi">
-                        </label>
-
-                        <label class="payment-row">
-                            <div class="pay-left">
-                                <img src="{% static 'images/cashod.png' %}" class="pay-icon">
-                                <span>Cash on Delivery</span>
-                            </div>
-                            <input type="radio" name="payment" value="cod" checked>
-                        </label>
-                    </div>
-
-                </div>
-
-                
-                <div class="right-box">
-                    <h3>Price Details</h3>
-                    <div class="price-box">
-                        <p>Total <span>₹{{ total }}</span></p>
-                        <p>GST <span>₹{{ gst }}</span></p>
-                        <hr>
-                        <h2>₹{{ grand_total }}</h2>
-                    </div>
-
-            
-                    <button type="submit" class="order-btn" id="cod-button">Place Order (COD)</button>
-                    <button type="button" class="order-btn" id="rzp-button">Pay Online</button>
-                </div>
-
-            </div>
-        </form>
-    </div>
-
-    
-    <footer class="footer">
-        <div class="footer-top">
-            <div class="footer-column">
-                <h4>ABOUT</h4>
-                <ul>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">SmartMed Stories</a></li>
-                    <li><a href="#">Press</a></li>
-                    <li><a href="#">Corporate Information</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-column">
-                <h4>GROUP COMPANIES</h4>
-                <ul>
-                    <li><a href="#">MediTrack</a></li>
-                    <li><a href="#">HealthTrip</a></li>
-                    <li><a href="#">PharmaShop</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-column">
-                <h4>HELP</h4>
-                <ul>
-                    <li><a href="#">Payments</a></li>
-                    <li><a href="#">Shipping</a></li>
-                    <li><a href="#">Cancellation & Returns</a></li>
-                    <li><a href="#">FAQ</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-column">
-                <h4>CONSUMER POLICY</h4>
-                <ul>
-                    <li><a href="#">Cancellation & Returns</a></li>
-                    <li><a href="#">Terms Of Use</a></li>
-                    <li><a href="#">Security</a></li>
-                    <li><a href="#">Privacy</a></li>
-                    <li><a href="#">Sitemap</a></li>
-                    <li><a href="#">Grievance Redressal</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-column">
-                <h4>Mail Us:</h4>
-                <p>SmartMed Online Pvt Ltd,<br>
-                Building HealthTech, Kochi, Kerala, India</p>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <div class="footer-left">
-                <span>&copy; 2026 SmartMed.com</span>
-            </div>
-            <div class="footer-right">
-                <img src="{% static 'images/visaa.jpg' %}" alt="Visa" width="30" height="30">
-                <img src="{% static 'images/masterr.jpg' %}" alt="Mastercard" width="30" height="30">
-                <img src="{% static 'images/rupay.png' %}" alt="RuPay" width="30" height="30">
-                <img src="{% static 'images/cod.avif' %}" alt="Cash on Delivery" width="30" height="30">
-            </div>
-        </div>
-    </footer>
-
-</div>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const rzpButton = document.getElementById("rzp-button");
-    const form = document.getElementById("checkout-form");
-
-    rzpButton.addEventListener("click", function(e) {
-        e.preventDefault();
-
-        const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
-        if(paymentMethod === 'cod') {
-            form.submit();
-            return;
-        }
-
-     
-        const options = {
-            "key": "{{ razorpay_merchant_key|default:'' }}",
-            "amount": "{{ grand_total|default:0 }}",
-            "currency": "INR",
-            "name": "SmartMed",
-            "description": "Medicine Payment",
-            "order_id": "{{ razorpay_order_id|default:'' }}",
-            "handler": function(response){
-                alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
-                form.submit();  
-            },
-            "theme": {
-                "color": "#28a745"
-            }
-        };
-        const rzp = new Razorpay(options);
-        rzp.open();
-    });
-});
-</script>
-
-</body>
-</html> -->

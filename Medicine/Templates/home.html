@@ -11,7 +11,6 @@
 
 <div class="main">
 
-<!-- NAVBAR -->
 <div class="first">
     <div class="logo">
         <img src="{% static 'images/logoo.png' %}" width="200">
@@ -50,7 +49,7 @@
 </div>
 
 
-<!-- HERO SECTION -->
+
 <div class="hero">
 
     <div class="hero-text">
@@ -64,14 +63,12 @@
                 <button class="shop-btn">Show All</button>
             </a>
 
-            <!-- ✅ UPDATED UPLOAD PRESCRIPTION -->
+            
             <form id="uploadForm" action="{% url 'upload_prescription' %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 
-                <!-- Hidden Input -->
+             
                 <input type="file" id="fileInput" name="prescription" style="display:none;" required>
-
-                <!-- Single Button -->
                 <button type="button" class="upload-btn" onclick="openFilePicker()">
                     Upload Prescription
                 </button>
@@ -84,7 +81,7 @@
 </div>
 
 
-<!-- PRODUCTS SECTION -->
+
 <div class="second">
 
 <div class="section-title">FEATURED PRODUCTS</div>
@@ -155,7 +152,7 @@
 </div>
 
 
-<!-- FOOTER -->
+
 <footer class="footer">
     <div class="footer-top">
         <!-- (your footer unchanged) -->
@@ -171,7 +168,6 @@
 </div>
 
 
-<!-- ✅ UPDATED JAVASCRIPT -->
 <script>
 function openFilePicker(){
     document.getElementById("fileInput").click();
@@ -185,7 +181,6 @@ document.getElementById("fileInput").addEventListener("change", function(){
 </script>
 
 
-<!-- TAWK CHAT -->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 (function(){

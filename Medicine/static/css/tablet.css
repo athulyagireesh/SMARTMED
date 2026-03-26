@@ -9,7 +9,7 @@ body{
 background:#f5f7fb;
 }
 
-/* NAVBAR */
+
 .navbar{
 width:100%;
 height:85px;
@@ -28,7 +28,7 @@ z-index:1000;
 height:65px;
 }
 
-/* SEARCH */
+
 .search{
 flex:1;
 display:flex;
@@ -57,11 +57,12 @@ padding:10px 20px;
 border-radius:0 6px 6px 0;
 }
 
-/* RIGHT */
+
 .nav-right{
 display:flex;
 gap:12px;
 }
+
 
 .icon-box{
 position:relative;
@@ -101,7 +102,8 @@ padding:8px 14px;
 border-radius:6px;
 }
 
-/* PAGE STRUCTURE */
+
+
 .page-container{
 display:flex;
 flex-direction:column;
@@ -118,7 +120,7 @@ gap:25px;
 padding:20px;
 }
 
-/* PRODUCT */
+
 .product{
 width:230px;
 background:white;
@@ -172,7 +174,7 @@ background:red;
 color:white;
 }
 
-/* FOOTER */
+
 .footer{
 background:#111827;
 color:white;
@@ -229,7 +231,7 @@ margin-right:10px;
 margin-top:10px;
 }
 
-/* BOTTOM */
+
 .footer-bottom{
 text-align:center;
 padding:15px;
@@ -238,7 +240,7 @@ font-size:13px;
 color:#9ca3af;
 }
 
-/* RESPONSIVE */
+
 @media(max-width:768px){
 .footer-top{
 flex-direction:column;
