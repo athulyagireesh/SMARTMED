@@ -7,7 +7,8 @@
 
 body {
     height: 100vh;
-    background-image: url(../images/2.jpg);
+        background-image: url(../images/log3.jpg);
+
         background-repeat:round;
  
     display: flex;
@@ -147,3 +148,5 @@ body::before {
     font-weight: 600;
     text-decoration: none;
 }
+
+
