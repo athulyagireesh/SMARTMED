@@ -24,7 +24,6 @@
     </div>
 
     <div class="right">
-        <a href="{% url 'home' %}" class="home-btn">Home</a>
 
         <a href="{% url 'cart' %}" class="cart-icon">
             <img src="{% static 'images/crt.svg' %}" class="icon-img" alt="Cart">
@@ -34,7 +33,10 @@
         <a href="{% url 'wishlist_page' %}" class="wishlist-icon">
             <img src="{% static 'images/wishlist.png' %}" class="icon-img" alt="Wishlist">
             <span class="wishlist-count">{{ wishlist_count }}</span>
+
         </a>
+
+        <a href="{% url 'home' %}" class="home-btn">Home</a>
     </div>
 </div>
 
@@ -51,17 +53,40 @@
                 <h3>{{ product.name }}</h3>
                 <p>₹{{ product.price }}</p>
 
-                <div class="product-actions">
-                    <a href="{% url 'add_to_cart' product.id %}" class="cart-btn">Add to Cart</a>
-                 
 
-                    <form method="POST" action="{% url 'add_wishlist' product.id %}" class="wishlist-box">
+
+
+<div class="product-actions">
+
+    <a href="{% url 'add_to_cart' product.id %}" class="cart-btn">
+        Add to Cart
+    </a>
+
+
+
+    <form method="POST" action="{% url 'add_to_wishlist' product.id %}">
     {% csrf_token %}
-    <input type="checkbox" id="wishlist-{{ product.id }}" {% if product.id in wishlist_products %}checked{% endif %}>
-    <label for="wishlist-{{ product.id }}">♡</label>
+    
+    <button type="submit" class="wish-btn">
+        <span class="heart {% if product.id in wishlist_products %}active{% endif %}">
+            ♡
+        </span>
+    </button>
+
 </form>
 
-                </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
             </div>
             {% endfor %}
         {% else %}

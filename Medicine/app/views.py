@@ -664,3 +664,23 @@ def remove_order(request, order_id):
 
 
 
+
+
+@login_required
+def product_detail(request, id):
+    product = get_object_or_404(Product, id=id)
+
+    wishlist_items = Wishlist.objects.filter(user=request.user)
+    wishlist_products = wishlist_items.values_list('product_id', flat=True)
+    wishlist_count = wishlist_items.count()
+
+    cart_count = Cart.objects.filter(user=request.user).aggregate(
+        total=Sum('quantity')
+    )['total'] or 0
+
+    return render(request, 'product_detail.html', {
+        'product': product,
+        'wishlist_products': wishlist_products,
+        'wishlist_count': wishlist_count,
+        'cart_count': cart_count
+    })
