@@ -14,7 +14,8 @@ height:90px;
 display:flex;
 align-items:center;
 justify-content:space-between;
-background:#2F80C7;
+/* background:#2F80C7; */
+background: #ffb347;
 position:fixed;
 top:0;
 z-index:1000;
@@ -186,7 +187,8 @@ height:420px;
 display:flex;
 align-items:center;
 padding-left:60px;
-background-image:url("../images/bg.png");
+/* background-image:url("../images/bg.png"); */
+background-image: url("../images/100.jpg");
 background-size:cover;
 }
 
