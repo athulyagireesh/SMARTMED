@@ -1,4 +1,4 @@
-/* ===== RESET ===== */
+/* ================= RESET ================= */
 *{
 margin:0;
 padding:0;
@@ -8,48 +8,57 @@ font-family:Arial;
 
 body{
 background:#f1f3f6;
+overflow-x:hidden;
 }
 
-/* ===== NAVBAR ===== */
+/* ================= NAVBAR ================= */
 .first{
 display:flex;
 align-items:center;
-justify-content:space-between;
 background:#2F80C7;
-padding:10px 20px;
+padding:10px 15px;
 position:fixed;
 top:0;
 width:100%;
 z-index:1000;
-flex-wrap:wrap;
+gap:4px; /* 🔥 tighter spacing */
 }
 
 /* LOGO */
-.logo img{
-height:60px;
+.logo{
+flex-shrink:0;
+display:flex;
+align-items:center;
 }
 
-/* SEARCH */
+.logo img{
+padding-top:0; /* 🔥 removed extra space */
+height:85px;
+width:110px;
+}
+
+/* 🔥 SEARCH VERY CLOSE TO LOGO */
 .search{
 flex:1;
+max-width:950px;
 display:flex;
-justify-content:center;
-padding:5px 10px;
+margin-left:0;     /* 🔥 no gap from logo */
+margin-right:46px;  /* small gap before icons */
+padding-right:0;
 }
 
 .search form{
 display:flex;
 width:100%;
-max-width:400px;
 }
 
 .search input{
-flex:1;
+width:100%;
 padding:8px;
-border:none;
+border:1px solid #ccc;
+border-right:none;
 border-radius:6px 0 0 6px;
 background:#f2f2f2;
-outline:none;
 }
 
 .search button{
@@ -65,15 +74,15 @@ cursor:pointer;
 background:#1e7e34;
 }
 
-/* RIGHT SIDE */
+/* RIGHT */
 .right{
 display:flex;
 align-items:center;
-gap:12px;
-flex-wrap:wrap;
+gap:8px;
+flex-shrink:0;
 }
 
-/* ICON BUTTONS */
+/* ICONS */
 .cart-icon,
 .wishlist-icon{
 display:flex;
@@ -99,7 +108,6 @@ width:22px;
 height:22px;
 }
 
-/* BADGE */
 .cart-count,
 .wishlist-count{
 position:absolute;
@@ -110,7 +118,6 @@ color:white;
 font-size:11px;
 padding:2px 6px;
 border-radius:50%;
-font-weight:bold;
 }
 
 /* BUTTON */
@@ -118,17 +125,18 @@ font-weight:bold;
 background:#1b4e8a;
 color:white;
 border:none;
-padding:8px 16px;
+padding:8px 14px;
 border-radius:6px;
 cursor:pointer;
-font-size:14px;
+font-size:13px;
+white-space:nowrap;
 }
 
 .home-btn:hover{
 background:#0d3b66;
 }
 
-/* ===== ORDERS PAGE ===== */
+/* ================= ORDERS ================= */
 .orders-wrapper{
 margin-top:110px;
 padding:20px;
@@ -171,7 +179,6 @@ padding:5px 10px;
 border-radius:20px;
 font-size:12px;
 color:white;
-text-transform:uppercase;
 }
 
 .status.pending{background:#ffc107;}
@@ -229,10 +236,6 @@ margin-top:15px;
 gap:10px;
 }
 
-.order-bottom p{
-font-weight:bold;
-}
-
 /* BUTTON */
 .cancel-btn{
 background:#dc3545;
@@ -247,13 +250,7 @@ cursor:pointer;
 background:#b02a37;
 }
 
-/* EMPTY */
-.orders-wrapper p{
-text-align:center;
-color:#777;
-}
-
-/* ===== FOOTER ===== */
+/* ================= FOOTER ================= */
 .footer{
 background:#111827;
 color:white;
@@ -275,33 +272,17 @@ min-width:180px;
 margin:10px;
 }
 
-.footer-column h4{
-font-size:14px;
-color:#9CA3AF;
-margin-bottom:10px;
-}
-
 .footer-column ul{
 list-style:none;
 }
 
-.footer-column ul li{
-margin-bottom:8px;
-}
-
 .footer-column ul li a{
 color:white;
-font-size:13px;
 text-decoration:none;
 }
 
 .footer-column ul li a:hover{
 color:#F59E0B;
-}
-
-.footer-column p{
-font-size:13px;
-color:#D1D5DB;
 }
 
 .footer-bottom{
@@ -310,47 +291,47 @@ justify-content:space-between;
 padding:15px 20px;
 border-top:1px solid #374151;
 flex-wrap:wrap;
+gap:10px;
+}
+
+.footer-right{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
 }
 
 .footer-right img{
 width:40px;
-margin-right:15px;
 }
 
-/* ===== RESPONSIVE ===== */
+/* ================= RESPONSIVE ================= */
 @media(max-width:900px){
 
 .first{
-flex-direction:column;
-align-items:flex-start;
+flex-wrap:wrap;
 }
 
+/* search full */
 .search{
 width:100%;
+margin-top:5px;
 }
 
+/* icons below */
 .right{
 width:100%;
-justify-content:flex-start;
+justify-content:center;
+margin-top:10px;
 }
 
 .orders-wrapper{
 margin-top:150px;
-padding:10px;
 }
 
-.order-top{
-flex-direction:column;
-}
-
+/* items stack */
 .item{
 flex-direction:column;
 align-items:flex-start;
-}
-
-.item img{
-width:70px;
-height:70px;
 }
 
 .order-bottom{
@@ -358,19 +339,9 @@ flex-direction:column;
 align-items:flex-start;
 }
 
-.footer-top{
-flex-direction:column;
-gap:20px;
 }
 
-.footer-bottom{
-flex-direction:column;
-gap:10px;
-}
-
-}
-
-/* SMALL DEVICES */
+/* MOBILE */
 @media(max-width:500px){
 
 .search input{
